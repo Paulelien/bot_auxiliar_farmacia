@@ -1,0 +1,115 @@
+DECRETO 79
+
+A continuación, se presenta un informe detallado sobre los principales temas e ideas del Decreto 79, que establece el Reglamento Aplicable a la Elaboración de Preparados Farmacéuticos en Recetarios de Farmacia, incluyendo citas relevantes.
+
+Informe Detallado: Reglamento Aplicable a la Elaboración de Preparados Farmacéuticos en Recetarios de Farmacia (Decreto 79)
+Fuente: Extractos de "Decreto-79_22-ENE-2011.pdf" (Publicación: 22-ENE-2011 | Promulgación: 04-AGO-2010 | Última Modificación: 12-FEB-2025 Decreto 30)
+
+Este decreto establece el marco regulatorio para el registro, elaboración, almacenamiento, tenencia, traslado, expendio y dispensación de preparados farmacéuticos y cosméticos de carácter magistral en farmacias autorizadas en Chile. Su objetivo principal es actualizar, organizar y completar las normas vigentes para asegurar la calidad, seguridad y eficacia de estos productos.
+
+I. Disposiciones Generales y Definiciones Clave
+El reglamento define y diferencia claramente los tipos de preparados y las condiciones bajo las cuales pueden ser elaborados y distribuidos.
+
+Alcance del Reglamento (Artículo 1º): Se aplica al "registro, elaboración, almacenamiento, tenencia, traslado, expendio y dispensación de los preparados farmacéuticos y de los preparados cosméticos de carácter magistral, que sean prescritos por un profesional habilitado."
+Tipos de Preparados (Artículo 2º):Preparado Magistral: "aquel que se elabora en forma inmediata, conforme a una fórmula magistral prescrita por un profesional habilitado para ello, a un paciente determinado o sobre la base de la simple división de una materia prima activa o producto farmacéutico registrado en el país, también prescrito profesionalmente, elaborados, en ambos casos, con un período de validez asignado y bajo la responsabilidad de un Químico Farmacéutico."
+Preparado Oficinal: "aquel elaborado conforme a lo descrito en la Farmacopea Farmacéutica Oficinal Oficial (FFOO), norma técnica aprobada por decreto supremo del Ministerio de Salud, a propuesta del Instituto de Salud Pública."
+Preparado Cosmético Magistral: Aquel elaborado en un recetario autorizado de farmacia, bajo la responsabilidad de un químico farmacéutico, para pacientes con enfermedades de la piel o sus anexos, según indicación profesional.
+Recetario (Artículo 3º): Es el "sector diferenciado del local de una Farmacia destinado a la elaboración de preparados, farmacéuticos y cosméticos."
+Preparados Prohibidos (Artículo 3º): Se prohíbe la elaboración, tenencia, distribución y transferencia de preparados contaminados, alterados, adulterados o falsificados.
+Condición de Venta y Distribución (Artículo 4º): Los preparados magistrales y cosméticos requieren receta médica. Los preparados oficinales se expenden según lo determine la FFOO. Se permite la distribución de preparados oficinales a establecimientos facultados y botiquines, con un sistema de registro. Los preparados magistrales pueden distribuirse a establecimientos asistenciales mediante convenio y con un perfil fármaco-terapéutico.
+Restricciones a Preparados Magistrales (Artículo 5º): No pueden contener principios activos en las mismas dosis y formas farmacéuticas de especialidades farmacéuticas registradas, excepto para pacientes con intolerancia a excipientes (indicado en receta) o en situaciones de escasez o desabastecimiento declaradas por el Ministerio de Salud (Decreto 30, Art. 1°, D.O. 12.02.2025). La variación de dosis o forma farmacéutica de un principio activo registrado es permitida si se ajusta a las necesidades del paciente, siempre que la composición no contenga principios activos "dentro del rango más/menos 10% de la dosis de un producto registrado."
+Glosario de Términos (Artículo 6º): Proporciona definiciones esenciales para el entendimiento del reglamento, incluyendo "Base Galénica," "Calidad de un preparado farmacéutico," "Contaminación cruzada," "Control de calidad," "Dispensación," "Eficacia," "Evaluación farmacéutica," "Excipiente," "Fórmula Magistral," "Farmacopea Farmacéutica Oficinal Oficial (FFOO)," "Fórmula secreta," "Materia prima," "Normas para la Elaboración de Preparados Farmacéuticos en Recetario de Farmacia," "Principio activo," "Profesional habilitado para prescribir," "Seguridad," "Trazabilidad del preparado," entre otros.
+II. Autorización Sanitaria de los Recetarios
+La operación de un recetario está sujeta a una estricta autorización y fiscalización por parte de la autoridad sanitaria.
+
+Autorización Obligatoria (Artículo 7º): "Todo recetario deberá funcionar con autorización sanitaria expresa, otorgada por la Secretaría Regional Ministerial de Salud (SEREMI)." La SEREMI también fiscaliza las actividades.
+Contenido de la Autorización (Artículo 8º): Incluye el recetario y farmacia a la que pertenece, tipo y forma farmacéutica de los preparados (con indicación de sustancias altamente activas), sistema de registro y nombre del Director Técnico y Supervisor (si existe).
+Tipos y Formas Farmacéuticas Autorizables (Artículo 9º): Se clasifican en sólidas (papelillos, cápsulas duras), líquidas y semisólidas (jarabes, soluciones, suspensiones, óvulos, supositorios, cremas, geles, pastas), preparados estériles (no inyectables, inyectables, nutriciones parenterales, citostáticos) y cosméticos magistrales. Se establecen requisitos específicos para farmacias homeopáticas y para la elaboración con sustancias altamente activas.
+Vigencia y Renovación (Artículo 10º): La autorización tiene una duración máxima de tres años y se renueva automáticamente, salvo que sea expresamente dejada sin efecto.
+Prohibiciones Específicas (Artículo 11º): "Se prohíbe elaborar preparados farmacéuticos ajenos a los tipos y formas indicados en el artículo precedente o que utilicen fórmulas secretas." También se prohíbe la importación, distribución, dispensación y expendio de preparados elaborados en el extranjero, salvo para uso personal acreditado.
+III. De la Prescripción
+Se detalla quién puede prescribir, los requisitos de la receta y las responsabilidades asociadas.
+
+Profesionales Habilitados (Artículo 12º): Médico cirujano, cirujano dentista y matrona. Los médicos veterinarios pueden prescribir si corresponden a principios activos de uso humano. Las recetas para psicotrópicos o estupefacientes deben seguir un formato oficial.
+Validez de la Receta (Artículo 13º): 30 días corridos desde su extensión. Se permite la elaboración fraccionada para tratamientos continuos.
+Asociación de Principios Activos (Artículo 14º): El profesional prescriptor debe determinar la viabilidad de asociar principios activos a dosis fija, asegurando la contribución terapéutica, seguridad y eficacia, con efectos secundarios iguales o menores a los componentes aislados.
+Notificación de Efectos Adversos (Artículo 15º): Profesionales prescriptores y Químicos Farmacéuticos están obligados a informar a la SEREMI sobre efectos adversos detectados.
+Evaluación Farmacéutica de la Receta (Artículo 16º): Toda receta magistral debe ser evaluada por el Director Técnico de la farmacia receptora o el supervisor del recetario para determinar su factibilidad técnica y cumplimiento normativo. Pueden aceptar o rechazar la receta, fundamentando su decisión.
+Registro y Devolución de Recetas (Artículo 17º): El Director Técnico o supervisor debe verificar los datos de la receta, estampar el timbre del recetario, fecha de elaboración y cantidad, y devolverla con el preparado, previa anotación en el Registro Oficial de elaboración. Las órdenes de establecimientos asistenciales y registros de elaboración deben archivarse por cinco años.
+IV. De los Registros
+La trazabilidad y el control son pilares del reglamento, exigiendo sistemas de registro exhaustivos.
+
+Libro de Registro de Recetas (Artículo 18º): Toda farmacia que reciba recetas magistrales para elaboración externa debe mantener un libro foliado y autorizado por la SEREMI, registrando la receta, fechas de recepción, envío y dispensación, así como las razones de rechazo.
+Sistema de Registros del Recetario (Artículo 19º): "Todo recetario deberá contar con un sistema de registros que permita conocer la trazabilidad del preparado, en todas sus etapas de distribución y/o dispensación." Incluye registro y archivo documental (materias primas, material de envase), procedimientos operativos, registros de actividades de elaboración (general, oficial de elaboración, traslado) y registro de formulaciones especiales.
+Número de Registro Sanitario Oficial (Artículo 20º): Los preparados farmacéuticos contarán con un número de registro oficial, que se incorporará en el Registro Oficial de Elaboración y será remitido al Instituto de Salud Pública trimestralmente.
+V. Condiciones de Elaboración, Organización y Funcionamiento
+Se establecen directrices detalladas para garantizar la calidad y seguridad en todas las etapas.
+
+A. De las Materias Primas:
+
+Nómina de Principios Activos (Artículo 21º): Una norma técnica del Ministerio de Salud aprobará la nómina de principios activos permitidos. Solo se pueden usar excipientes de farmacopeas reconocidas y FFOO.
+Requisitos y Control de Calidad (Artículo 22º): Las materias primas deben tener protocolo de análisis de control de calidad local, adquirirse en droguerías o laboratorios autorizados y llevar anotada la fecha de control. Se permite la importación para uso interno con control de calidad nacional. Se exige nuevo control de calidad de materias primas con envase abierto tras un año. Las materias primas fuera de especificación deben almacenarse como "Residuos e Insumos no aptos."
+Material de Envase (Artículo 23º): Debe cumplir las mismas exigencias de control de calidad que las materias primas.
+Bases Galénicas (Artículo 24º): Se permite un inventario mínimo de bases galénicas con estabilidad física, química y microbiológica por no más de 20 días. Prohibido su reprocesamiento.
+B. De la Planta Física del Recetario de Farmacia:
+
+Espacio Exclusivo (Artículo 25º): El recetario debe tener una planta física exclusiva, diferenciada y adecuada al tipo de preparado. La elaboración de inyectables, mezclas intravenosas y preparados altamente activos debe realizarse en áreas separadas.
+Zonas de Almacenamiento (Artículo 26º): Debe haber zonas separadas para materias primas, material de envase y preparados elaborados. Productos de riesgo (inflamables, tóxicos, etc.) y residuos deben tener separación física y medidas de seguridad. Sustancias estupefacientes y psicotrópicas deben estar bajo llave.
+C. Del Personal:
+
+Encargado/Supervisor de Recetario (Artículo 27º): Debe estar a cargo de un Químico Farmacéutico, que puede ser también Director Técnico de la farmacia. No se pueden realizar actividades sin la presencia de un Químico Farmacéutico.
+Responsabilidades del Químico Farmacéutico (Artículo 28º): Responsable de la evaluación farmacéutica y de asegurar la calidad en todas las etapas (elaboración, control, traslado, almacenamiento, dispensación).
+Deberes Indelegables del Director Técnico (Artículo 29º): Incluyen solicitar recursos, orientar y capacitar al personal, implementar auto evaluaciones, disponer de procedimientos operacionales estandarizados, verificar materias primas, supervisar ingresos, registrar proveedores, mantener archivos de protocolos y definir condiciones de embalaje y transporte.
+Obligaciones Delegables del Director Técnico (Artículo 30º): Realizar la evaluación farmacéutica definitiva, dispensar o supervisar el expendio, consignar datos en la receta y informar al solicitante el plazo de retiro.
+Presencia Constante del Profesional Farmacéutico (Artículo 31º): El Director Técnico o supervisor debe estar presente durante todo el funcionamiento del recetario. Sus responsabilidades incluyen mantener instalaciones y equipos óptimos, velar por la calidad, mantener documentación, almacenar insumos, verificar controles de calidad, rechazar materias primas sin protocolo nacional, registrar bases galénicas, elaborar bajo normas, asegurar calidad hasta el vencimiento, mantener calidad en fraccionamiento, realizar controles a oficinales, asignar periodo de validez a magistrales, verificar rotulación, retirar productos no aptos y velar por la destrucción de productos deteriorados.
+Auxiliar Paramédico (Artículo 32º): Requisitos incluyen 4º medio aprobado, certificado de salud compatible y autorización como Auxiliar Paramédico de Farmacia. Títulos técnicos superiores en el área farmacéutica no requieren autorización sanitaria. Prohibido realizar funciones propias del Director Técnico o Supervisor.
+D. De la Elaboración de Preparados Farmacéuticos:
+
+Proceso y Prohibiciones (Artículo 33º): La elaboración implica operaciones técnicas, control, envasado y etiquetado. Los preparados magistrales deben hacerse "en forma inmediata contra la presentación de la receta magistral y no podrán mantenerse en inventario, quedando prohibida su fabricación masiva." Los oficinales deben elaborarse en lotes.
+Textos de Referencia (Artículo 34º): Todo recetario debe disponer de la FFOO actualizada y farmacopeas reconocidas.
+Uso de Especialidades Farmacéuticas como Materia Prima (Artículo 35º): Solo permitido para ajustar dosis cuando no hay materia prima disponible o en situaciones urgentes (debe registrarse). Se pueden fraccionar/reconstituir especialidades estériles. Prohibido usar especialidades sin garantía de inviolabilidad o reutilizar envases primarios abiertos si el fabricante no lo permite.
+Fraccionamiento (Artículo 36º): Debe realizarse bajo procedimientos escritos y responsabilidad del Director Técnico/Supervisor. No se pueden modificar las características de disolución o absorción del producto original (excluye liberación controlada, recubrimiento entérico, etc.). Prohibido fraccionar polvos liofilizados.
+Período de Validez Asignado (PVA) (Artículo 37º): Asignado por el Químico Farmacéutico. Para oficinales, según FFOO (máximo 1 año). Para magistrales (farmacéuticos o cosméticos), basado en características de la fórmula y estabilidad; "en ausencia de estudios de estabilidad específicos... este período, en ningún caso, podrá ser superior a cuarenta días a partir de la fecha de elaboración." Para magistrales por simple división de materias primas activas, máximo 6 meses; por simple división de productos farmacéuticos, máximo 40 días.
+E. Del Envase y Rotulación:
+
+Información Obligatoria (Artículo 38º): Envase debe garantizar inviolabilidad y conservación. El rótulo debe incluir: denominación (oficinales), nombre y ubicación de la farmacia y recetario, número de autorización del recetario, nombre del Director Técnico, cantidad total, número de registro de elaboración, fecha de vencimiento, forma farmacéutica, modo de empleo, advertencias, precauciones de almacenamiento y dosis/composición (principio activo destacado, excipientes completos). Advertencia: "Por seguridad eliminar este preparado después de su fecha de vencimiento."
+Envases Reducidos (Artículo 39º): Algunas indicaciones pueden ir en el envase secundario si el primario incluye lo esencial.
+Preparados Oficinales (Artículo 40º): Deben incluir número de Registro Sanitario Oficial, código FFOO (si aplica) e identificación de lote/sublote.
+Preparados Magistrales (Artículo 41º): Además de lo anterior, deben incluir nombre del paciente y del profesional que prescribe.
+Psicotrópicos y Estupefacientes (Artículo 42º): Rótulos deben consignar "sujeto a control de psicotrópicos" o "sujeto a control de estupefacientes" y una estrella de cinco puntas (verde para psicotrópicos, roja para estupefacientes). La rotulación no debe inducir a uso equivocado o impedir legibilidad.
+Sustancias Altamente Activas (Artículo 43º): El embalaje de transporte debe llevar la leyenda "Precaución, contiene sustancia peligrosa."
+F. Publicidad e Información al Paciente:
+
+Restricciones Publicitarias (Artículo 44º): Solo se pueden publicitar los tipos y formas farmacéuticas autorizadas. Prohibida la divulgación de fórmulas magistrales y sus propiedades. Los preparados oficinales pueden mencionar su disponibilidad.
+Prohibición de Incentivos (Artículo 45º): Prohibida la donación, entrega gratuita o cualquier incentivo vinculado a la venta. No se pueden usar rifas, sorteos, muestras gratuitas u otras formas que estimulen el consumo o la automedicación. Tampoco se pueden elaborar o distribuir como muestras médicas.
+VI. De la Calidad
+El reglamento enfatiza la calidad a través de procedimientos y controles.
+
+Procedimientos de Calidad (Artículo 46º): Toda farmacia con recetario debe tener procedimientos para cada actividad que interviene en la calidad del preparado (evaluación técnica, proveedores, recepción de materias primas/material de envase, limpieza, mantenimiento, almacenamiento, elaboración, documentación, envasado, distribución, dispensación, personal). La documentación debe estar disponible para la autoridad.
+Control de Calidad de Materias Primas y Productos Terminados (Artículo 47º): La identidad, pureza, estabilidad y control de calidad de materias primas para oficinales se rigen por la FFOO y farmacopeas reconocidas. Para magistrales, los controles se verifican en el cumplimiento de los procesos de elaboración hasta el envasado y rotulación.
+Sector de Control de Calidad (Artículo 48º): Los recetarios pueden tener un sector exclusivo para control de calidad. Los controles analíticos/microbiológicos pueden ser realizados por laboratorios autorizados mediante convenio.
+VII. Del Almacenamiento y Traslado
+Se establecen normas para la correcta conservación y movimiento de los preparados.
+
+Zonas de Almacenamiento (Artículo 49º): Deben existir zonas identificadas para materias primas, preparados terminados y materiales/preparados no aptos. El almacenamiento de materias primas, excipientes y preparados terminados se rige por las Normas de Elaboración y FFOO. Los preparados termolábiles deben conservarse en refrigeradores con temperatura controlada y registrada.
+Devolución por Condiciones de Transporte (Artículo 50º): El director técnico de la farmacia, el usuario o el profesional prescriptor pueden devolver un producto si las condiciones de transporte no aseguran su calidad.
+VIII. De la Dispensación y Expendio
+Regula la entrega final de los preparados al público.
+
+Lugares de Dispensación (Artículo 51º): Los preparados farmacéuticos y cosméticos solo pueden ser dispensados o expendidos en Farmacias, con la excepción de nutriciones parenterales que pueden enviarse a domicilio para pacientes en hospitalización domiciliaria.
+Información al Paciente (Artículo 52º): El director técnico debe asegurar la entrega de información oral o escrita para el correcto uso del preparado. La autoridad sanitaria puede objetar la información escrita.
+Productos No Retirados o No Aptos (Artículo 53º): Los preparados no retirados deben almacenarse en la sección diferenciada para productos no aptos y registrarse. La disposición final de productos no aptos, vencidos o deteriorados debe realizarse por empresas autorizadas.
+IX. De la Fiscalización
+Se define el rol de la autoridad sanitaria en la supervisión del cumplimiento del reglamento.
+
+Responsabilidad de la SEREMI (Artículo 54º): Corresponde a la SEREMI la fiscalización de los Recetarios Farmacéuticos autorizados mediante inspecciones periódicas.
+Sanciones (Artículo 55º): El incumplimiento será sancionado mediante sumario sanitario por el Instituto de Salud Pública o la SEREMI. Las sanciones serán consideradas al momento de la renovación de la autorización sanitaria.
+X. Disposiciones Finales y Transitorias
+Vigencia (Artículo 56º): El reglamento entró en vigor seis meses después de su publicación, derogando artículos específicos del Decreto Supremo Nº 466 de 1984.
+Artículos Transitorios:Primero Transitorio: Farmacias con recetarios autorizados a la fecha de publicación deben comunicar tipos y formas de preparados y tienen 6 meses para cumplir con las nuevas exigencias. Las farmacias que captan recetas magistrales para elaboración externa deben comunicar y remitir convenios.
+Segundo Transitorio: Mientras no se apruebe la nómina de principios activos, se pueden usar los incorporados en especialidades farmacéuticas con registro sanitario vigente.
+Tercero Transitorio: Mientras no se apruebe la FFOO, se puede usar la Farmacopea Oficial Chilena.
+Cuarto Transitorio: Mientras no se dicten las Normas Oficiales para la Elaboración de Preparados Farmacéuticos, se deben cumplir las disposiciones generales de este reglamento.
+Quinto Transitorio: Auxiliares de farmacia que ya trabajaban en recetarios tienen un plazo de un año para someterse a un procedimiento de autorización sanitaria como auxiliares paramédicos de farmacia, incluyendo una evaluación de aptitud y cumplimiento de requisitos del Decreto Supremo Nº1704 de 1993.
+Este decreto representa un esfuerzo integral por regular y estandarizar la elaboración de preparados farmacéuticos y cosméticos magistrales en Chile, poniendo un fuerte énfasis en la calidad, seguridad, trazabilidad y la responsabilidad de los profesionales químicos farmacéuticos.
+

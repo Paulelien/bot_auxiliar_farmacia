@@ -1,0 +1,41 @@
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Archivos de caché y datos
+material/faiss_index.bin
+material/textos.pkl
+*.pkl
+*.bin
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Archivos de respaldo
+*.bak
+*.backup 

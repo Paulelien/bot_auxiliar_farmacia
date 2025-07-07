@@ -1,0 +1,315 @@
+MÓDULO I: LEGISLACIÓN FARMACÉUTICA
+1. Normas Técnicas de Almacenamiento y Distribución:
+•
+¿Cuál es el objetivo principal de las condiciones de almacenamiento de los productos farmacéuticos?
+◦
+Respuesta: Asegurar la calidad de los productos farmacéuticos, evitando el deterioro de los envases y el envejecimiento acelerado o prematuro de los principios activos que los componen, garantizando la conservación de sus condiciones de calidad hasta el producto final.
+•
+¿Qué organismo en Chile es el encargado de asegurar que las normas de calidad se cumplan en la fabricación de medicamentos?
+◦
+Respuesta: El Instituto de Salud Pública (ISP).
+•
+Explique el principio FEFO ("First Expired, First Out") y su importancia en el almacenamiento de medicamentos.
+◦
+Respuesta: El principio FEFO significa "primer vencimiento/primera salida". Es una técnica de gestión de existencias que prioriza la salida de los productos con fecha de caducidad más próxima, sin importar el lote. Su importancia radica en que previene pérdidas que pueden ocurrir si no se observa la fecha de caducidad.
+•
+Mencione tres factores ambientales que inciden en el vencimiento de los medicamentos y cómo pueden afectar su calidad.
+◦
+Respuesta:
+▪
+La Luz: Muchos medicamentos son fotosensibles y se degradan en su presencia, lo que se evita con envases primarios y secundarios en óptimas condiciones.
+▪
+La Humedad: Favorece el crecimiento de bacterias y hongos, puede ablandar comprimidos, causar hidrólisis del principio activo y deteriorar el envase.
+▪
+La Temperatura: Temperaturas altas alteran la estabilidad del medicamento, aumentando la posibilidad de degradación y pudiendo producir productos tóxicos o pérdida de potencia. Temperaturas muy bajas pueden alterar la forma farmacéutica.
+•
+¿Cuál es el rango de temperatura considerado como "Temperatura ambiente" para el almacenamiento de medicamentos?
+◦
+Respuesta: Se entiende al rango que va desde los 15 a 25°C, pudiendo llegar a 30°C si el estudio lo acredita y según el área geográfica.
+•
+Las áreas de almacenamiento deben contar con controles de temperatura. ¿Con qué frecuencia deben registrarse las temperaturas y en qué lugares específicos?
+◦
+Respuesta: Deben registrarse al menos dos veces al día (am/pm) y por escrito. Esto incluye dependencias especiales, bodega, sala de ventas, refrigerador y cualquier área destinada al almacenamiento de medicamentos.
+•
+¿Qué es la "cadena de frío" en la Farmacia y qué rango de temperatura mantiene?
+◦
+Respuesta: La cadena de frío es la mantención de la temperatura entre 2 y 8°C. Es crucial para asegurar que el medicamento llegue en óptimas condiciones al usuario, desde su transporte hasta la disposición final.
+•
+Indique la ubicación ideal para la insulina dentro del refrigerador y si debe ser congelada.
+◦
+Respuesta: El lugar ideal de ubicación dentro del refrigerador es en el compartimiento interior, no en la puerta. La insulina NUNCA debe ser congelada.
+•
+Si los productos devueltos no están deteriorados, ¿bajo qué condiciones pueden regresar al inventario para la venta?
+◦
+Respuesta: Deben ser puestos en cuarentena en un lugar claramente designado y solo pueden regresar al inventario después de ser aprobados por una persona designada y responsable (generalmente el director técnico), tras una reevaluación satisfactoria de su condición.
+•
+¿Quiénes tienen acceso permitido al área de almacenamiento de productos sometidos a control de stock (psicotrópicos y estupefacientes)?
+◦
+Respuesta: Solo el director técnico, quien lo subrogue, o personal técnico autorizado por él de manera escrita.
+2. Finalidad de los Documentos de Compra, Venta y Traslado:
+•
+¿Cuál es la finalidad principal de una "Boleta de Compra y Venta"?
+◦
+Respuesta: Es el comprobante tributario que acredita la venta de un producto o servicio a un consumidor final.
+•
+Mencione dos ventajas de las "Facturas Electrónicas".
+◦
+Respuesta: No es necesario enviarlas al SII una vez emitidas; no se invierte tiempo ni dinero en adquirir y timbrar talonarios en papel (se timbran automáticamente); pueden enviarse vía correo electrónico, evitando costos de impresión; y su respaldo es más sencillo al estar en formato XML.
+3. Operaciones Matemáticas:
+•
+Defina "Posología".
+◦
+Respuesta: Rama de la terapéutica que se ocupa de la dosificación de los medicamentos, tanto de la cantidad de medicamento como del intervalo de tiempo entre las administraciones sucesivas.
+•
+Una persona pesa 70 Kg y se le administra una dosis de 500 mg de Paracetamol. ¿Cuánto se le deberá administrar a una persona que pesa 90 Kg, considerando que la dosis y el peso tienen una proporcionalidad directa?
+◦
+Respuesta: Se deberá administrar aproximadamente 642,9 mg.
+▪
+Dosis / Peso = k (constante)
+▪
+500 mg / 70 Kg = X / 90 Kg
+▪
+X = (500 mg * 90 Kg) / 70 Kg
+▪
+X = 45000 / 70 = 642.857 mg.
+•
+Convierta 3 gramos (g) a miligramos (mg).
+◦
+Respuesta: 3 g equivalen a 3000 mg (1g = 1000 mg).
+•
+Un médico indica: "Rp/ Polivitamínico 5 mL al día por 2 meses". El polivitamínico tiene una presentación en frascos de 100 mL de solución. ¿Cuántos frascos debería dispensar al paciente?
+◦
+Respuesta: Se deberían dispensar 3 frascos.
+▪
+Dosis total necesaria: 5 mL/día * 60 días (2 meses) = 300 mL.
+▪
+Cantidad de frascos: 300 mL / 100 mL/frasco = 3 frascos.
+•
+Un paciente diabético necesita dispensar una receta de insulina que indica: "Rp/ Insulina Ultrarrápida 40 UI/día SC (Lápiz) x 30 días". Si en la Farmacia solo disponen de presentación en lápiz de 100 UI/mL, cada uno conteniendo 3 mL, ¿cuántos lápices debería dispensar al mes?
+◦
+Respuesta: Se deben dispensar 4 lápices.
+▪
+Dosis total necesaria: 40 UI/día * 30 días = 1200 UI/mes.
+▪
+UI por lápiz: 100 UI/mL * 3 mL = 300 UI/lápiz.
+▪
+Cantidad de lápices: 1200 UI / 300 UI/lápiz = 4 lápices.
+•
+Un paciente debe tomar "Ácido Valproico Gotas, administrar 23 gotas cada 12 horas por 3 meses". Si 20 gotas equivalen a 1 mL y la presentación es de 25 mL por frasco, ¿cuántos frascos de Ácido Valproico se deben dispensar para cumplir el tratamiento?
+◦
+Respuesta: Se deben dispensar 9 frascos.
+▪
+Dosis diaria: 23 gotas * 2 veces/día (cada 12h) = 46 gotas/día.
+▪
+Gotas totales para 3 meses (90 días): 46 gotas/día * 90 días = 4140 gotas.
+▪
+Gotas por frasco (25 mL): 25 mL * 20 gotas/mL = 500 gotas/frasco.
+▪
+Frascos necesarios: 4140 gotas / 500 gotas/frasco = 8.28 frascos.
+▪
+Dado que no se pueden entregar frascos fraccionados y se debe asegurar la dosis completa, se entregan 9 frascos.
+4. Reglamentación de Dispensación de Fármacos y Responsabilidades:
+•
+¿Qué establece el Reglamento 466 del 31 de diciembre de 1984?
+◦
+Respuesta: Establece las condiciones sanitarias en que debe efectuarse la distribución, preparación de fórmulas magistrales y oficinales, fraccionamiento y expendio de productos farmacéuticos, alimentos de uso médico en Farmacias, Almacenes Farmacéuticos, Droguerías, Depósitos de Productos Farmacéuticos (humanos, veterinarios, dentales) y botiquines.
+•
+Según el Reglamento 466, ¿cuáles son los requisitos para que una persona cuente con autorización sanitaria para desempeñarse como "Auxiliar de Farmacia"?
+◦
+Respuesta:
+▪
+Haber rendido satisfactoriamente el 4º año de enseñanza media o estudios equivalentes.
+▪
+Haber desempeñado labores de bodegaje, reposición y manejo de productos farmacéuticos en farmacia, a lo menos, durante un año, con certificación del Químico Farmacéutico.
+▪
+Rendir satisfactoriamente un examen de competencia ante la autoridad sanitaria sobre regulación sanitaria, condiciones de almacenamiento y venta, y acción terapéutica/contraindicaciones de productos de venta directa.
+•
+Mencione dos responsabilidades legales del Auxiliar de Farmacia.
+◦
+Respuesta (ejemplos):
+▪
+Desempeño de labores de bodegaje, reposición y manejo de productos farmacéuticos.
+▪
+Velar por el cumplimiento de las condiciones adecuadas de almacenamiento y venta de productos farmacéuticos.
+▪
+Conocimiento y educación a la comunidad sobre la acción terapéutica y contraindicaciones de productos farmacéuticos de venta directa.
+▪
+Recibir y revisar recetas según normas, despachar productos de acuerdo a prescripción, transcribir indicaciones médicas, registrar movimiento de fármacos.
+▪
+Informar al paciente sobre la indicación médica para el cumplimiento del tratamiento, elaborar etiquetas con indicaciones.
+•
+Mencione tres responsabilidades que son exclusivas o supervisadas por el Químico Farmacéutico (Director Técnico).
+◦
+Respuesta (ejemplos):
+▪
+Verificar que el despacho de las recetas se efectúe conforme a las disposiciones legales, cautelando las condiciones de venta.
+▪
+Despachar personalmente recetas de productos sometidos a controles legales especiales (estupefacientes, psicotrópicos, receta retenida), dejando constancia de su nombre y firma.
+▪
+La adquisición, tenencia, custodia y expendio de estupefacientes, psicotrópicos y productos de venta bajo receta retenida.
+▪
+Promover el uso racional de los medicamentos.
+▪
+Efectuar o supervisar el fraccionamiento de envases de medicamentos.
+▪
+Extender copia de recetas de medicamentos "Receta Retenida" o "Receta Cheque" cuando sean solicitadas.
+▪
+Velar por el sistema de almacenamiento que asegure conservación, estabilidad y calidad.
+▪
+Adiestrar al personal auxiliar y supervisar su correcto desempeño.
+▪
+Retirar de circulación productos farmacéuticos vencidos.
+▪
+Mantener al día los Registros de inspección, fraccionamiento, control de estupefacientes, control de psicotrópicos y reclamos.
+5. Medicamentos según Condición de Venta y Receta Médica:
+•
+¿Cuáles son las tres categorías de medicamentos según su condición de venta?
+◦
+Respuesta: De venta directa (VD), de venta con receta médica (R), y de venta con receta médica retenida (RR o RCH).
+•
+Además del médico cirujano, ¿qué otros profesionales están legalmente habilitados para extender una receta médica en Chile?
+◦
+Respuesta: Cirujano dentista, médico veterinario, matrona, o tecnólogo médico con mención en oftalmología.
+•
+Si una receta prescribe un medicamento por su denominación de fantasía, pero existen medicamentos bioequivalentes certificados, ¿qué puede hacer el químico farmacéutico a solicitud del requirente?
+◦
+Respuesta: El químico farmacéutico puede, por sí mismo o delegando, expender cualquier otro bioequivalente que contenga el mismo principio activo y dosis por forma farmacéutica.
+•
+Defina "Receta Retenida" y "Receta Cheque".
+◦
+Respuesta:
+▪
+Receta Retenida: Documento por el cual se prescriben productos sujetos a esta condición de venta, la cual deberá archivarse en el establecimiento y puede destruirse al cabo de un año.
+▪
+Receta Cheque: Aquella por medio de la cual se prescriben productos estupefacientes o psicotrópicos, extendida en formularios oficiales.
+•
+¿Qué sanciones se pueden aplicar al propietario, director técnico o auxiliar de una farmacia si se expende un medicamento diferente al indicado en la receta?
+◦
+Respuesta: Multa de un décimo de unidad tributaria mensual hasta mil unidades tributarias mensuales. Las reincidencias pueden ser sancionadas hasta con el doble de la multa original. Además, pueden aplicarse sanciones como clausura del establecimiento, cancelación de la autorización de funcionamiento, paralización de faenas, suspensión de distribución y uso de productos, y retiro, decomiso, destrucción o desnaturalización de los mismos.
+
+--------------------------------------------------------------------------------
+MÓDULO II: TECNOLOGÍA FARMACÉUTICA
+1. Introducción a la Farmacotecnia y Formas Farmacéuticas:
+•
+¿Qué es una "forma farmacéutica" y cuáles son sus componentes principales?
+◦
+Respuesta: Es la disposición externa que se da a las sustancias medicamentosas para facilitar su administración. Están compuestas por principios activos y excipientes (sustancias inactivas).
+•
+Mencione las cuatro clasificaciones de formas farmacéuticas según su estado físico y dé un ejemplo de cada una.
+◦
+Respuesta:
+▪
+Sólidas: Polvos (sueltos o unidos), como comprimidos, granulados.
+▪
+Líquidas: Sólidos disueltos o suspendidos en un líquido, como jarabes, elixires.
+▪
+Semisólidas: Mezcla de agua y sustancias grasas, como pomadas, geles.
+▪
+Gaseosas: Componentes en estado gaseoso, como aerosoles.
+•
+Enumere tres vías de administración parenterales.
+◦
+Respuesta:
+▪
+Subcutánea: Bajo la piel.
+▪
+Intramuscular: En un músculo.
+▪
+Intravenosa: En una vena.
+▪
+Intratecal: Alrededor de la médula espinal.
+2. Conceptos Básicos de Preparados Galénicos y Recetario Magistral:
+•
+¿Qué es un "Preparado Oficinal" y quién determina su fecha de vencimiento?
+◦
+Respuesta: Es aquel elaborado conforme a lo descrito en la Farmacopea Farmacéutica Oficinal Oficial (FFOO). Su vencimiento es determinado por la FFOO, y en ningún caso podrá ser superior a un año.
+•
+Defina "Materia Prima" y "Producto Terminado" en el contexto de la fabricación de medicamentos.
+◦
+Respuesta:
+▪
+Materia Prima: Toda sustancia, activa o inactiva, empleada en la fabricación de un medicamento, ya permanezca inalterada, se modifique o desaparezca en el transcurso del proceso (ej. almidón de arroz).
+▪
+Producto Terminado: Medicamento que ha pasado por todas las fases de preparación, incluyendo su acondicionamiento en el envase final.
+•
+¿Qué es "Cuarentena" en la cadena de productos farmacéuticos?
+◦
+Respuesta: Es la situación de las materias primas, productos intermedios, a granel o terminados, y material de acondicionamiento, que permanece aislado mientras se toma la decisión de aceptación o rechazo.
+•
+¿Qué es un "Recetario Magistral"?
+◦
+Respuesta: Es el sector diferenciado del local de una Farmacia destinado a la elaboración de preparados farmacéuticos y cosméticos.
+•
+Mencione tres requisitos mínimos que debe contener una "Receta Magistral".
+◦
+Respuesta: Mención de que se trata de una receta magistral, identificación del profesional que prescribe, identificación del paciente, prescripción magistral y duración del tratamiento, firma y fecha.
+•
+¿Cuál es el plazo de validez de una receta magistral para su elaboración en el recetario?
+◦
+Respuesta: 30 días corridos contados desde la fecha de su extensión.
+•
+¿En qué situación excepcional se permite la elaboración de preparados magistrales con la misma dosis y forma farmacéutica de especialidades farmacéuticas ya registradas?
+◦
+Respuesta: Solo en el caso de pacientes con intolerancia a excipientes determinados, debiendo indicarse en la receta su condición médica y el nombre del excipiente contraindicado.
+•
+¿Cómo deben conservarse los preparados farmacéuticos termolábiles hasta el momento de su dispensación?
+◦
+Respuesta: Deben conservarse en refrigeradores con temperatura controlada dentro del rango requerido y registrada.
+3. Control de Calidad:
+•
+¿Qué se entiende por "Control de Calidad" en el contexto de un preparado farmacéutico?
+◦
+Respuesta: Es el proceso relacionado con el cumplimiento de los diferentes requisitos y condiciones para garantizar la calidad del preparado, incluyendo muestreo, cumplimiento de especificaciones, organización, documentación y liberación, usando métodos oficiales o estandarizados por el farmacéutico a cargo.
+•
+Mencione tres actividades para las cuales deben existir procedimientos en una farmacia con recetario para asegurar la calidad del preparado.
+◦
+Respuesta (ejemplos): Evaluación técnica, evaluación de proveedores, recepción de materias primas, recepción de material de envase, limpieza, mantención de instrumental y equipamiento, almacenamiento de materias primas, fase de elaboración de preparados, documentación y registros, envasado y empaque, distribución, almacenamiento y transporte del preparado, dispensación, personal, atribuciones, funciones y requerimientos.
+
+--------------------------------------------------------------------------------
+MÓDULO III: ARSENAL FARMACOTERAPÉUTICO
+1. Formulario Nacional:
+•
+¿Qué es el "Formulario Nacional de Medicamentos"?
+◦
+Respuesta: Es el documento oficial que contiene la nómina seleccionada de productos farmacéuticos indispensables para una eficiente terapéutica, sustentada en la realidad epidemiológica del país y la evidencia científica, cuya calidad debe ser garantizada.
+•
+Mencione al menos cinco tipos de información que deben consignar las monografías de cada producto farmacéutico en el Formulario Nacional.
+◦
+Respuesta (ejemplos): Estructura química y propiedades fisicoquímicas, estabilidad, acción/acciones farmacológicas, farmacocinética, uso/usos terapéuticos, formas farmacéuticas, vías de administración y dosis, reacciones adversas, contraindicaciones, interacciones, precauciones, advertencias sobre peligros.
+•
+¿Cuáles son los criterios para seleccionar los medicamentos que integran el Formulario Nacional?
+◦
+Respuesta: Productos definidos como indispensables, productos con seguridad y eficacia demostrada, cumplimiento de los principios de la medicina basada en la evidencia, y productos que demuestren una mejor efectividad versus costo.
+•
+¿Qué es el "petitorio mínimo" para farmacias y quién lo determina en Chile? ¿Cuántos medicamentos lo componen actualmente?
+◦
+Respuesta: El petitorio mínimo son los fármacos indispensables para el tratamiento de los principales problemas de salud que afectan a la población (antibióticos, analgésicos, antiinflamatorios, etc.). El Ministerio de Salud es quien lo determina. Actualmente, corresponde a 144 medicamentos.
+2. Especialidades Farmacéuticas (Clasificación ATC):
+•
+¿En qué se basa el Sistema de Clasificación Anatómica, Terapéutica y Química (ATC) de los medicamentos?
+◦
+Respuesta: Se basa en criterios anatómicos, terapéuticos y químicos.
+•
+Mencione un ejemplo de un principio activo y su uso terapéutico dentro del grupo "Medicamentos usados en el sistema nervioso central (N)".
+◦
+Respuesta (ejemplo):
+▪
+Grupo N01 Anestésicos: Lidocaína (produce anulación total o parcial de la sensibilidad).
+▪
+Grupo N02 Analgésicos: Paracetamol (elimina o disminuye el dolor y la fiebre).
+▪
+Grupo N03 Antiepilépticos: Ácido Valproico (previene o combate convulsiones).
+•
+Mencione un ejemplo de un principio activo y su uso terapéutico dentro del grupo "Medicamentos usados en el aparato cardiovascular y circulatorio (C)".
+◦
+Respuesta (ejemplo):
+▪
+Grupo C02 Antihipertensivos: Metildopa (tratamiento de la hipertensión arterial).
+▪
+Grupo C03 Diuréticos: Furosemida (indicado en edemas, insuficiencia cardíaca congestiva, hipertensión arterial).
+▪
+Grupo C07 Beta-bloqueantes adrenérgicos: Propranolol (efecto antihipertensivo, antianginoso o antiarrítmico).
+•
+¿Por qué las vitaminas se incluyen en el módulo de Arsenal Farmacoterapéutico, a pesar de no ser estrictamente medicamentos?
+◦
+Respuesta: Aunque no son medicamentos, se incluyen como coadyuvantes de terapias y siempre están presentes en el arsenal. Se consideran suplementos alimenticios, esenciales para el mantenimiento de las funciones metabólicas normales.

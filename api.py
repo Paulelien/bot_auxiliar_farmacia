@@ -11,6 +11,14 @@ from datetime import datetime
 # Configuración
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
+
+# Validar que la API key esté configurada
+if not api_key:
+    raise ValueError(
+        "OPENAI_API_KEY no está configurada. "
+        "Por favor, configura la variable de entorno OPENAI_API_KEY en Render."
+    )
+
 client = OpenAI(api_key=api_key)
 
 CARPETA_MATERIAL = "material"

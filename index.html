@@ -19,6 +19,17 @@
             box-sizing: border-box;
         }
 
+        /* Optimizaciones para dispositivos táctiles */
+        @media (hover: none) and (pointer: coarse) {
+            .btn, .question-btn, .quiz-option {
+                min-height: 44px; /* Tamaño mínimo para toques */
+            }
+            
+            .chat-input input {
+                min-height: 44px;
+            }
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -129,32 +140,135 @@
             40% { transform: scale(1); opacity: 1; }
         }
 
-        /* Mejoras responsive */
-        @media (max-width: 768px) {
+        /* Mejoras responsive - Móviles pequeños */
+        @media (max-width: 480px) {
+            .container {
+                padding: 8px;
+            }
+            
+            .header {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                max-width: 120px;
+                margin-bottom: 0.5rem;
+            }
+            
             .main-content {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
             
+            .chat-section, .quiz-section {
+                padding: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+            
             .chat-input {
                 flex-direction: column;
+                gap: 0.5rem;
             }
             
             .chat-input input {
                 min-width: auto;
+                padding: 0.75rem 1rem;
+                font-size: 16px; /* Evita zoom en iOS */
             }
             
             .btn {
                 padding: 0.75rem 1.5rem;
                 font-size: 14px;
+                width: 100%;
+            }
+            
+            .chat-history {
+                padding: 1rem;
+                max-height: 300px;
+            }
+            
+            .message {
+                padding: 0.75rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .message-header {
+                font-size: 0.9rem;
+            }
+            
+            .suggested-questions h4 {
+                font-size: 1rem;
+            }
+            
+            .question-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+                margin: 0.2rem;
+            }
+            
+            .quiz-question {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .quiz-option {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Tablets */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                padding: 15px;
             }
             
             .header h1 {
                 font-size: 2rem;
             }
             
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .chat-section, .quiz-section {
+                padding: 1.5rem;
+            }
+            
+            .chat-input {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 14px;
+            }
+        }
+
+        /* Pantallas medianas */
+        @media (min-width: 769px) and (max-width: 1024px) {
             .container {
-                padding: 10px;
+                max-width: 900px;
+            }
+            
+            .main-content {
+                gap: 1.5rem;
             }
         }
 
@@ -344,6 +458,7 @@
             margin: 1rem 0;
         }
 
+        /* Mejoras adicionales para móviles */
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -355,6 +470,38 @@
             
             .chat-input {
                 flex-direction: column;
+            }
+            
+            /* Mejorar botones en móviles */
+            .suggested-questions .btn {
+                margin: 0.25rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            /* Ajustar modal de reportes */
+            #reportModal > div {
+                margin: 1rem;
+                padding: 1rem;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            
+            /* Mejorar scroll en chat */
+            .chat-history {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Ajustar botones de acción */
+            .suggested-questions > div:last-child {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+            
+            .suggested-questions > div:last-child .btn {
+                font-size: 0.7rem;
+                padding: 0.5rem 0.75rem;
             }
         }
     </style>

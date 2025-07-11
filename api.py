@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -7,6 +7,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from embedding_utils import buscar_similares, cargar_o_crear_indice
 import random
 from datetime import datetime
+from sqlalchemy.orm import Session
+from sqlalchemy import func
+from database_config import get_db
+from models import Estudiante, Sesion, Pregunta, ResultadoQuiz
 
 # Configuración
 load_dotenv()
@@ -48,6 +52,18 @@ app.add_middleware(
 class PreguntaRequest(BaseModel):
     pregunta: str
 
+class EstudianteRequest(BaseModel):
+    nombre: str
+    email: str
+    grupo: str = "General"
+
+class QuizResultRequest(BaseModel):
+    estudiante_id: int
+    puntaje: int
+    preguntas_correctas: int
+    total_preguntas: int
+    tiempo_completado_minutos: int
+
 # --- PREGUNTAS SUGERIDAS ---
 PREGUNTAS_SUGERIDAS = [
     "¿Cuáles son las funciones del auxiliar de farmacia?",
@@ -58,7 +74,6 @@ PREGUNTAS_SUGERIDAS = [
     "¿Qué es la cadena de frío?",
     "¿Cómo se debe atender al cliente en una farmacia?",
     "¿Qué es el Decreto 79?",
-    "¿Cuáles son los requisitos para trabajar en una farmacia?",
     "¿Qué son los medicamentos de venta libre?"
 ]
 
@@ -455,3 +470,189 @@ Contexto:
         return {"respuesta": respuesta_final}
     except Exception as e:
         return {"respuesta": f"Error al consultar OpenAI: {e}"}
+
+# --- ENDPOINTS DE ANALYTICS ---
+
+@app.post("/init_db")
+def initialize_database():
+    """Inicializar base de datos desde la API"""
+    try:
+        from init_db import init_database, create_sample_data
+        
+        # Inicializar base de datos
+        init_database()
+        
+        # Crear datos de ejemplo
+        create_sample_data()
+        
+        return {"mensaje": "Base de datos inicializada correctamente"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error inicializando base de datos: {str(e)}")
+
+@app.post("/estudiantes/registrar")
+def registrar_estudiante(estudiante: EstudianteRequest, db: Session = Depends(get_db)):
+    """Registrar un nuevo estudiante"""
+    try:
+        nuevo_estudiante = Estudiante(
+            nombre=estudiante.nombre,
+            email=estudiante.email,
+            grupo=estudiante.grupo
+        )
+        db.add(nuevo_estudiante)
+        db.commit()
+        db.refresh(nuevo_estudiante)
+        return {"id": nuevo_estudiante.id, "mensaje": "Estudiante registrado correctamente"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/sesiones/iniciar")
+def iniciar_sesion(estudiante_id: int, db: Session = Depends(get_db)):
+    """Iniciar una nueva sesión para un estudiante"""
+    try:
+        sesion = Sesion(estudiante_id=estudiante_id)
+        db.add(sesion)
+        db.commit()
+        db.refresh(sesion)
+        return {"sesion_id": sesion.id, "mensaje": "Sesión iniciada"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/sesiones/finalizar")
+def finalizar_sesion(sesion_id: int, db: Session = Depends(get_db)):
+    """Finalizar una sesión"""
+    try:
+        sesion = db.query(Sesion).filter(Sesion.id == sesion_id).first()
+        if not sesion:
+            raise HTTPException(status_code=404, detail="Sesión no encontrada")
+        
+        sesion.fecha_fin = datetime.now()
+        if sesion.fecha_inicio is not None and sesion.fecha_fin is not None:
+            duracion = (sesion.fecha_fin - sesion.fecha_inicio).total_seconds() / 60
+            sesion.duracion_minutos = int(duracion)
+        
+        db.commit()
+        return {"mensaje": "Sesión finalizada"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/quiz/resultado")
+def guardar_resultado_quiz(resultado: QuizResultRequest, db: Session = Depends(get_db)):
+    """Guardar resultado de un quiz"""
+    try:
+        nuevo_resultado = ResultadoQuiz(
+            estudiante_id=resultado.estudiante_id,
+            puntaje=resultado.puntaje,
+            preguntas_correctas=resultado.preguntas_correctas,
+            total_preguntas=resultado.total_preguntas,
+            tiempo_completado_minutos=resultado.tiempo_completado_minutos
+        )
+        db.add(nuevo_resultado)
+        db.commit()
+        return {"mensaje": "Resultado guardado correctamente"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/analytics/estudiante/{estudiante_id}")
+def obtener_analytics_estudiante(estudiante_id: int, db: Session = Depends(get_db)):
+    """Obtener analytics de un estudiante específico"""
+    try:
+        estudiante = db.query(Estudiante).filter(Estudiante.id == estudiante_id).first()
+        if not estudiante:
+            raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+        
+        # Estadísticas de sesiones
+        sesiones = db.query(Sesion).filter(Sesion.estudiante_id == estudiante_id).all()
+        total_sesiones = len(sesiones)
+        tiempo_total = sum(s.duracion_minutos or 0 for s in sesiones)
+        
+        # Estadísticas de preguntas
+        preguntas = db.query(Pregunta).filter(Pregunta.estudiante_id == estudiante_id).all()
+        total_preguntas = len(preguntas)
+        
+        # Categorías más consultadas
+        categorias = {}
+        for p in preguntas:
+            if p.categoria is not None:
+                categorias[p.categoria] = categorias.get(p.categoria, 0) + 1
+        
+        # Resultados de quiz
+        resultados = db.query(ResultadoQuiz).filter(ResultadoQuiz.estudiante_id == estudiante_id).all()
+        promedio_quiz = sum(r.puntaje for r in resultados) / len(resultados) if resultados else 0
+        
+        return {
+            "estudiante": {
+                "id": estudiante.id,
+                "nombre": estudiante.nombre,
+                "email": estudiante.email,
+                "grupo": estudiante.grupo
+            },
+            "estadisticas": {
+                "total_sesiones": total_sesiones,
+                "tiempo_total_minutos": tiempo_total,
+                "total_preguntas": total_preguntas,
+                "promedio_quiz": round(float(promedio_quiz), 2),
+                "categorias_consultadas": len(categorias)
+            },
+            "categorias_mas_consultadas": [
+                {"categoria": cat, "consultas": count}
+                for cat, count in sorted(categorias.items(), key=lambda x: x[1], reverse=True)[:5]
+            ]
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/analytics/dashboard")
+def obtener_dashboard(db: Session = Depends(get_db)):
+    """Obtener dashboard general"""
+    try:
+        # Métricas generales
+        total_estudiantes = db.query(Estudiante).count()
+        total_preguntas = db.query(Pregunta).count()
+        
+        # Sesiones de hoy
+        hoy = datetime.now().date()
+        sesiones_hoy = db.query(Sesion).filter(
+            Sesion.fecha_inicio >= hoy
+        ).count()
+        
+        # Promedio de quiz
+        resultados = db.query(ResultadoQuiz).all()
+        promedio_quiz = sum(r.puntaje for r in resultados) / len(resultados) if resultados else 0
+        
+        # Categorías más consultadas
+        categorias = db.query(Pregunta.categoria, func.count(Pregunta.id)).group_by(Pregunta.categoria).all()
+        categorias_populares = [{"categoria": cat, "total": count} for cat, count in categorias if cat]
+        
+        return {
+            "metricas_generales": {
+                "total_estudiantes": total_estudiantes,
+                "sesiones_hoy": sesiones_hoy,
+                "total_preguntas": total_preguntas,
+                "promedio_quiz_general": round(float(promedio_quiz), 2)
+            },
+            "categorias_populares": categorias_populares[:5]
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/test_analytics")
+def test_analytics():
+    """Endpoint de prueba para verificar que analytics funciona"""
+    return {
+        "status": "ok",
+        "message": "Analytics endpoint funcionando",
+        "timestamp": str(datetime.now()),
+        "data": {
+            "metricas_generales": {
+                "total_estudiantes": 0,
+                "sesiones_hoy": 0,
+                "total_preguntas": 0,
+                "promedio_quiz_general": 0
+            },
+            "categorias_populares": []
+        }
+    }

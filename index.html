@@ -513,6 +513,10 @@
             <img src="logo_avanxa.png" alt="Logo Avanxa" class="logo">
             <h1>Chatbot Auxiliar de Farmacia</h1>
             <p>Asistente educativo inteligente para el curso de Auxiliar de Farmacia</p>
+            <div id="studentInfo" style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                <span id="currentStudentDisplay">Estudiante</span>
+                <button onclick="changeStudent()" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.25rem 0.5rem; border-radius: 15px; margin-left: 1rem; font-size: 0.8rem; cursor: pointer;">Cambiar</button>
+            </div>
         </div>
 
         <!-- Main Content -->
@@ -578,38 +582,160 @@
         let quizScore = 0;
         const QUIZ_LIMIT = 7;
         
-        // Historial de conversación
+        // Variables globales
         let conversationHistory = [];
+        let currentStudentId = null;
+        let currentStudentName = null;
+        
+        // Función para generar ID único de estudiante
+        function generateStudentId() {
+            // Intentar obtener ID del LMS si está disponible
+            if (window.parent && window.parent.location) {
+                const urlParams = new URLSearchParams(window.parent.location.search);
+                const lmsUserId = urlParams.get('user_id') || urlParams.get('id') || urlParams.get('student_id');
+                if (lmsUserId) {
+                    return `lms_${lmsUserId}`;
+                }
+            }
+            
+            // Si no hay ID del LMS, generar uno basado en timestamp y random
+            const timestamp = Date.now();
+            const random = Math.random().toString(36).substr(2, 9);
+            return `student_${timestamp}_${random}`;
+        }
+        
+        // Función para obtener nombre del estudiante
+        function getStudentName() {
+            // Intentar obtener del LMS
+            if (window.parent && window.parent.location) {
+                const urlParams = new URLSearchParams(window.parent.location.search);
+                const lmsUserName = urlParams.get('user_name') || urlParams.get('name') || urlParams.get('student_name');
+                if (lmsUserName) {
+                    return decodeURIComponent(lmsUserName);
+                }
+            }
+            
+            // Si no hay nombre del LMS, usar genérico
+            return 'Estudiante';
+        }
+        
+        // Función para inicializar estudiante
+        function initializeStudent() {
+            currentStudentId = generateStudentId();
+            currentStudentName = getStudentName();
+            
+            // Guardar ID del estudiante en localStorage
+            localStorage.setItem('currentStudentId', currentStudentId);
+            localStorage.setItem('currentStudentName', currentStudentName);
+            
+            console.log(`Estudiante inicializado: ${currentStudentName} (ID: ${currentStudentId})`);
+            
+            // Actualizar display del estudiante en el header
+            updateStudentDisplay();
+            
+            // Mostrar mensaje de bienvenida personalizado
+            const chatHistory = document.getElementById('chatHistory');
+            chatHistory.innerHTML = `
+                <div class="message bot">
+                    <div class="message-header">🤖 Asistente</div>
+                    <div>¡Hola ${currentStudentName}! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
+                </div>
+            `;
+        }
+        
+        // Función para actualizar el display del estudiante
+        function updateStudentDisplay() {
+            const studentDisplay = document.getElementById('currentStudentDisplay');
+            if (studentDisplay && currentStudentName) {
+                studentDisplay.textContent = `👤 ${currentStudentName}`;
+            }
+        }
         
         // Cargar historial guardado
         function loadConversationHistory() {
-            const saved = localStorage.getItem('chatHistory');
+            // Verificar si hay un estudiante actual
+            const savedStudentId = localStorage.getItem('currentStudentId');
+            const savedStudentName = localStorage.getItem('currentStudentName');
+            
+            if (savedStudentId && savedStudentName) {
+                currentStudentId = savedStudentId;
+                currentStudentName = savedStudentName;
+                console.log(`Estudiante existente cargado: ${currentStudentName} (ID: ${currentStudentId})`);
+                updateStudentDisplay();
+            } else {
+                // Nuevo estudiante
+                initializeStudent();
+            }
+            
+            // Cargar historial específico del estudiante
+            const saved = localStorage.getItem(`chatHistory_${currentStudentId}`);
             if (saved) {
                 conversationHistory = JSON.parse(saved);
                 // Mostrar historial en el chat
                 conversationHistory.forEach(msg => {
                     addMessageToHistory(msg.type, msg.content, false);
                 });
+            } else {
+                // Nuevo estudiante sin historial
+                console.log('Nuevo estudiante sin historial previo');
             }
         }
         
         // Guardar historial
         function saveConversationHistory() {
-            localStorage.setItem('chatHistory', JSON.stringify(conversationHistory));
+            if (currentStudentId) {
+                localStorage.setItem(`chatHistory_${currentStudentId}`, JSON.stringify(conversationHistory));
+            }
         }
         
         // Limpiar historial
         function clearConversationHistory() {
             if (confirm('¿Estás seguro de que quieres limpiar todo el historial de conversación?')) {
                 conversationHistory = [];
-                localStorage.removeItem('chatHistory');
+                if (currentStudentId) {
+                    localStorage.removeItem(`chatHistory_${currentStudentId}`);
+                }
                 const chatHistory = document.getElementById('chatHistory');
                 chatHistory.innerHTML = `
                     <div class="message bot">
                         <div class="message-header">🤖 Asistente</div>
-                        <div>¡Hola! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
+                        <div>¡Hola ${currentStudentName || 'Estudiante'}! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
                     </div>
                 `;
+            }
+        }
+        
+        // Función para cambiar de estudiante (para testing)
+        function changeStudent() {
+            const newName = prompt('Ingresa el nombre del nuevo estudiante:');
+            if (newName) {
+                // Limpiar historial actual
+                if (currentStudentId) {
+                    localStorage.removeItem(`chatHistory_${currentStudentId}`);
+                }
+                
+                // Generar nuevo ID y nombre
+                currentStudentId = generateStudentId();
+                currentStudentName = newName;
+                
+                // Guardar nuevo estudiante
+                localStorage.setItem('currentStudentId', currentStudentId);
+                localStorage.setItem('currentStudentName', currentStudentName);
+                
+                // Actualizar display del estudiante
+                updateStudentDisplay();
+                
+                // Limpiar conversación actual
+                conversationHistory = [];
+                const chatHistory = document.getElementById('chatHistory');
+                chatHistory.innerHTML = `
+                    <div class="message bot">
+                        <div class="message-header">🤖 Asistente</div>
+                        <div>¡Hola ${currentStudentName}! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
+                    </div>
+                `;
+                
+                console.log(`Cambiado a estudiante: ${currentStudentName} (ID: ${currentStudentId})`);
             }
         }
         

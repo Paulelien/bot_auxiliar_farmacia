@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Chatbot - Auxiliar de Farmacia</title>
+    <style>
+        :root {
+            --color-primario: #4B2067;
+            --color-secundario: #7C3FAF;
+            --color-acento: #FF6B35;
+            --color-texto: #2C3E50;
+            --color-fondo: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--color-texto);
+            line-height: 1.6;
+        }
+
+        .widget-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 3px solid var(--color-primario);
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .status-online {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-offline {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .chat-section {
+            margin-bottom: 2rem;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .chat-input input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #E9ECEF;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--color-secundario);
+            box-shadow: 0 0 0 3px rgba(124, 63, 175, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--color-primario), var(--color-secundario));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 31, 103, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .chat-history {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #E9ECEF;
+            border-radius: 12px;
+            padding: 1rem;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, var(--color-secundario), var(--color-primario));
+            color: white;
+            margin-left: 2rem;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.bot {
+            background: white;
+            border: 2px solid var(--color-primario);
+            margin-right: 2rem;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-header {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #F3E5F5;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--color-secundario);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-secundario);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .suggested-questions {
+            margin-top: 1rem;
+        }
+
+        .suggested-questions h3 {
+            color: var(--color-primario);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .question-btn {
+            background: white;
+            border: 2px solid var(--color-secundario);
+            color: var(--color-secundario);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 0.25rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .question-btn:hover {
+            background: var(--color-secundario);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #E9ECEF;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--color-secundario);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            color: var(--color-primario);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .widget-container {
+                padding: 15px;
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .chat-input {
+                flex-direction: column;
+            }
+            
+            .chat-input input {
+                min-width: auto;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .features-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <div class="header">
+            <h1>🤖 Asistente Chatbot</h1>
+            <p>Curso de Auxiliar de Farmacia - Avanxa</p>
+            <div id="statusIndicator" class="status-indicator status-offline">
+                🟡 Modo Offline
+            </div>
+        </div>
+
+        <div class="chat-section">
+            <div class="chat-input">
+                <input type="text" id="questionInput" placeholder="Escribe tu pregunta aquí..." onkeypress="handleKeyPress(event)">
+                <button class="btn" id="sendBtn" onclick="sendQuestion()">Enviar</button>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <span>🤖 Asistente está escribiendo</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="chat-history" id="chatHistory">
+                <div class="message bot">
+                    <div class="message-header">🤖 Asistente</div>
+                    <div>¡Hola! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
+                </div>
+            </div>
+
+            <div class="suggested-questions">
+                <h3>💡 Preguntas sugeridas:</h3>
+                <div id="suggestedQuestions">
+                    <button class="question-btn" onclick="askQuestion('¿Cuáles son las funciones del auxiliar de farmacia?')">
+                        Funciones del auxiliar
+                    </button>
+                    <button class="question-btn" onclick="askQuestion('¿Qué es el Decreto 405?')">
+                        Decreto 405
+                    </button>
+                    <button class="question-btn" onclick="askQuestion('¿Cómo se almacenan los medicamentos termolábiles?')">
+                        Almacenamiento
+                    </button>
+                    <button class="question-btn" onclick="askQuestion('¿Qué son los psicotrópicos?')">
+                        Psicotrópicos
+                    </button>
+                    <button class="question-btn" onclick="askQuestion('¿Cuáles son las formas farmacéuticas más comunes?')">
+                        Formas farmacéuticas
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <div class="feature-title">Contenido Educativo</div>
+                <div class="feature-description">Respuestas basadas en el material oficial del curso</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">Quizzes Interactivos</div>
+                <div class="feature-description">Evalúa tu conocimiento con preguntas de práctica</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <div class="feature-title">Seguimiento</div>
+                <div class="feature-description">Analytics y reportes de progreso</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de la API
+        const API_BASE = 'https://asistente-auxiliar-farmacia.onrender.com';
+        
+        // Datos locales para modo offline
+        const datosOffline = {
+            respuestas: {
+                "¿Cuáles son las funciones del auxiliar de farmacia?": "Las funciones principales del auxiliar de farmacia incluyen: 1) Asistir al farmacéutico en la dispensación y venta de medicamentos, 2) Atender al público y orientar sobre medicamentos de venta libre, 3) Mantener el orden y limpieza de la farmacia, 4) Controlar inventarios y fechas de vencimiento, 5) Almacenar medicamentos según normativas, 6) Manejar la documentación requerida, 7) Colaborar en la preparación de fórmulas magistrales bajo supervisión.",
+                
+                "¿Qué es el Decreto 405?": "El Decreto 405 es una normativa chilena que regula el control de psicotrópicos y estupefacientes. Establece las condiciones para la prescripción, dispensación, almacenamiento y control de estos medicamentos. Es fundamental para el trabajo en farmacia ya que regula medicamentos de alto riesgo que requieren control especial.",
+                
+                "¿Cómo se almacenan los medicamentos termolábiles?": "Los medicamentos termolábiles deben almacenarse entre 2°C y 8°C en refrigeradores especiales para farmacia. Es fundamental mantener la cadena de frío, verificar la temperatura constantemente, no almacenar en la puerta del refrigerador, y asegurar que no haya interrupciones en el suministro eléctrico.",
+                
+                "¿Qué son los psicotrópicos?": "Los psicotrópicos son medicamentos que actúan sobre el sistema nervioso central, produciendo cambios en la percepción, el estado de ánimo, la conciencia o el comportamiento. Están sujetos a control especial según el Decreto 405 y requieren receta médica retenida para su dispensación.",
+                
+                "¿Cuáles son las formas farmacéuticas más comunes?": "Las formas farmacéuticas más comunes incluyen: 1) Comprimidos y cápsulas (sólidas), 2) Jarabes y suspensiones (líquidas), 3) Cremas y ungüentos (semisólidas), 4) Inyectables (parenterales), 5) Supositorios y óvulos, 6) Inhaladores y nebulizadores, 7) Parches transdérmicos.",
+                
+                "¿Qué es la cadena de frío?": "La cadena de frío es el proceso de almacenamiento y distribución de medicamentos termolábiles a temperaturas controladas (2°C-8°C) desde su fabricación hasta su administración al paciente. Es fundamental para mantener la eficacia y seguridad de estos medicamentos.",
+                
+                "¿Cómo se debe atender al cliente en una farmacia?": "La atención al cliente en farmacia debe ser: 1) Profesional y respetuosa, 2) Confidencial (respetar la privacidad), 3) Orientadora (no diagnosticar), 4) Paciente y clara en las explicaciones, 5) Verificando siempre la receta médica cuando sea necesaria, 6) Informando sobre efectos secundarios y contraindicaciones.",
+                
+                "¿Qué es el Decreto 79?": "El Decreto 79 regula el funcionamiento de farmacias en Chile. Establece los requisitos para la instalación, funcionamiento y fiscalización de farmacias, incluyendo aspectos como personal requerido, infraestructura, horarios de funcionamiento y obligaciones legales.",
+                
+
+                
+                "¿Qué son los medicamentos de venta libre?": "Los medicamentos de venta libre (OTC - Over The Counter) son aquellos que se pueden vender sin receta médica porque se consideran seguros para el autoconsumo. Incluyen analgésicos simples, antiácidos, vitaminas, y otros productos de bajo riesgo. Aún así, el auxiliar debe orientar sobre su uso correcto."
+            },
+            
+            preguntas_sugeridas: [
+                "¿Cuáles son las funciones del auxiliar de farmacia?",
+                "¿Qué es el Decreto 405?",
+                "¿Cómo se almacenan los medicamentos termolábiles?",
+                "¿Qué son los psicotrópicos?",
+                "¿Cuáles son las formas farmacéuticas más comunes?",
+                "¿Qué es la cadena de frío?",
+                "¿Cómo se debe atender al cliente en una farmacia?",
+                "¿Qué es el Decreto 79?",
+
+                "¿Qué son los medicamentos de venta libre?"
+            ]
+        };
+        
+        // Variables globales
+        let conversationHistory = [];
+        let apiOnline = false;
+        
+        // Función para probar conectividad con la API
+        async function testAPIConnectivity() {
+            try {
+                const response = await fetch(`${API_BASE}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    console.log('✅ API conectada correctamente');
+                    return true;
+                } else {
+                    console.log('❌ API respondió con error:', response.status);
+                    return false;
+                }
+            } catch (error) {
+                console.log('❌ Error de conectividad con API:', error.message);
+                return false;
+            }
+        }
+        
+        // Función para enviar pregunta
+        async function sendQuestion() {
+            const input = document.getElementById('questionInput');
+            const question = input.value.trim();
+            
+            if (!question) {
+                return;
+            }
+            
+            // Limpiar input
+            input.value = '';
+            
+            // Agregar mensaje del usuario
+            addMessage('user', question);
+            
+            // Mostrar indicador de escritura
+            showTypingIndicator();
+            
+            try {
+                let respuesta;
+                
+                if (apiOnline) {
+                    // Intentar conectar a la API
+                    try {
+                        const response = await fetch(`${API_BASE}/preguntar`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ pregunta: question })
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            respuesta = data.respuesta;
+                        } else {
+                            throw new Error('API no disponible');
+                        }
+                    } catch (error) {
+                        console.log('⚠️ Error con API, usando modo offline:', error.message);
+                        respuesta = getOfflineResponse(question);
+                    }
+                } else {
+                    // Usar modo offline directamente
+                    respuesta = getOfflineResponse(question);
+                }
+                
+                // Ocultar indicador de escritura
+                hideTypingIndicator();
+                
+                // Agregar respuesta del bot
+                addMessage('bot', respuesta);
+                
+                // Guardar en historial
+                saveToHistory('user', question);
+                saveToHistory('bot', respuesta);
+                
+            } catch (error) {
+                hideTypingIndicator();
+                addMessage('bot', 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.');
+                console.error('Error:', error);
+            }
+        }
+        
+        // Función para obtener respuesta offline
+        function getOfflineResponse(question) {
+            // Buscar respuesta exacta
+            const respuestaExacta = datosOffline.respuestas[question];
+            if (respuestaExacta) {
+                return respuestaExacta;
+            }
+            
+            // Buscar respuesta por palabras clave
+            const questionLower = question.toLowerCase();
+            
+            if (questionLower.includes('función') || questionLower.includes('auxiliar')) {
+                return datosOffline.respuestas["¿Cuáles son las funciones del auxiliar de farmacia?"];
+            }
+            
+            if (questionLower.includes('decreto 405') || questionLower.includes('405')) {
+                return datosOffline.respuestas["¿Qué es el Decreto 405?"];
+            }
+            
+            if (questionLower.includes('termolábil') || questionLower.includes('almacenar') || questionLower.includes('refrigerador')) {
+                return datosOffline.respuestas["¿Cómo se almacenan los medicamentos termolábiles?"];
+            }
+            
+            if (questionLower.includes('psicotrópico')) {
+                return datosOffline.respuestas["¿Qué son los psicotrópicos?"];
+            }
+            
+            if (questionLower.includes('forma farmacéutica') || questionLower.includes('comprimido') || questionLower.includes('jarabe')) {
+                return datosOffline.respuestas["¿Cuáles son las formas farmacéuticas más comunes?"];
+            }
+            
+            if (questionLower.includes('cadena de frío') || questionLower.includes('temperatura')) {
+                return datosOffline.respuestas["¿Qué es la cadena de frío?"];
+            }
+            
+            if (questionLower.includes('atender') || questionLower.includes('cliente')) {
+                return datosOffline.respuestas["¿Cómo se debe atender al cliente en una farmacia?"];
+            }
+            
+            if (questionLower.includes('decreto 79') || questionLower.includes('79')) {
+                return datosOffline.respuestas["¿Qué es el Decreto 79?"];
+            }
+            
+
+            
+            if (questionLower.includes('venta libre') || questionLower.includes('sin receta')) {
+                return datosOffline.respuestas["¿Qué son los medicamentos de venta libre?"];
+            }
+            
+            // Respuesta genérica si no encuentra coincidencia
+            return "Gracias por tu pregunta. Actualmente estoy funcionando en modo offline con información básica del curso. Para obtener respuestas más específicas y detalladas, te recomiendo consultar el material del curso o contactar a tu tutor. ¿Te gustaría hacer alguna de las preguntas sugeridas?";
+        }
+        
+        // Función para hacer pregunta desde botones sugeridos
+        function askQuestion(question) {
+            document.getElementById('questionInput').value = question;
+            sendQuestion();
+        }
+        
+        // Función para agregar mensaje al chat
+        function addMessage(type, content) {
+            const chatHistory = document.getElementById('chatHistory');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const header = type === 'user' ? '👤 Tú' : '🤖 Asistente';
+            messageDiv.innerHTML = `
+                <div class="message-header">${header}</div>
+                <div>${content}</div>
+            `;
+            
+            chatHistory.appendChild(messageDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+        
+        // Función para mostrar indicador de escritura
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+        }
+        
+        // Función para ocultar indicador de escritura
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+        
+        // Función para guardar en historial
+        function saveToHistory(type, content) {
+            conversationHistory.push({
+                type: type,
+                content: content,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Guardar en localStorage
+            localStorage.setItem('chatHistory', JSON.stringify(conversationHistory));
+        }
+        
+        // Función para actualizar estado de la API
+        function updateAPIStatus(online) {
+            const indicator = document.getElementById('statusIndicator');
+            apiOnline = online;
+            
+            if (online) {
+                indicator.textContent = '🟢 API Online';
+                indicator.className = 'status-indicator status-online';
+            } else {
+                indicator.textContent = '🟡 Modo Offline';
+                indicator.className = 'status-indicator status-offline';
+            }
+        }
+        
+        // Función para manejar Enter en el input
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendQuestion();
+            }
+        }
+        
+        // Cargar historial guardado
+        function loadConversationHistory() {
+            const saved = localStorage.getItem('chatHistory');
+            if (saved) {
+                conversationHistory = JSON.parse(saved);
+                // Mostrar últimos 5 mensajes
+                const recentMessages = conversationHistory.slice(-10);
+                recentMessages.forEach(msg => {
+                    addMessage(msg.type, msg.content);
+                });
+            }
+        }
+        
+        // Inicializar cuando se carga la página
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Cargar historial
+            loadConversationHistory();
+            
+            // Probar conectividad con API
+            const apiConectada = await testAPIConnectivity();
+            updateAPIStatus(apiConectada);
+            
+            console.log('🚀 Widget de asistente farmacia inicializado');
+        });
+    </script>
+</body>
+</html> 

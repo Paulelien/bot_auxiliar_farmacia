@@ -4,4 +4,6 @@ faiss-cpu
 python-dotenv
 PyMuPDF
 fastapi
-uvicorn 
+uvicorn
+sqlalchemy
+psycopg2-binary 

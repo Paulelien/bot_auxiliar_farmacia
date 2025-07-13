@@ -1103,3 +1103,56 @@ def test_basico():
             "tipo_error": type(e).__name__,
             "linea_error": getattr(e, '__traceback__', None)
         }
+
+@app.get("/test_openai")
+def test_openai():
+    """
+    Endpoint para probar la conexión con OpenAI
+    """
+    try:
+        # Verificar si la API key está configurada
+        if not api_key:
+            return {
+                "status": "error",
+                "message": "OPENAI_API_KEY no está configurada",
+                "api_key_configured": False
+            }
+        
+        # Verificar si la API key es válida (sin exponer la clave)
+        api_key_length = len(api_key)
+        api_key_prefix = api_key[:7] if api_key else ""
+        
+        # Intentar una llamada simple a OpenAI
+        try:
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": "Hola"}],
+                max_tokens=10,
+                temperature=0
+            )
+            
+            return {
+                "status": "success",
+                "message": "Conexión con OpenAI exitosa",
+                "api_key_configured": True,
+                "api_key_length": api_key_length,
+                "api_key_prefix": api_key_prefix,
+                "openai_response": "OK"
+            }
+            
+        except Exception as e:
+            return {
+                "status": "error",
+                "message": f"Error al conectar con OpenAI: {str(e)}",
+                "api_key_configured": True,
+                "api_key_length": api_key_length,
+                "api_key_prefix": api_key_prefix,
+                "openai_error": str(e)
+            }
+            
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Error general: {str(e)}",
+            "api_key_configured": False
+        }

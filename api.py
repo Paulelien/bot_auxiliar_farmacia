@@ -963,3 +963,88 @@ def test_busqueda_simple():
             "tipo_error": type(e).__name__,
             "traceback": str(e.__traceback__) if hasattr(e, '__traceback__') else "No disponible"
         }
+
+@app.get("/test_busqueda_paso_a_paso")
+def test_busqueda_paso_a_paso():
+    """Endpoint de prueba paso a paso para identificar el error exacto"""
+    resultados = {}
+    
+    try:
+        # Paso 1: Verificar datos básicos
+        resultados["paso_1"] = {
+            "indice_existe": indice is not None,
+            "textos_existen": textos is not None,
+            "cantidad_textos": len(textos) if textos else 0
+        }
+        
+        # Paso 2: Verificar configuración
+        from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
+        resultados["paso_2"] = {
+            "umbral_principal": UMBRAL_SIMILITUD_PRINCIPAL,
+            "umbral_secundario": UMBRAL_SIMILITUD_SECUNDARIO
+        }
+        
+        # Paso 3: Verificar función de embedding
+        try:
+            from embedding_utils import obtener_embedding
+            embedding_test = obtener_embedding("test simple")
+            resultados["paso_3"] = {
+                "embedding_funciona": True,
+                "dimension": len(embedding_test)
+            }
+        except Exception as e:
+            resultados["paso_3"] = {
+                "embedding_funciona": False,
+                "error": str(e)
+            }
+            return {"status": "error_en_paso_3", "resultados": resultados}
+        
+        # Paso 4: Verificar función buscar_similares (sin llamarla)
+        try:
+            from embedding_utils import buscar_similares
+            resultados["paso_4"] = {
+                "funcion_importada": True
+            }
+        except Exception as e:
+            resultados["paso_4"] = {
+                "funcion_importada": False,
+                "error": str(e)
+            }
+            return {"status": "error_en_paso_4", "resultados": resultados}
+        
+        # Paso 5: Llamar buscar_similares con umbral 0.0 (más permisivo)
+        try:
+            pregunta_test = "legislación"
+            resultados_busqueda = buscar_similares(
+                pregunta_test, 
+                indice, 
+                textos, 
+                k=1, 
+                umbral=0.0
+            )
+            resultados["paso_5"] = {
+                "busqueda_funciona": True,
+                "resultados_encontrados": len(resultados_busqueda),
+                "primer_resultado": {
+                    "archivo": resultados_busqueda[0].get('archivo', 'N/A'),
+                    "similitud": resultados_busqueda[0].get('similitud', 'N/A'),
+                    "texto_preview": resultados_busqueda[0].get('texto', '')[:50] + "..." if resultados_busqueda[0].get('texto') else 'N/A'
+                } if resultados_busqueda else None
+            }
+        except Exception as e:
+            resultados["paso_5"] = {
+                "busqueda_funciona": False,
+                "error": str(e),
+                "tipo_error": type(e).__name__
+            }
+            return {"status": "error_en_paso_5", "resultados": resultados}
+        
+        return {"status": "ok", "resultados": resultados}
+        
+    except Exception as e:
+        return {
+            "status": "error_general",
+            "error": str(e),
+            "tipo_error": type(e).__name__,
+            "resultados": resultados
+        }

@@ -430,25 +430,12 @@ No uses conocimiento general del modelo. Si la información no está en los docu
 
 📌 Preguntas sobre atribuciones legales:
 
-Nunca respondas que el curso habilita al estudiante a ejercer como auxiliar. Si se pregunta sobre acreditación, certificación o legalidad para trabajar, responde:
-
-“La información que solicitas no se encuentra en los documentos disponibles. Por favor, consulta con tu tutor académico.”
+Nunca respondas que el curso habilita al estudiante a ejercer como auxiliar. Si se pregunta sobre acreditación, certificación o legalidad para trabajar, responde de forma general o sugiere consultar fuentes oficiales.
 
 
 
 
 
-"""
-
-
-
-
-
-
-
-Pregunta: {pregunta}
-Contexto:
-{contexto}
 """
     with st.spinner("Pensando..."):
         try:

@@ -8,6 +8,9 @@ import sys
 from pdf_utils import cargar_multiples_pdfs
 from embedding_utils import cargar_o_crear_indice
 
+from dotenv import load_dotenv
+load_dotenv()
+
 def actualizar_indice():
     """
     Actualiza el índice FAISS con todos los PDFs en la carpeta material/

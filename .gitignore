@@ -4,8 +4,8 @@
 .env.production
 
 # Archivos de caché y datos
-material/faiss_index.bin
-material/textos.pkl
+#material/faiss_index.bin
+#material/textos.pkl
 *.pkl
 *.bin
 

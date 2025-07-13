@@ -1,4 +1,29 @@
-- Los medicamentos deben conservarse según la indicación del fabricante: "lugar fresco y seco" significa entre 15°C y 25°C.
-- Una receta retenida es aquella que queda archivada, como ocurre con psicotrópicos.
-- El etiquetado de preparados magistrales debe cumplir el Artículo 38 del DS 466.
-- Un bioequivalente es un medicamento que demuestra la misma eficacia terapéutica que el original.
+LEGISLACIÓN FARMACÉUTICA CHILENA
+
+El marco normativo que regula la actividad farmacéutica en Chile incluye diversos decretos y leyes que establecen las condiciones para el funcionamiento de farmacias, la dispensación de medicamentos y las responsabilidades del personal farmacéutico.
+
+DECRETO 405: Control de psicotrópicos y estupefacientes. Este decreto establece las normas para el control y dispensación de medicamentos psicotrópicos y estupefacientes, incluyendo los requisitos de receta médica, almacenamiento y registro de ventas.
+
+DECRETO 79: Norma los recetarios farmacéuticos. Este decreto establece las características y requisitos que deben cumplir los recetarios utilizados por los profesionales habilitados para prescribir medicamentos.
+
+DECRETO 466: Reglamento de farmacias. Este decreto establece las condiciones sanitarias que deben cumplir las farmacias, incluyendo requisitos de infraestructura, personal y funcionamiento.
+
+FUNCIONES DEL AUXILIAR DE FARMACIA
+
+El auxiliar de farmacia es un profesional que asiste al farmacéutico en las tareas de dispensación, venta y control de medicamentos, siempre bajo la supervisión del profesional responsable. Sus funciones incluyen: atención al cliente, control de inventario, almacenamiento de medicamentos y apoyo en la dispensación.
+
+TECNOLOGÍA FARMACÉUTICA
+
+Las formas farmacéuticas son las presentaciones en las que se administran los medicamentos, incluyendo comprimidos, cápsulas, jarabes, inyectables y otras formas de administración.
+
+ALMACENAMIENTO Y CONSERVACIÓN
+
+Los medicamentos deben conservarse según la indicación del fabricante: "lugar fresco y seco" significa entre 15°C y 25°C.
+
+La cadena de frío debe mantenerse entre 2°C y 8°C para medicamentos termolábiles.
+
+Una receta retenida es aquella que queda archivada, como ocurre con psicotrópicos.
+
+El etiquetado de preparados magistrales debe cumplir el Artículo 38 del DS 466.
+
+Un bioequivalente es un medicamento que demuestra la misma eficacia terapéutica que el original.

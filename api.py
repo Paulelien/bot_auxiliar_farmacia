@@ -411,9 +411,9 @@ def preguntar(req: PreguntaRequest):
     
     contexto = "\n".join(contexto_partes)
     
-    # Si no hay contexto relevante, informar al usuario
+    # Si no hay contexto relevante, continuar con respuesta genérica
     if not contexto_partes:
-        return {"respuesta": "La información que solicitas no se encuentra en los documentos disponibles. Por favor, consulta con tu tutor académico."}
+        contexto = "No se encontró información específica en los documentos del curso."
     prompt = f"""
 Eres un asistente educativo experto en farmacia y normativa sanitaria chilena. Estás diseñado para apoyar a estudiantes que están preparando el examen oficial de la SEREMI de Salud de Chile, requerido para obtener la autorización como Auxiliar de Farmacia.
 

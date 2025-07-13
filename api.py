@@ -752,3 +752,76 @@ def test_archivos():
         "directorio_actual": os.getcwd(),
         "contenido_directorio": os.listdir(".")
     }
+
+@app.get("/test_prompt")
+def test_prompt():
+    """Endpoint de prueba para diagnosticar problemas con el prompt"""
+    try:
+        # Test 1: Prompt simple
+        prompt_simple = "Responde brevemente: ¿Qué es la farmacia?"
+        
+        respuesta_simple = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt_simple}],
+            max_tokens=100,
+            temperature=0.2
+        )
+        
+        # Test 2: Prompt con contexto (versión simplificada)
+        contexto_test = "La farmacia es un establecimiento donde se dispensan medicamentos."
+        prompt_con_contexto = f"""
+Eres un asistente de farmacia. Responde basándote en este contexto:
+
+Contexto: {contexto_test}
+
+Pregunta: ¿Qué es la farmacia?
+
+Responde de forma clara y concisa.
+"""
+        
+        respuesta_con_contexto = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt_con_contexto}],
+            max_tokens=150,
+            temperature=0.2
+        )
+        
+        # Test 3: Verificar longitud del prompt real
+        prompt_real = f"""
+Eres un asistente educativo experto en farmacia y normativa sanitaria chilena.
+
+Pregunta: ¿Qué es la legislación farmacéutica?
+
+Responde de forma clara y concisa.
+"""
+        
+        return {
+            "status": "ok",
+            "api_key_configurada": bool(api_key),
+            "longitud_api_key": len(api_key) if api_key else 0,
+            "test_simple": {
+                "prompt": prompt_simple,
+                "longitud_prompt": len(prompt_simple),
+                "respuesta": respuesta_simple.choices[0].message.content,
+                "tokens_usados": respuesta_simple.usage.total_tokens
+            },
+            "test_con_contexto": {
+                "prompt": prompt_con_contexto,
+                "longitud_prompt": len(prompt_con_contexto),
+                "respuesta": respuesta_con_contexto.choices[0].message.content,
+                "tokens_usados": respuesta_con_contexto.usage.total_tokens
+            },
+            "prompt_real_ejemplo": {
+                "longitud": len(prompt_real),
+                "primeros_100_caracteres": prompt_real[:100]
+            }
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "tipo_error": type(e).__name__,
+            "api_key_configurada": bool(api_key),
+            "longitud_api_key": len(api_key) if api_key else 0
+        }

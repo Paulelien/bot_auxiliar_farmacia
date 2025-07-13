@@ -718,3 +718,37 @@ def test_analytics():
             "categorias_populares": []
         }
     }
+
+@app.get("/test_archivos")
+def test_archivos():
+    """Endpoint de prueba para verificar qué archivos están disponibles en Render"""
+    import os
+    
+    # Verificar carpeta material
+    carpeta_material = "material"
+    archivos_disponibles = []
+    
+    if os.path.exists(carpeta_material):
+        for archivo in os.listdir(carpeta_material):
+            ruta_completa = os.path.join(carpeta_material, archivo)
+            if os.path.isfile(ruta_completa):
+                tamaño = os.path.getsize(ruta_completa)
+                archivos_disponibles.append({
+                    "nombre": archivo,
+                    "tamaño_bytes": tamaño,
+                    "tamaño_mb": round(tamaño / (1024 * 1024), 2)
+                })
+    
+    # Verificar archivos de índice específicos
+    faiss_existe = os.path.exists(os.path.join(carpeta_material, "faiss_index.bin"))
+    textos_existe = os.path.exists(os.path.join(carpeta_material, "textos.pkl"))
+    
+    return {
+        "carpeta_material_existe": os.path.exists(carpeta_material),
+        "archivos_encontrados": len(archivos_disponibles),
+        "faiss_index_existe": faiss_existe,
+        "textos_pkl_existe": textos_existe,
+        "archivos": archivos_disponibles,
+        "directorio_actual": os.getcwd(),
+        "contenido_directorio": os.listdir(".")
+    }

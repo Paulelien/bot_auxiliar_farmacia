@@ -824,33 +824,75 @@ def test_busqueda():
     try:
         from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
         
+        # Verificar que tenemos datos
+        if not textos or len(textos) == 0:
+            return {
+                "status": "error",
+                "error": "No hay textos cargados",
+                "textos_cargados": len(textos) if textos else 0
+            }
+        
+        if not indice:
+            return {
+                "status": "error", 
+                "error": "Índice FAISS no cargado"
+            }
+        
         # Test 1: Búsqueda con umbral principal
         pregunta_test = "legislación farmacéutica"
-        resultados_principal = buscar_similares(
-            pregunta_test, 
-            indice, 
-            textos, 
-            k=3, 
-            umbral=UMBRAL_SIMILITUD_PRINCIPAL
-        )
+        print(f"Probando búsqueda con umbral principal: {UMBRAL_SIMILITUD_PRINCIPAL}")
+        
+        try:
+            resultados_principal = buscar_similares(
+                pregunta_test, 
+                indice, 
+                textos, 
+                k=3, 
+                umbral=UMBRAL_SIMILITUD_PRINCIPAL
+            )
+            print(f"Resultados con umbral principal: {len(resultados_principal)}")
+        except Exception as e:
+            return {
+                "status": "error",
+                "error": f"Error en búsqueda con umbral principal: {str(e)}",
+                "tipo_error": type(e).__name__
+            }
         
         # Test 2: Búsqueda con umbral secundario
-        resultados_secundario = buscar_similares(
-            pregunta_test, 
-            indice, 
-            textos, 
-            k=3, 
-            umbral=UMBRAL_SIMILITUD_SECUNDARIO
-        )
+        print(f"Probando búsqueda con umbral secundario: {UMBRAL_SIMILITUD_SECUNDARIO}")
+        try:
+            resultados_secundario = buscar_similares(
+                pregunta_test, 
+                indice, 
+                textos, 
+                k=3, 
+                umbral=UMBRAL_SIMILITUD_SECUNDARIO
+            )
+            print(f"Resultados con umbral secundario: {len(resultados_secundario)}")
+        except Exception as e:
+            return {
+                "status": "error",
+                "error": f"Error en búsqueda con umbral secundario: {str(e)}",
+                "tipo_error": type(e).__name__
+            }
         
         # Test 3: Búsqueda sin umbral (para ver qué hay)
-        resultados_sin_umbral = buscar_similares(
-            pregunta_test, 
-            indice, 
-            textos, 
-            k=5, 
-            umbral=0.0
-        )
+        print("Probando búsqueda sin umbral")
+        try:
+            resultados_sin_umbral = buscar_similares(
+                pregunta_test, 
+                indice, 
+                textos, 
+                k=5, 
+                umbral=0.0
+            )
+            print(f"Resultados sin umbral: {len(resultados_sin_umbral)}")
+        except Exception as e:
+            return {
+                "status": "error",
+                "error": f"Error en búsqueda sin umbral: {str(e)}",
+                "tipo_error": type(e).__name__
+            }
         
         return {
             "status": "ok",
@@ -876,7 +918,8 @@ def test_busqueda():
         return {
             "status": "error",
             "error": str(e),
-            "tipo_error": type(e).__name__
+            "tipo_error": type(e).__name__,
+            "traceback": str(e.__traceback__) if hasattr(e, '__traceback__') else "No disponible"
         }
 
 @app.get("/test_busqueda_simple")

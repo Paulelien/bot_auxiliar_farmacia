@@ -504,14 +504,6 @@ Si la información solicitada no se encuentra en los documentos cargados, o no p
 - Responde con precisión, brevedad y foco en el aprendizaje del examen.  
 - Si hay pasos o procedimientos relevantes en la normativa (por ejemplo, condiciones de almacenamiento, criterios de dispensación o restricción), descríbelos tal como se indican en la fuente.
 
-
-
-
-
-
-
-
-
 Pregunta: {pregunta}
 Contexto:
 {contexto}
@@ -824,4 +816,65 @@ Responde de forma clara y concisa.
             "tipo_error": type(e).__name__,
             "api_key_configurada": bool(api_key),
             "longitud_api_key": len(api_key) if api_key else 0
+        }
+
+@app.get("/test_busqueda")
+def test_busqueda():
+    """Endpoint de prueba para diagnosticar la función de búsqueda semántica"""
+    try:
+        from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
+        
+        # Test 1: Búsqueda con umbral principal
+        pregunta_test = "legislación farmacéutica"
+        resultados_principal = buscar_similares(
+            pregunta_test, 
+            indice, 
+            textos, 
+            k=3, 
+            umbral=UMBRAL_SIMILITUD_PRINCIPAL
+        )
+        
+        # Test 2: Búsqueda con umbral secundario
+        resultados_secundario = buscar_similares(
+            pregunta_test, 
+            indice, 
+            textos, 
+            k=3, 
+            umbral=UMBRAL_SIMILITUD_SECUNDARIO
+        )
+        
+        # Test 3: Búsqueda sin umbral (para ver qué hay)
+        resultados_sin_umbral = buscar_similares(
+            pregunta_test, 
+            indice, 
+            textos, 
+            k=5, 
+            umbral=0.0
+        )
+        
+        return {
+            "status": "ok",
+            "umbral_principal": UMBRAL_SIMILITUD_PRINCIPAL,
+            "umbral_secundario": UMBRAL_SIMILITUD_SECUNDARIO,
+            "pregunta_test": pregunta_test,
+            "resultados_principal": len(resultados_principal),
+            "resultados_secundario": len(resultados_secundario),
+            "resultados_sin_umbral": len(resultados_sin_umbral),
+            "muestra_sin_umbral": [
+                {
+                    "archivo": r.get('archivo', 'N/A'),
+                    "similitud": r.get('similitud', 'N/A'),
+                    "texto_preview": r.get('texto', '')[:100] + "..." if r.get('texto') else 'N/A'
+                }
+                for r in resultados_sin_umbral[:3]
+            ] if resultados_sin_umbral else [],
+            "indice_cargado": indice is not None,
+            "textos_cargados": len(textos) if textos else 0
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "tipo_error": type(e).__name__
         }

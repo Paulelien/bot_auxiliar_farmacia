@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script para actualizar el índice FAISS con nuevos PDFs
+Script para actualizar el índice FAISS con nuevos PDFs y archivos de texto
 """
 
 import os
@@ -11,13 +11,44 @@ from embedding_utils import cargar_o_crear_indice
 from dotenv import load_dotenv
 load_dotenv()
 
+def cargar_archivos_texto(carpeta_material):
+    """
+    Carga archivos de texto (.txt) de la carpeta material
+    """
+    textos_texto = []
+    
+    for archivo in os.listdir(carpeta_material):
+        if archivo.endswith('.txt'):
+            ruta_archivo = os.path.join(carpeta_material, archivo)
+            try:
+                with open(ruta_archivo, 'r', encoding='utf-8') as f:
+                    contenido = f.read()
+                
+                # Dividir el contenido en fragmentos más pequeños
+                fragmentos = contenido.split('\n\n')  # Dividir por párrafos dobles
+                
+                for i, fragmento in enumerate(fragmentos):
+                    if fragmento.strip():  # Solo fragmentos no vacíos
+                        textos_texto.append({
+                            'texto': fragmento.strip(),
+                            'archivo': archivo,
+                            'pagina': i + 1
+                        })
+                
+                print(f"  ✅ Procesado: {archivo} ({len(fragmentos)} fragmentos)")
+                
+            except Exception as e:
+                print(f"  ❌ Error procesando {archivo}: {e}")
+    
+    return textos_texto
+
 def actualizar_indice():
     """
-    Actualiza el índice FAISS con todos los PDFs en la carpeta material/
+    Actualiza el índice FAISS con todos los PDFs y archivos de texto en la carpeta material/
     """
     print("🔄 Iniciando actualización del índice...")
     
-    # Carpeta donde están los PDFs
+    # Carpeta donde están los archivos
     carpeta_material = "material"
     
     if not os.path.exists(carpeta_material):
@@ -28,15 +59,22 @@ def actualizar_indice():
     print("📄 Procesando PDFs...")
     textos_con_metadatos = cargar_multiples_pdfs(carpeta_material)
     
-    if not textos_con_metadatos:
-        print("❌ No se encontraron PDFs para procesar")
+    # Cargar archivos de texto
+    print("📝 Procesando archivos de texto...")
+    textos_texto = cargar_archivos_texto(carpeta_material)
+    
+    # Combinar todos los textos
+    todos_los_textos = textos_con_metadatos + textos_texto
+    
+    if not todos_los_textos:
+        print("❌ No se encontraron archivos para procesar")
         return False
     
-    print(f"✅ Se procesaron {len(textos_con_metadatos)} fragmentos de texto")
+    print(f"✅ Se procesaron {len(todos_los_textos)} fragmentos de texto total")
     
     # Mostrar archivos procesados
     archivos_procesados = set()
-    for texto in textos_con_metadatos:
+    for texto in todos_los_textos:
         archivos_procesados.add(texto['archivo'])
     
     print("\n📋 Archivos procesados:")
@@ -46,7 +84,7 @@ def actualizar_indice():
     # Crear o actualizar el índice
     print("\n🔍 Creando/actualizando índice FAISS...")
     try:
-        indice, textos_actualizados = cargar_o_crear_indice(textos_con_metadatos)
+        indice, textos_actualizados = cargar_o_crear_indice(todos_los_textos)
         print(f"✅ Índice actualizado exitosamente")
         print(f"📊 Total de fragmentos en el índice: {len(textos_actualizados)}")
         return True

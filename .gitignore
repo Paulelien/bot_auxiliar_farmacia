@@ -7,6 +7,8 @@
 # Incluir archivos del índice FAISS (necesarios para el bot)
 !material/faiss_index.bin
 !material/textos.pkl
+
+# Excluir otros archivos binarios y pickle
 *.pkl
 *.bin
 

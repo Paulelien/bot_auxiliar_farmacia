@@ -466,9 +466,6 @@ Responde únicamente en base a:
   - Grupo terapéutico  
   - Clasificación ATC  
 
-No uses conocimiento general del modelo. Si la información no está en los documentos, responde lo siguiente:
-
-> "La información solicitada no se encuentra en los documentos disponibles. Te recomiendo comunicarte con tu tutor académico a través del apartado *Consultas Académicas* en el menú superior de la plataforma."
 
 📌 RESPUESTAS OBLIGATORIAS:
 

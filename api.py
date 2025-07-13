@@ -27,6 +27,9 @@ client = OpenAI(api_key=api_key)
 
 CARPETA_MATERIAL = "material"
 
+# Importar configuración de umbrales
+from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
+
 # Estadísticas de uso
 estadisticas_uso = {
     "preguntas_totales": 0,
@@ -387,7 +390,6 @@ def preguntar(req: PreguntaRequest):
     
     estadisticas_uso["ultima_actualizacion"] = str(datetime.now())
     # Buscar contexto relevante con umbral alto de similitud
-    from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
     
     resultados = buscar_similares(pregunta, indice, textos, k=3, umbral=UMBRAL_SIMILITUD_PRINCIPAL)
     contexto_partes = []
@@ -822,7 +824,6 @@ Responde de forma clara y concisa.
 def test_busqueda():
     """Endpoint de prueba para diagnosticar la función de búsqueda semántica"""
     try:
-        from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
         
         # Verificar que tenemos datos
         if not textos or len(textos) == 0:

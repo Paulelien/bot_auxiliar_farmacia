@@ -878,3 +878,45 @@ def test_busqueda():
             "error": str(e),
             "tipo_error": type(e).__name__
         }
+
+@app.get("/test_busqueda_simple")
+def test_busqueda_simple():
+    """Endpoint de prueba simple para diagnosticar errores en búsqueda"""
+    try:
+        # Test 1: Verificar si el índice y textos están cargados
+        info_basica = {
+            "indice_cargado": indice is not None,
+            "textos_cargados": len(textos) if textos else 0,
+            "tipo_indice": str(type(indice)) if indice else "None",
+            "tipo_textos": str(type(textos)) if textos else "None"
+        }
+        
+        # Test 2: Verificar si hay textos
+        if textos and len(textos) > 0:
+            info_basica["primer_texto"] = {
+                "archivo": textos[0].get('archivo', 'N/A'),
+                "texto_preview": textos[0].get('texto', '')[:50] + "..." if textos[0].get('texto') else 'N/A'
+            }
+        
+        # Test 3: Intentar obtener embedding (sin búsqueda)
+        try:
+            from embedding_utils import obtener_embedding
+            embedding_test = obtener_embedding("test")
+            info_basica["embedding_funciona"] = True
+            info_basica["dimension_embedding"] = len(embedding_test)
+        except Exception as e:
+            info_basica["embedding_funciona"] = False
+            info_basica["error_embedding"] = str(e)
+        
+        return {
+            "status": "ok",
+            "info": info_basica
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "tipo_error": type(e).__name__,
+            "traceback": str(e.__traceback__) if hasattr(e, '__traceback__') else "No disponible"
+        }

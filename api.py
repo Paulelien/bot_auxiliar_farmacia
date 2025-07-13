@@ -1156,3 +1156,47 @@ def test_openai():
             "message": f"Error general: {str(e)}",
             "api_key_configured": False
         }
+
+@app.get("/test_pregunta_simple")
+def test_pregunta_simple():
+    """
+    Endpoint para probar una pregunta simple sin el prompt complejo
+    """
+    try:
+        pregunta = "¿Qué es la cadena de frío?"
+        
+        # Buscar contexto
+        resultados = buscar_similares(pregunta, indice, textos, k=3, umbral=0.5)
+        
+        if resultados:
+            contexto = "Contexto encontrado: " + str(len(resultados)) + " resultados"
+        else:
+            contexto = "No se encontró contexto"
+        
+        # Prompt simple
+        prompt_simple = f"Responde brevemente: {pregunta}"
+        
+        # Llamada a OpenAI
+        respuesta = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt_simple}],
+            max_tokens=100,
+            temperature=0.2
+        )
+        
+        respuesta_final = respuesta.choices[0].message.content
+        
+        return {
+            "status": "success",
+            "pregunta": pregunta,
+            "contexto_encontrado": contexto,
+            "respuesta_openai": respuesta_final,
+            "modelo_usado": "gpt-3.5-turbo"
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "tipo_error": type(e).__name__
+        }

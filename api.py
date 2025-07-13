@@ -1048,3 +1048,60 @@ def test_busqueda_paso_a_paso():
             "tipo_error": type(e).__name__,
             "resultados": resultados
         }
+
+@app.get("/test_basico")
+def test_basico():
+    """Endpoint de diagnóstico básico sin importaciones adicionales"""
+    try:
+        # Verificar variables globales básicas
+        info_basica = {
+            "api_key_existe": bool(api_key),
+            "client_openai_existe": client is not None,
+            "carpeta_material": CARPETA_MATERIAL,
+            "indice_tipo": str(type(indice)) if indice else "None",
+            "textos_tipo": str(type(textos)) if textos else "None",
+            "textos_cantidad": len(textos) if textos else 0
+        }
+        
+        # Verificar si podemos acceder a config sin importar
+        try:
+            import config
+            info_basica["config_importable"] = True
+            info_basica["umbral_principal"] = getattr(config, 'UMBRAL_SIMILITUD_PRINCIPAL', 'No encontrado')
+            info_basica["umbral_secundario"] = getattr(config, 'UMBRAL_SIMILITUD_SECUNDARIO', 'No encontrado')
+        except Exception as e:
+            info_basica["config_importable"] = False
+            info_basica["error_config"] = str(e)
+        
+        # Verificar si podemos acceder a embedding_utils sin importar
+        try:
+            import embedding_utils
+            info_basica["embedding_utils_importable"] = True
+        except Exception as e:
+            info_basica["embedding_utils_importable"] = False
+            info_basica["error_embedding_utils"] = str(e)
+        
+        # Verificar si hay archivos en la carpeta material
+        try:
+            import os
+            if os.path.exists(CARPETA_MATERIAL):
+                archivos = os.listdir(CARPETA_MATERIAL)
+                info_basica["archivos_material"] = archivos
+                info_basica["cantidad_archivos"] = len(archivos)
+            else:
+                info_basica["carpeta_material_existe"] = False
+        except Exception as e:
+            info_basica["error_verificar_archivos"] = str(e)
+        
+        return {
+            "status": "ok",
+            "info": info_basica
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "tipo_error": type(e).__name__,
+            "linea_error": getattr(e, '__traceback__', None)
+        }

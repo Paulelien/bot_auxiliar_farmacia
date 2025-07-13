@@ -4,8 +4,9 @@
 .env.production
 
 # Archivos de caché y datos
-#material/faiss_index.bin
-#material/textos.pkl
+# Incluir archivos del índice FAISS (necesarios para el bot)
+!material/faiss_index.bin
+!material/textos.pkl
 *.pkl
 *.bin
 

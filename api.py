@@ -440,6 +440,8 @@ Deriva al tutor si la pregunta es legal, administrativa o no cubierta.
 
 Responde con claridad y precisión en 4–5 frases máximo.
 
+No respondas sobre nombres comerciales de medicamentos si no estás completamente seguro de su principio activo en el contexto de Chile. Si tienes dudas, responde: 'No tengo información suficiente, por favor verifica en el ISP o consulta a un profesional habilitado
+
 
 Pregunta: {pregunta}
 Contexto:

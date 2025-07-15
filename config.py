@@ -10,8 +10,8 @@
 # - 0.65: Muy bajo (casi cualquier cosa)
 # - 0.60: Mínimo (todo)
 
-UMBRAL_SIMILITUD_PRINCIPAL = 0.65
-UMBRAL_SIMILITUD_SECUNDARIO = 0.55
+UMBRAL_SIMILITUD_PRINCIPAL = 0.50
+UMBRAL_SIMILITUD_SECUNDARIO = 0.40
 
 # Configuración de búsqueda
 K_MAX_RESULTADOS = 5

@@ -30,6 +30,9 @@ def cargar_o_crear_indice(textos_con_metadatos):
         try:
             with open(TEXTOS_PATH, "rb") as f:
                 textos_con_metadatos = pickle.load(f)
+                if not isinstance(textos_con_metadatos, list):
+                    print("Error: textos_con_metadatos no es una lista. Forzando recreación del índice.")
+                    raise ValueError("textos_con_metadatos no es una lista")
             index = faiss.read_index(INDICE_FAISS_PATH)
             return index, textos_con_metadatos
         except Exception as e:

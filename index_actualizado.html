@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot Auxiliar de Farmacia - Avanxa</title>
+    <style>
+        :root {
+            --color-primario: #4B2067;
+            --color-secundario: #7C3FAF;
+            --color-acento: #FF6B35;
+            --color-texto: #2C3E50;
+            --color-fondo: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            color: var(--color-texto);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(76, 31, 103, 0.3);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chat-section, .quiz-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 3px solid var(--color-primario);
+        }
+
+        .section-title {
+            color: var(--color-primario);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .chat-input input {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem 1.5rem;
+            border: 2px solid #E9ECEF;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--color-secundario);
+            box-shadow: 0 0 0 3px rgba(124, 63, 175, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(76, 31, 103, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 31, 103, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .chat-history {
+            background: #F8F9FA;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #E9ECEF;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .message.user {
+            background: #E8F5E8;
+            border-left: 4px solid #2E7D32;
+        }
+
+        .message.bot {
+            background: #F3E5F5;
+            border-left: 4px solid var(--color-secundario);
+        }
+
+        .message-header {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-primario);
+        }
+
+        .suggested-questions {
+            margin-top: 1.5rem;
+        }
+
+        .suggested-questions h4 {
+            color: var(--color-primario);
+            margin-bottom: 1rem;
+        }
+
+        .question-btn {
+            background: #F8F9FA;
+            border: 2px solid var(--color-secundario);
+            color: var(--color-secundario);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .question-btn:hover {
+            background: var(--color-secundario);
+            color: white;
+        }
+
+        .quiz-container {
+            text-align: center;
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--color-texto);
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-progress {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: var(--color-primario);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E9ECEF;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            transition: width 0.3s ease;
+        }
+
+        .score-display {
+            font-size: 0.9rem;
+            color: var(--color-secundario);
+            font-weight: 600;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #E9ECEF;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--color-secundario);
+            background: #F8F9FA;
+        }
+
+        .quiz-option.selected {
+            border-color: var(--color-secundario);
+            background: #F3E5F5;
+        }
+
+        .quiz-option.correct {
+            border-color: #4CAF50;
+            background: #E8F5E8;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #F44336;
+            background: #FFEBEE;
+        }
+
+        .caso-clinico {
+            background: #f8f9fa;
+            border: 2px solid var(--color-secundario);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .caso-titulo {
+            color: var(--color-primario);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .caso-descripcion {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-acento);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .success {
+            background: linear-gradient(90deg, var(--color-secundario) 0%, #A084CA 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .error {
+            background: linear-gradient(90deg, #F44336 0%, #EF5350 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .chat-input {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="logo_avanxa.png" alt="Logo Avanxa" class="logo">
+            <h1>Chatbot Auxiliar de Farmacia</h1>
+            <p>Asistente educativo inteligente para el curso de Auxiliar de Farmacia</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Chat Section -->
+            <div class="chat-section">
+                <h2 class="section-title">💬 Haz tus preguntas</h2>
+                
+                <div class="chat-input">
+                    <input type="text" id="questionInput" placeholder="Ej: ¿Qué es el principio FEFO?" onkeypress="handleKeyPress(event)">
+                    <button class="btn" onclick="sendQuestion()" id="sendBtn">Preguntar</button>
+                </div>
+
+                <div class="chat-history" id="chatHistory">
+                    <div class="message bot">
+                        <div class="message-header">🤖 Asistente</div>
+                        <div>¡Hola! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
+                    </div>
+                </div>
+
+                <div class="suggested-questions">
+                    <h4>💡 Preguntas sugeridas:</h4>
+                    <div id="suggestedQuestions"></div>
+                </div>
+            </div>
+
+            <!-- Casos Clínicos Section -->
+            <div class="quiz-section">
+                <h2 class="section-title">🏥 Casos Clínicos</h2>
+                
+                <div class="quiz-container">
+                    <div id="casosClinicosContent">
+                        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">¡Practica con casos clínicos reales para mejorar tus habilidades!</p>
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <button class="btn" onclick="startCasosClinicos()" style="background: linear-gradient(135deg, #6f42c1, #8e44ad); color: white; padding: 1rem 2rem; font-size: 1.2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3); transition: all 0.3s ease;">
+                                🏥 Iniciar Casos Clínicos
+                            </button>
+                        </div>
+                    </div>
+                    <div id="quizContent" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CASOS CLÍNICOS INTEGRADOS DIRECTAMENTE
+        const CASOS_CLINICOS = {
+            "casos_clinicos": [
+                {
+                    "id": 1,
+                    "titulo": "Caso Clínico: Paciente con Hipertensión",
+                    "descripcion": "María, 65 años, acude a la farmacia con una receta médica para tratar su hipertensión arterial. Presenta presión arterial de 160/95 mmHg y tiene antecedentes de diabetes tipo 2.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "¿Cuál de los siguientes medicamentos NO es un antihipertensivo de primera línea?",
+                            "opciones": [
+                                "A) Losartán",
+                                "B) Amlodipino", 
+                                "C) Paracetamol",
+                                "D) Enalapril"
+                            ],
+                            "respuesta_correcta": 2,
+                            "explicacion": "El paracetamol es un analgésico y antipirético, no un antihipertensivo. Los otros tres son medicamentos antihipertensivos comunes."
+                        },
+                        {
+                            "id": 2,
+                            "pregunta": "¿Qué precaución especial debe tener María al tomar antihipertensivos?",
+                            "opciones": [
+                                "A) Tomar con el estómago lleno",
+                                "B) Evitar cambios bruscos de posición",
+                                "C) Exponerse al sol sin protección",
+                                "D) Hacer ejercicio intenso inmediatamente"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "Los antihipertensivos pueden causar hipotensión ortostática, por lo que se debe evitar levantarse bruscamente."
+                        },
+                        {
+                            "id": 3,
+                            "pregunta": "¿Cuál es el valor normal de presión arterial para adultos?",
+                            "opciones": [
+                                "A) 140/90 mmHg",
+                                "B) 120/80 mmHg",
+                                "C) 160/100 mmHg", 
+                                "D) 180/110 mmHg"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "El valor normal de presión arterial es menor a 120/80 mmHg."
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "titulo": "Caso Clínico: Paciente con Diabetes",
+                    "descripcion": "Carlos, 45 años, diagnosticado recientemente con diabetes tipo 2. Acude a la farmacia para recibir orientación sobre su medicación y cuidados generales.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "¿Cuál es el objetivo principal del tratamiento de la diabetes tipo 2?",
+                            "opciones": [
+                                "A) Curar la enfermedad",
+                                "B) Mantener niveles normales de glucosa",
+                                "C) Eliminar la insulina del cuerpo",
+                                "D) Reducir el peso corporal únicamente"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "El objetivo principal es mantener niveles normales de glucosa en sangre para prevenir complicaciones."
+                        },
+                        {
+                            "id": 2,
+                            "pregunta": "¿Qué medicamento oral es de primera línea para la diabetes tipo 2?",
+                            "opciones": [
+                                "A) Insulina",
+                                "B) Metformina",
+                                "C) Glibenclamida",
+                                "D) Pioglitazona"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "La metformina es el medicamento de primera línea para el tratamiento de la diabetes tipo 2."
+                        },
+                        {
+                            "id": 3,
+                            "pregunta": "¿Cuál es el valor normal de glucosa en ayunas?",
+                            "opciones": [
+                                "A) 70-100 mg/dL",
+                                "B) 100-126 mg/dL",
+                                "C) 126-200 mg/dL",
+                                "D) Más de 200 mg/dL"
+                            ],
+                            "respuesta_correcta": 0,
+                            "explicacion": "Los valores normales de glucosa en ayunas son entre 70-100 mg/dL."
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "titulo": "Caso Clínico: Gestión de Almacenamiento",
+                    "descripcion": "Un auxiliar de farmacia recibe un nuevo lote de vacunas y jeringas precargadas de insulina. Estos productos requieren condiciones especiales de almacenamiento.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "¿Cuál es el principio de gestión más adecuado para estos productos?",
+                            "opciones": [
+                                "A) FIFO (First In, First Out) a 15-25°C",
+                                "B) LIFO (Last In, First Out) a 8-15°C", 
+                                "C) FEFO (First Expired, First Out) a 2-8°C",
+                                "D) FSN (Fast, Slow, Non-moving) a menos de 0°C"
+                            ],
+                            "respuesta_correcta": 2,
+                            "explicacion": "El principio FEFO es fundamental para el auxiliar de farmacia. Prioriza la salida de productos cuya fecha de caducidad está más próxima. Las vacunas e insulinas requieren cadena de frío estricta entre 2-8°C."
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Variables globales para casos clínicos
+        let casosClinicos = [];
+        let casoActual = 0;
+        let preguntaActual = 0;
+        let puntajeCasosClinicos = 0;
+        let totalPreguntasCasosClinicos = 0;
+        let quizAnswered = false;
+
+        // Función para manejar Enter en el input
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendQuestion();
+            }
+        }
+
+        // Función para enviar pregunta (simulada para LMS)
+        function sendQuestion() {
+            const input = document.getElementById('questionInput');
+            const question = input.value.trim();
+            
+            if (!question) {
+                showError('Por favor, escribe una pregunta válida.');
+                return;
+            }
+
+            // Agregar pregunta del usuario al chat
+            addMessage('user', question);
+            
+            // Simular respuesta del bot
+            setTimeout(() => {
+                const respuestas = [
+                    "Excelente pregunta. Te recomiendo revisar el material del curso para obtener información más detallada.",
+                    "Esta es una consulta importante. Consulta con tu instructor para obtener la respuesta más precisa.",
+                    "Buena pregunta. Te sugiero revisar los módulos correspondientes del curso.",
+                    "Esta información se encuentra en el material de estudio. Revisa los documentos proporcionados."
+                ];
+                const respuesta = respuestas[Math.floor(Math.random() * respuestas.length)];
+                addMessage('bot', respuesta);
+            }, 1000);
+
+            input.value = '';
+        }
+
+        // Función para agregar mensaje al chat
+        function addMessage(type, content) {
+            const chatHistory = document.getElementById('chatHistory');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const header = type === 'user' ? '👤 Tú' : '🤖 Asistente';
+            messageDiv.innerHTML = `
+                <div class="message-header">${header}</div>
+                <div>${content}</div>
+            `;
+            
+            chatHistory.appendChild(messageDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        // Función para mostrar errores
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            document.querySelector('.chat-section').insertBefore(errorDiv, document.querySelector('.chat-history'));
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        // Función para iniciar casos clínicos
+        function startCasosClinicos() {
+            casosClinicos = CASOS_CLINICOS.casos_clinicos;
+            casoActual = 0;
+            preguntaActual = 0;
+            puntajeCasosClinicos = 0;
+            totalPreguntasCasosClinicos = casosClinicos.reduce((total, caso) => total + caso.preguntas.length, 0);
+            
+            console.log(`Casos clínicos iniciados con ${casosClinicos.length} casos y ${totalPreguntasCasosClinicos} preguntas`);
+            
+            // Ocultar contenido inicial y mostrar quiz
+            document.getElementById('casosClinicosContent').style.display = 'none';
+            document.getElementById('quizContent').style.display = 'block';
+            
+            showCasoClinico();
+        }
+
+        // Función para mostrar caso clínico
+        function showCasoClinico() {
+            const quizContent = document.getElementById('quizContent');
+            
+            if (casoActual >= casosClinicos.length) {
+                // Mostrar resultados finales
+                const porcentaje = Math.round((puntajeCasosClinicos / totalPreguntasCasosClinicos) * 100);
+                let mensaje = '';
+                if (porcentaje >= 90) {
+                    mensaje = '¡Excelente! 🏆 Dominas los casos clínicos';
+                } else if (porcentaje >= 70) {
+                    mensaje = '¡Muy bien! 👍 Buen manejo de casos clínicos';
+                } else if (porcentaje >= 50) {
+                    mensaje = '¡Bien! 💪 Puedes mejorar en casos clínicos';
+                } else {
+                    mensaje = 'Necesitas repasar más 📚 los casos clínicos';
+                }
+                
+                quizContent.innerHTML = `
+                    <div class="quiz-question">¡Evaluación de Casos Clínicos Finalizada!</div>
+                    <div class="success">
+                        <h3>${mensaje}</h3>
+                        <p>Tu puntaje: <b>${puntajeCasosClinicos} / ${totalPreguntasCasosClinicos}</b> (${porcentaje}%)</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${porcentaje}%"></div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            📊 <strong>Resumen:</strong><br>
+                            • Casos completados: ${casosClinicos.length}<br>
+                            • Preguntas respondidas: ${totalPreguntasCasosClinicos}<br>
+                            • Respuestas correctas: ${puntajeCasosClinicos}
+                        </p>
+                    </div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn" onclick="startCasosClinicos()" style="margin-right: 1rem;">🔄 Reiniciar</button>
+                        <button class="btn" onclick="resetQuizSection()">🏠 Volver al Menú</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            const caso = casosClinicos[casoActual];
+            const pregunta = caso.preguntas[preguntaActual];
+            
+            // Calcular progreso general
+            const preguntasCompletadas = (casoActual * 3) + preguntaActual;
+            const progreso = (preguntasCompletadas / totalPreguntasCasosClinicos) * 100;
+            
+            quizContent.innerHTML = `
+                <div class="caso-clinico">
+                    <div class="caso-titulo">${caso.titulo}</div>
+                    <div class="caso-descripcion">${caso.descripcion}</div>
+                </div>
+                
+                <div class="quiz-progress">
+                    <div class="progress-text">
+                        Caso ${casoActual + 1} de ${casosClinicos.length} - 
+                        Pregunta ${preguntaActual + 1} de ${caso.preguntas.length}
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progreso}%"></div>
+                    </div>
+                    <div class="score-display">Puntaje actual: ${puntajeCasosClinicos}</div>
+                </div>
+                
+                <div class="quiz-question">${pregunta.pregunta}</div>
+                <div class="quiz-options">
+                    ${pregunta.opciones.map((opcion, index) => `
+                        <div class="quiz-option" onclick="selectOptionCasoClinico(this, ${index})">
+                            ${opcion}
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="btn" onclick="checkAnswerCasoClinico()" id="checkBtn" disabled>Responder</button>
+            `;
+        }
+
+        // Función para seleccionar opción
+        function selectOptionCasoClinico(element, optionIndex) {
+            if (quizAnswered) return;
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            document.getElementById('checkBtn').disabled = false;
+        }
+
+        // Función para verificar respuesta
+        function checkAnswerCasoClinico() {
+            if (quizAnswered) return;
+            
+            const selected = document.querySelector('.quiz-option.selected');
+            if (!selected) return;
+            
+            const selectedIndex = Array.from(document.querySelectorAll('.quiz-option')).indexOf(selected);
+            const caso = casosClinicos[casoActual];
+            const pregunta = caso.preguntas[preguntaActual];
+            
+            quizAnswered = true;
+            
+            // Marcar opciones correctas e incorrectas
+            document.querySelectorAll('.quiz-option').forEach((option, index) => {
+                if (index === pregunta.respuesta_correcta) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== pregunta.respuesta_correcta) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            let result, resultClass;
+            if (selectedIndex === pregunta.respuesta_correcta) {
+                puntajeCasosClinicos++;
+                result = '¡Correcto! 🎉';
+                resultClass = 'success';
+            } else {
+                result = `Incorrecto. La respuesta correcta es: ${pregunta.opciones[pregunta.respuesta_correcta]}`;
+                resultClass = 'error';
+            }
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.className = resultClass;
+            resultDiv.innerHTML = `
+                <div>${result}</div>
+                <div style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.9;">
+                    <strong>Explicación:</strong> ${pregunta.explicacion}
+                </div>
+            `;
+            document.getElementById('quizContent').appendChild(resultDiv);
+            document.getElementById('checkBtn').disabled = true;
+            
+            // Esperar 3 segundos antes de mostrar el botón de siguiente
+            setTimeout(() => {
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'btn';
+                nextBtn.style.marginLeft = '1rem';
+                nextBtn.style.marginTop = '1rem';
+                
+                if (preguntaActual < caso.preguntas.length - 1) {
+                    // Siguiente pregunta del mismo caso
+                    nextBtn.textContent = 'Siguiente pregunta ➡️';
+                    nextBtn.onclick = () => {
+                        preguntaActual++;
+                        quizAnswered = false;
+                        showCasoClinico();
+                    };
+                } else if (casoActual < casosClinicos.length - 1) {
+                    // Siguiente caso
+                    nextBtn.textContent = 'Siguiente caso ➡️';
+                    nextBtn.onclick = () => {
+                        casoActual++;
+                        preguntaActual = 0;
+                        quizAnswered = false;
+                        showCasoClinico();
+                    };
+                } else {
+                    // Finalizar
+                    nextBtn.textContent = 'Finalizar evaluación 🏁';
+                    nextBtn.onclick = () => {
+                        casoActual++;
+                        showCasoClinico();
+                    };
+                }
+                document.getElementById('quizContent').appendChild(nextBtn);
+            }, 3000);
+        }
+
+        // Función para resetear la sección
+        function resetQuizSection() {
+            // Ocultar quiz y mostrar contenido inicial
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('casosClinicosContent').style.display = 'block';
+        }
+
+        // Cargar preguntas sugeridas al iniciar
+        window.onload = function() {
+            const preguntasSugeridas = [
+                "¿Qué es el principio FEFO?",
+                "¿Cómo se almacenan los medicamentos termolábiles?",
+                "¿Qué son los medicamentos de venta libre?",
+                "¿Cómo se debe atender al cliente en una farmacia?",
+                "¿Qué es el Decreto 405?"
+            ];
+            
+            const container = document.getElementById('suggestedQuestions');
+            preguntasSugeridas.forEach(pregunta => {
+                const btn = document.createElement('button');
+                btn.className = 'question-btn';
+                btn.textContent = pregunta;
+                btn.onclick = () => {
+                    document.getElementById('questionInput').value = pregunta;
+                    document.getElementById('questionInput').focus();
+                };
+                container.appendChild(btn);
+            });
+        };
+    </script>
+</body>
+</html> 

@@ -1140,3 +1140,155 @@ def test_pregunta_simple():
             "error": str(e),
             "tipo_error": type(e).__name__
         }
+
+# --- ENDPOINTS PARA CASOS CLÍNICOS ---
+import json
+
+def cargar_casos_clinicos():
+    """Cargar los casos clínicos desde el archivo JSON"""
+    try:
+        with open('casos_clinicos.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"casos_clinicos": []}
+    except Exception as e:
+        print(f"Error al cargar casos clínicos: {e}")
+        return {"casos_clinicos": []}
+
+@app.get("/casos_clinicos")
+def obtener_casos_clinicos():
+    """Obtener todos los casos clínicos disponibles"""
+    try:
+        casos = cargar_casos_clinicos()
+        return {
+            "status": "success",
+            "casos": casos["casos_clinicos"],
+            "total_casos": len(casos["casos_clinicos"])
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+@app.get("/casos_clinicos/{caso_id}")
+def obtener_caso_clinico(caso_id: int):
+    """Obtener un caso clínico específico por ID"""
+    try:
+        casos = cargar_casos_clinicos()
+        caso = next((c for c in casos["casos_clinicos"] if c["id"] == caso_id), None)
+        
+        if caso:
+            return {
+                "status": "success",
+                "caso": caso
+            }
+        else:
+            return {
+                "status": "error",
+                "message": f"Caso clínico con ID {caso_id} no encontrado"
+            }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+@app.get("/casos_clinicos/{caso_id}/preguntas")
+def obtener_preguntas_caso_clinico(caso_id: int):
+    """Obtener las preguntas de un caso clínico específico"""
+    try:
+        casos = cargar_casos_clinicos()
+        caso = next((c for c in casos["casos_clinicos"] if c["id"] == caso_id), None)
+        
+        if caso:
+            return {
+                "status": "success",
+                "caso_id": caso_id,
+                "titulo": caso["titulo"],
+                "descripcion": caso["descripcion"],
+                "preguntas": caso["preguntas"],
+                "total_preguntas": len(caso["preguntas"])
+            }
+        else:
+            return {
+                "status": "error",
+                "message": f"Caso clínico con ID {caso_id} no encontrado"
+            }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+@app.get("/quiz_casos_clinicos")
+def obtener_quiz_casos_clinicos():
+    """Obtener un quiz completo con todos los casos clínicos"""
+    try:
+        casos = cargar_casos_clinicos()
+        
+        if not casos["casos_clinicos"]:
+            return {
+                "status": "error",
+                "message": "No hay casos clínicos disponibles"
+            }
+        
+        # Crear el quiz con todos los casos
+        quiz = {
+            "titulo": "Quiz de Casos Clínicos - Auxiliar de Farmacia",
+            "descripcion": "Evaluación basada en casos clínicos reales",
+            "casos": casos["casos_clinicos"],
+            "total_casos": len(casos["casos_clinicos"]),
+            "total_preguntas": sum(len(caso["preguntas"]) for caso in casos["casos_clinicos"])
+        }
+        
+        return {
+            "status": "success",
+            "quiz": quiz
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+class RespuestaCasoClinico(BaseModel):
+    caso_id: int
+    pregunta_id: int
+    respuesta_seleccionada: int
+
+@app.post("/casos_clinicos/verificar_respuesta")
+def verificar_respuesta_caso_clinico(respuesta: RespuestaCasoClinico):
+    """Verificar si una respuesta a un caso clínico es correcta"""
+    try:
+        casos = cargar_casos_clinicos()
+        caso = next((c for c in casos["casos_clinicos"] if c["id"] == respuesta.caso_id), None)
+        
+        if not caso:
+            return {
+                "status": "error",
+                "message": f"Caso clínico con ID {respuesta.caso_id} no encontrado"
+            }
+        
+        pregunta = next((p for p in caso["preguntas"] if p["id"] == respuesta.pregunta_id), None)
+        
+        if not pregunta:
+            return {
+                "status": "error",
+                "message": f"Pregunta con ID {respuesta.pregunta_id} no encontrada en el caso {respuesta.caso_id}"
+            }
+        
+        es_correcta = respuesta.respuesta_seleccionada == pregunta["respuesta_correcta"]
+        
+        return {
+            "status": "success",
+            "es_correcta": es_correcta,
+            "respuesta_correcta": pregunta["respuesta_correcta"],
+            "explicacion": pregunta["explicacion"],
+            "opcion_correcta": pregunta["opciones"][pregunta["respuesta_correcta"]]
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }

@@ -1,0 +1,367 @@
+{
+  "casos_clinicos": [
+    {
+      "id": 1,
+      "titulo": "Caso Clínico: Paciente con Hipertensión",
+      "descripcion": "María, 65 años, acude a la farmacia con una receta médica para tratar su hipertensión arterial. Presenta presión arterial de 160/95 mmHg y tiene antecedentes de diabetes tipo 2.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "¿Cuál de los siguientes medicamentos NO es un antihipertensivo de primera línea?",
+          "opciones": [
+            "A) Losartán",
+            "B) Amlodipino", 
+            "C) Paracetamol",
+            "D) Enalapril"
+          ],
+          "respuesta_correcta": 2,
+          "explicacion": "El paracetamol es un analgésico y antipirético, no un antihipertensivo. Los otros tres son medicamentos antihipertensivos comunes."
+        },
+        {
+          "id": 2,
+          "pregunta": "¿Qué precaución especial debe tener María al tomar antihipertensivos?",
+          "opciones": [
+            "A) Tomar con el estómago lleno",
+            "B) Evitar cambios bruscos de posición",
+            "C) Exponerse al sol sin protección",
+            "D) Hacer ejercicio intenso inmediatamente"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "Los antihipertensivos pueden causar hipotensión ortostática, por lo que se debe evitar levantarse bruscamente."
+        },
+        {
+          "id": 3,
+          "pregunta": "¿Cuál es el valor normal de presión arterial para adultos?",
+          "opciones": [
+            "A) 140/90 mmHg",
+            "B) 120/80 mmHg",
+            "C) 160/100 mmHg", 
+            "D) 180/110 mmHg"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "El valor normal de presión arterial es menor a 120/80 mmHg."
+        },
+        {
+          "id": 4,
+          "pregunta": "¿Qué efecto secundario es común en los inhibidores de la ECA?",
+          "opciones": [
+            "A) Tos seca",
+            "B) Diarrea",
+            "C) Insomnio",
+            "D) Pérdida de apetito"
+          ],
+          "respuesta_correcta": 0,
+          "explicacion": "La tos seca es un efecto secundario frecuente de los inhibidores de la ECA como el enalapril."
+        },
+        {
+          "id": 5,
+          "pregunta": "¿Qué recomendación dietética es importante para María?",
+          "opciones": [
+            "A) Aumentar el consumo de sal",
+            "B) Reducir el consumo de sodio",
+            "C) Consumir más grasas saturadas",
+            "D) Evitar las verduras"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "La reducción del consumo de sodio es fundamental en el tratamiento de la hipertensión arterial."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "titulo": "Caso Clínico: Paciente con Diabetes",
+      "descripcion": "Carlos, 45 años, diagnosticado recientemente con diabetes tipo 2. Acude a la farmacia para recibir orientación sobre su medicación y cuidados generales.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "¿Cuál es el objetivo principal del tratamiento de la diabetes tipo 2?",
+          "opciones": [
+            "A) Curar la enfermedad",
+            "B) Mantener niveles normales de glucosa",
+            "C) Eliminar la insulina del cuerpo",
+            "D) Reducir el peso corporal únicamente"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "El objetivo principal es mantener niveles normales de glucosa en sangre para prevenir complicaciones."
+        },
+        {
+          "id": 2,
+          "pregunta": "¿Qué medicamento oral es de primera línea para la diabetes tipo 2?",
+          "opciones": [
+            "A) Insulina",
+            "B) Metformina",
+            "C) Glibenclamida",
+            "D) Pioglitazona"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "La metformina es el medicamento de primera línea para el tratamiento de la diabetes tipo 2."
+        },
+        {
+          "id": 3,
+          "pregunta": "¿Cuál es el valor normal de glucosa en ayunas?",
+          "opciones": [
+            "A) 70-100 mg/dL",
+            "B) 100-126 mg/dL",
+            "C) 126-200 mg/dL",
+            "D) Más de 200 mg/dL"
+          ],
+          "respuesta_correcta": 0,
+          "explicacion": "Los valores normales de glucosa en ayunas son entre 70-100 mg/dL."
+        },
+        {
+          "id": 4,
+          "pregunta": "¿Qué complicación es más frecuente en pacientes diabéticos?",
+          "opciones": [
+            "A) Problemas cardíacos",
+            "B) Problemas renales",
+            "C) Problemas oculares",
+            "D) Todas las anteriores"
+          ],
+          "respuesta_correcta": 3,
+          "explicacion": "La diabetes puede afectar múltiples órganos, siendo frecuentes las complicaciones cardíacas, renales y oculares."
+        },
+        {
+          "id": 5,
+          "pregunta": "¿Qué recomendación es importante para el autocontrol de la diabetes?",
+          "opciones": [
+            "A) Medir glucosa solo cuando se sienta mal",
+            "B) Realizar controles regulares de glucosa",
+            "C) No medir nunca la glucosa",
+            "D) Medir solo una vez al mes"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "El autocontrol regular de la glucosa es fundamental para el manejo adecuado de la diabetes."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "titulo": "Caso Clínico: Paciente con Dolor Crónico",
+      "descripcion": "Ana, 58 años, padece artritis reumatoide y acude a la farmacia con dolor crónico en las articulaciones. Toma medicamentos antiinflamatorios regularmente.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "¿Qué tipo de medicamento es más apropiado para el dolor crónico de Ana?",
+          "opciones": [
+            "A) Paracetamol",
+            "B) Ibuprofeno",
+            "C) Morfina",
+            "D) Aspirina"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "Los antiinflamatorios no esteroideos como el ibuprofeno son apropiados para el dolor inflamatorio crónico."
+        },
+        {
+          "id": 2,
+          "pregunta": "¿Qué efecto secundario es común en los AINEs?",
+          "opciones": [
+            "A) Problemas gastrointestinales",
+            "B) Somnolencia",
+            "C) Pérdida de memoria",
+            "D) Visión borrosa"
+          ],
+          "respuesta_correcta": 0,
+          "explicacion": "Los AINEs pueden causar irritación gástrica y úlceras, por lo que deben tomarse con alimentos."
+        },
+        {
+          "id": 3,
+          "pregunta": "¿Cuál es la dosis máxima diaria recomendada de ibuprofeno?",
+          "opciones": [
+            "A) 1200 mg",
+            "B) 2400 mg",
+            "C) 3600 mg",
+            "D) 4800 mg"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "La dosis máxima diaria de ibuprofeno es 2400 mg (600 mg cada 6 horas)."
+        },
+        {
+          "id": 4,
+          "pregunta": "¿Qué recomendación es importante para Ana?",
+          "opciones": [
+            "A) Tomar medicamentos con el estómago vacío",
+            "B) Tomar medicamentos con alimentos",
+            "C) No hacer ejercicio",
+            "D) Evitar el reposo"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "Los AINEs deben tomarse con alimentos para reducir la irritación gástrica."
+        },
+        {
+          "id": 5,
+          "pregunta": "¿Qué terapia complementaria puede ayudar a Ana?",
+          "opciones": [
+            "A) Fisioterapia",
+            "B) Acupuntura",
+            "C) Ejercicio moderado",
+            "D) Todas las anteriores"
+          ],
+          "respuesta_correcta": 3,
+          "explicacion": "Todas estas terapias complementarias pueden ayudar en el manejo del dolor crónico."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "titulo": "Caso Clínico: Paciente Pediátrico",
+      "descripcion": "Lucas, 8 años, presenta fiebre de 38.5°C y dolor de garganta. Su madre acude a la farmacia buscando orientación sobre el tratamiento adecuado.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "¿Qué medicamento es seguro para la fiebre en niños?",
+          "opciones": [
+            "A) Aspirina",
+            "B) Paracetamol",
+            "C) Ibuprofeno",
+            "D) B y C son correctas"
+          ],
+          "respuesta_correcta": 3,
+          "explicacion": "Tanto el paracetamol como el ibuprofeno son seguros para niños, pero nunca aspirina por riesgo de síndrome de Reye."
+        },
+        {
+          "id": 2,
+          "pregunta": "¿Cuál es la dosis de paracetamol para niños?",
+          "opciones": [
+            "A) 10-15 mg/kg cada 4-6 horas",
+            "B) 20-25 mg/kg cada 4-6 horas",
+            "C) 30-35 mg/kg cada 4-6 horas",
+            "D) 40-45 mg/kg cada 4-6 horas"
+          ],
+          "respuesta_correcta": 0,
+          "explicacion": "La dosis recomendada de paracetamol en niños es 10-15 mg/kg cada 4-6 horas."
+        },
+        {
+          "id": 3,
+          "pregunta": "¿Cuándo se debe derivar al médico un niño con fiebre?",
+          "opciones": [
+            "A) Siempre que tenga fiebre",
+            "B) Si la fiebre persiste más de 3 días",
+            "C) Solo si la fiebre es muy alta",
+            "D) Nunca es necesario"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "Se debe derivar al médico si la fiebre persiste más de 3 días o si hay otros síntomas preocupantes."
+        },
+        {
+          "id": 4,
+          "pregunta": "¿Qué medida no farmacológica es útil para la fiebre?",
+          "opciones": [
+            "A) Baños con agua fría",
+            "B) Baños con agua tibia",
+            "C) Abrigar mucho al niño",
+            "D) No dar líquidos"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "Los baños con agua tibia ayudan a bajar la fiebre de forma segura."
+        },
+        {
+          "id": 5,
+          "pregunta": "¿Qué es importante verificar antes de administrar medicamentos a niños?",
+          "opciones": [
+            "A) Solo el peso",
+            "B) Solo la edad",
+            "C) Peso, edad y antecedentes alérgicos",
+            "D) Solo si tiene hambre"
+          ],
+          "respuesta_correcta": 2,
+          "explicacion": "Es fundamental verificar peso, edad y antecedentes alérgicos antes de administrar medicamentos a niños."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "titulo": "Caso Clínico: Gestión de Almacenamiento de Vacunas e Insulina",
+      "descripcion": "Un auxiliar de farmacia recibe un nuevo lote de vacunas y jeringas precargadas de insulina. Estos productos requieren condiciones especiales de almacenamiento para mantener su calidad y eficacia.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "Considerando el vencimiento y la necesidad de cadena de frío, ¿cuál de las siguientes combinaciones de principio de gestión de existencias y rango de temperatura es la más adecuada para estos productos?",
+          "opciones": [
+            "A) FIFO (First In, First Out) a 15-25°C",
+            "B) LIFO (Last In, First Out) a 8-15°C", 
+            "C) FEFO (First Expired, First Out) a 2-8°C",
+            "D) FSN (Fast, Slow, Non-moving) a menos de 0°C"
+          ],
+          "respuesta_correcta": 2,
+          "explicacion": "La alternativa correcta es c) FEFO (First Expired, First Out) a 2-8°C. El principio FEFO, acrónimo en inglés de \"First Expired, First Out\", es fundamental para el auxiliar de farmacia y rige la norma 147. Este principio prioriza la salida de los productos cuya fecha de caducidad está más próxima, independientemente del lote, lo cual ayuda a prevenir pérdidas por vencimiento. Tanto las vacunas como las insulinas son productos que requieren mantener una cadena de frío estricta, lo que significa que deben conservarse a una temperatura entre 2 y 8°C. Es importante recordar que la insulina NUNCA debe ser congelada."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "titulo": "Caso Clínico: Cálculo Posológico - Ácido Valproico Gotas",
+      "descripcion": "Un paciente acude a la farmacia con una receta para Ácido Valproico Gotas. La indicación médica es \"administrar 23 gotas cada 12 horas por 3 meses\". La farmacia solo dispone de Ácido Valproico en una presentación de frascos de 25 mL, y se sabe que 20 gotas equivalen a 1 mL.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "¿Cuántos frascos de 25 mL de Ácido Valproico Gotas debería dispensar el auxiliar de farmacia para cubrir el tratamiento completo de este paciente?",
+          "opciones": [
+            "A) 8 frascos",
+            "B) 9 frascos",
+            "C) 10 frascos", 
+            "D) 4 frascos"
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "La alternativa correcta es b) 9 frascos. Para determinar la cantidad de frascos a dispensar, se realizan los siguientes cálculos posológicos: 1. Calcular la dosis diaria en gotas: La indicación \"cada 12 horas\" implica 2 administraciones al día (24 horas / 12 horas = 2). Por lo tanto, 23 gotas * 2 veces al día = 46 gotas diarias. 2. Calcular el total de gotas para el tratamiento: El tratamiento es por 3 meses, lo que se considera como 90 días. Entonces, 46 gotas/día * 90 días = 4.140 gotas necesarias para el tratamiento. 3. Determinar cuántas gotas contiene un frasco de 25 mL: Sabiendo que 20 gotas equivalen a 1 mL, un frasco de 25 mL contiene 25 mL * 20 gotas/mL = 500 gotas por frasco. 4. Calcular el número de frascos necesarios: Se divide el total de gotas requeridas por el número de gotas por frasco: 4.140 gotas / 500 gotas/frasco = 8,28 frascos. 5. Dado que no es posible dispensar frascos fraccionados y se debe asegurar la indemnidad del producto terminado y el cumplimiento completo del tratamiento, se debe redondear al entero superior. Por lo tanto, el auxiliar deberá dispensar 9 frascos al paciente."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "titulo": "Caso Clínico: Despacho de Medicamentos Estupefacientes",
+      "descripcion": "Un paciente presenta una receta para un medicamento clasificado como estupefaciente. En ese momento, el Químico Farmacéutico (Director Técnico) no se encuentra en el establecimiento, y el Auxiliar de Farmacia es el único personal presente con autorización para despachar otros tipos de recetas y manejar el abastecimiento.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "Según el Reglamento 466, ¿cuál es la acción correcta que debe tomar el Auxiliar de Farmacia en esta situación?",
+          "opciones": [
+            "A) Despachar la receta, haciendo constar su nombre y firma, ya que tiene autorización sanitaria para el despacho de productos farmacéuticos en general.",
+            "B) Negarse a despachar la receta y pedir al paciente que espere al Químico Farmacéutico, ya que el despacho de este tipo de medicamentos es una responsabilidad exclusiva de este último.",
+            "C) Informar al paciente que la farmacia no comercializa este tipo de medicamentos controlados.",
+            "D) Despachar la receta si cuenta con una autorización escrita del Químico Farmacéutico para acceder al área de control de stock."
+          ],
+          "respuesta_correcta": 1,
+          "explicacion": "La alternativa correcta es b) Negarse a despachar la receta y pedir al paciente que espere al Químico Farmacéutico, ya que el despacho de este tipo de medicamentos es una responsabilidad exclusiva de este último. El Reglamento 466 establece claramente que es responsabilidad del Químico Farmacéutico (Director Técnico) despachar personalmente las recetas de productos farmacéuticos sometidos a controles legales especiales, como estupefacientes y psicotrópicos, dejando constancia de su nombre y firma. Aunque el auxiliar de farmacia tiene responsabilidades en el despacho y manejo de productos farmacéuticos bajo la supervisión del director técnico, la función específica de despacho personal de sustancias controladas es atribuida al Químico Farmacéutico. El acceso al área de control de stock de estos productos está restringido al director técnico o personal autorizado por escrito por él, pero esto no delega la obligación de \"despacho personal\" del Químico Farmacéutico."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "titulo": "Caso Clínico: Validez de Recetas Magistrales",
+      "descripcion": "Un paciente acude a una farmacia que cuenta con recetario magistral, presentando una receta para una fórmula magistral (una crema tópica personalizada) que fue extendida por su médico hace 40 días. El auxiliar de farmacia debe verificar la validez de la receta antes de procesarla para su elaboración.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "¿Cuál es el estado de la receta magistral presentada por el paciente, según la normativa vigente?",
+          "opciones": [
+            "A) Es válida, ya que las recetas magistrales, al ser personalizadas, no tienen un plazo de caducidad estricto.",
+            "B) Es válida, siempre y cuando el médico revalide la fecha en la farmacia mediante un nuevo documento o firma.",
+            "C) No es válida, pues ha excedido el plazo legal de 30 días corridos desde su extensión.",
+            "D) Es válida si el auxiliar de farmacia, tras evaluar al paciente, considera que el tratamiento sigue siendo pertinente."
+          ],
+          "respuesta_correcta": 2,
+          "explicacion": "La alternativa correcta es c) No es válida, pues ha excedido el plazo legal de 30 días corridos desde su extensión. Los documentos indican que \"El plazo durante el cual una receta es válida para ser presentada a su elaboración en recetario es de 30 días corridos contados desde la fecha de su extensión\". Una vez superado este plazo, la receta pierde su validez para ser elaborada en el recetario, independientemente de la necesidad clínica o la valoración del auxiliar."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "titulo": "Caso Clínico: Almacenamiento de Medicamentos Fotosensibles",
+      "descripcion": "El auxiliar de farmacia Pablo está realizando una revisión de las condiciones de almacenamiento en la sala de ventas. Observa que varios envases de medicamentos fotosensibles (que deben protegerse de la luz) están ubicados cerca de un ventanal donde reciben luz solar directa durante varias horas al día. Adicionalmente, Pablo nota que los termómetros de máxima y mínima no se han registrado por escrito en los últimos cinco días en las distintas áreas de almacenamiento.",
+      "preguntas": [
+        {
+          "id": 1,
+          "pregunta": "¿Cuál de los siguientes factores de almacenamiento representa un riesgo inmediato para la calidad de los medicamentos fotosensibles observados y qué acción se requiere con respecto a la temperatura?",
+          "opciones": [
+            "A) La humedad, ya que promueve el crecimiento de bacterias y hongos en el producto.",
+            "B) La temperatura, aunque los medicamentos fotosensibles no se ven directamente afectados por ella.",
+            "C) La luz, que puede degradar los medicamentos, y el registro constante (al menos dos veces al día) y por escrito de la temperatura es obligatorio en todas las áreas de almacenamiento.",
+            "D) La falta de segregación física de los productos, que puede llevar a contaminación cruzada."
+          ],
+          "respuesta_correcta": 2,
+          "explicacion": "La alternativa correcta es c) La luz, que puede degradar los medicamentos, y el registro constante (al menos dos veces al día) y por escrito de la temperatura es obligatorio en todas las áreas de almacenamiento."
+        }
+      ]
+    }
+  ]
+} 

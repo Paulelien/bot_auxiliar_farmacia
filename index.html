@@ -436,6 +436,52 @@
             background: #FFEBEE;
         }
 
+        .quiz-options-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .quiz-mode-btn {
+            flex: 1;
+            min-width: 150px;
+            background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 31, 103, 0.4);
+        }
+
+        .caso-clinico {
+            background: #f8f9fa;
+            border: 2px solid var(--color-secundario);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .caso-titulo {
+            color: var(--color-primario);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .caso-descripcion {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-acento);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
         .loading {
             text-align: center;
             color: var(--color-secundario);
@@ -559,15 +605,23 @@
                 </div>
             </div>
 
-            <!-- Quiz Section -->
+            <!-- Espacio entre secciones -->
+            <div style="margin: 3rem 0;"></div>
+
+            <!-- Casos Clínicos Section -->
             <div class="quiz-section">
-                <h2 class="section-title">🧠 Quiz de práctica</h2>
+                <h2 class="section-title">🏥 Casos Clínicos</h2>
                 
                 <div class="quiz-container">
-                    <div id="quizContent">
-                        <p>¡Pon a prueba tus conocimientos con preguntas del curso!</p>
-                        <button class="btn" onclick="startQuiz()">🎯 Iniciar quiz</button>
+                    <div id="casosClinicosContent">
+                        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">¡Practica con casos clínicos reales para mejorar tus habilidades!</p>
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <button class="btn quiz-mode-btn" onclick="startCasosClinicos()" style="background: linear-gradient(135deg, #6f42c1, #8e44ad); color: white; padding: 1rem 2rem; font-size: 1.2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3); transition: all 0.3s ease;">
+                                🏥 Iniciar Casos Clínicos
+                            </button>
+                        </div>
                     </div>
+                    <div id="quizContent" style="display: none;"></div>
                 </div>
             </div>
         </div>
@@ -619,6 +673,48 @@
             return 'Estudiante';
         }
         
+        // Función para detectar si está en el LMS
+        function isInLMS() {
+            // Verificar parámetro forzado para pruebas
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('force_lms') === 'true') {
+                console.log('Modo LMS forzado por parámetro URL');
+                return true;
+            }
+            
+            // Verificar si está en un iframe (común en LMS)
+            if (window.self !== window.top) {
+                return true;
+            }
+            
+            // Verificar URL del LMS
+            const currentUrl = window.location.href.toLowerCase();
+            const lmsKeywords = ['moodle', 'canvas', 'blackboard', 'schoology', 'brightspace', 'edmodo', 'googleclassroom', 'teams', 'zoom'];
+            
+            for (const keyword of lmsKeywords) {
+                if (currentUrl.includes(keyword)) {
+                    return true;
+                }
+            }
+            
+            // Verificar parámetros de URL del LMS
+            const lmsParams = ['user_id', 'course_id', 'session_id', 'lms_user', 'moodle_user'];
+            
+            for (const param of lmsParams) {
+                if (urlParams.has(param)) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        // Función para cargar opciones de quiz según el contexto (ahora solo casos clínicos)
+        function loadQuizOptions() {
+            // Ya no es necesaria esta función, pero la mantenemos por compatibilidad
+            console.log('Solo casos clínicos disponibles');
+        }
+        
         // Función para inicializar estudiante
         function initializeStudent() {
             currentStudentId = generateStudentId();
@@ -641,6 +737,8 @@
                     <div>¡Hola ${currentStudentName}! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
                 </div>
             `;
+            
+            // Las opciones de casos clínicos ya están cargadas en el HTML
         }
         
         // Función para actualizar el display del estudiante
@@ -1156,7 +1254,236 @@
             }, 5000);
         }
 
-        // Reemplazar el botón de cargar pregunta por el de iniciar quiz
+        // --- FUNCIONES PARA CASOS CLÍNICOS ---
+        let casosClinicos = [];
+        let casoActual = 0;
+        let preguntaActual = 0;
+        let puntajeCasosClinicos = 0;
+        let totalPreguntasCasosClinicos = 0;
+
+        async function startCasosClinicos() {
+            try {
+                const response = await fetch(`${API_BASE}/quiz_casos_clinicos`);
+                const data = await response.json();
+                
+                if (data.status === 'success' && data.quiz) {
+                    casosClinicos = data.quiz.casos;
+                    casoActual = 0;
+                    preguntaActual = 0;
+                    puntajeCasosClinicos = 0;
+                    totalPreguntasCasosClinicos = data.quiz.total_preguntas;
+                    
+                    console.log(`Casos clínicos iniciados con ${casosClinicos.length} casos y ${totalPreguntasCasosClinicos} preguntas`);
+                    
+                    // Ocultar contenido inicial y mostrar quiz
+                    document.getElementById('casosClinicosContent').style.display = 'none';
+                    document.getElementById('quizContent').style.display = 'block';
+                    
+                    showCasoClinico();
+                } else {
+                    showError('No se pudieron cargar los casos clínicos. Intenta de nuevo.');
+                }
+            } catch (error) {
+                console.error('Error al cargar casos clínicos:', error);
+                showError('Error de conexión al cargar los casos clínicos. Intenta de nuevo.');
+            }
+        }
+
+        function showCasoClinico() {
+            const quizContent = document.getElementById('quizContent');
+            
+            if (casoActual >= casosClinicos.length) {
+                // Mostrar resultados finales
+                const porcentaje = Math.round((puntajeCasosClinicos / totalPreguntasCasosClinicos) * 100);
+                let mensaje = '';
+                if (porcentaje >= 90) {
+                    mensaje = '¡Excelente! 🏆 Dominas los casos clínicos';
+                } else if (porcentaje >= 70) {
+                    mensaje = '¡Muy bien! 👍 Buen manejo de casos clínicos';
+                } else if (porcentaje >= 50) {
+                    mensaje = '¡Bien! 💪 Puedes mejorar en casos clínicos';
+                } else {
+                    mensaje = 'Necesitas repasar más 📚 los casos clínicos';
+                }
+                
+                quizContent.innerHTML = `
+                    <div class="quiz-question">¡Evaluación de Casos Clínicos Finalizada!</div>
+                    <div class="success">
+                        <h3>${mensaje}</h3>
+                        <p>Tu puntaje: <b>${puntajeCasosClinicos} / ${totalPreguntasCasosClinicos}</b> (${porcentaje}%)</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${porcentaje}%"></div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            📊 <strong>Resumen:</strong><br>
+                            • Casos completados: ${casosClinicos.length}<br>
+                            • Preguntas respondidas: ${totalPreguntasCasosClinicos}<br>
+                            • Respuestas correctas: ${puntajeCasosClinicos}
+                        </p>
+                    </div>
+                    <div class="quiz-options-container">
+                        <button class="btn quiz-mode-btn" onclick="startCasosClinicos()">🔄 Reiniciar Casos Clínicos</button>
+                        <button class="btn quiz-mode-btn" onclick="resetQuizSection()">🏠 Volver al Menú</button>
+                    </div>
+                `;
+                return;
+                return;
+            }
+            
+            const caso = casosClinicos[casoActual];
+            const pregunta = caso.preguntas[preguntaActual];
+            
+            // Calcular progreso general
+            const preguntasCompletadas = (casoActual * 5) + preguntaActual;
+            const progreso = (preguntasCompletadas / totalPreguntasCasosClinicos) * 100;
+            
+            quizContent.innerHTML = `
+                <div class="caso-clinico">
+                    <div class="caso-titulo">${caso.titulo}</div>
+                    <div class="caso-descripcion">${caso.descripcion}</div>
+                </div>
+                
+                <div class="quiz-progress">
+                    <div class="progress-text">
+                        Caso ${casoActual + 1} de ${casosClinicos.length} - 
+                        Pregunta ${preguntaActual + 1} de ${caso.preguntas.length}
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progreso}%"></div>
+                    </div>
+                    <div class="score-display">Puntaje actual: ${puntajeCasosClinicos}</div>
+                </div>
+                
+                <div class="quiz-question">${pregunta.pregunta}</div>
+                <div class="quiz-options">
+                    ${pregunta.opciones.map((opcion, index) => `
+                        <div class="quiz-option" onclick="selectOptionCasoClinico(this, ${index})">
+                            ${String.fromCharCode(65 + index)}. ${opcion}
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="btn" onclick="checkAnswerCasoClinico()" id="checkBtn" disabled>Responder</button>
+            `;
+        }
+
+        function selectOptionCasoClinico(element, optionIndex) {
+            if (quizAnswered) return;
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            document.getElementById('checkBtn').disabled = false;
+        }
+
+        async function checkAnswerCasoClinico() {
+            if (quizAnswered) return;
+            
+            const selected = document.querySelector('.quiz-option.selected');
+            if (!selected) return;
+            
+            const selectedIndex = Array.from(document.querySelectorAll('.quiz-option')).indexOf(selected);
+            const caso = casosClinicos[casoActual];
+            const pregunta = caso.preguntas[preguntaActual];
+            
+            quizAnswered = true;
+            
+            try {
+                const response = await fetch(`${API_BASE}/casos_clinicos/verificar_respuesta`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        caso_id: caso.id,
+                        pregunta_id: pregunta.id,
+                        respuesta_seleccionada: selectedIndex
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    // Marcar opciones correctas e incorrectas
+                    document.querySelectorAll('.quiz-option').forEach((option, index) => {
+                        if (index === pregunta.respuesta_correcta) {
+                            option.classList.add('correct');
+                        } else if (index === selectedIndex && !data.es_correcta) {
+                            option.classList.add('incorrect');
+                        }
+                    });
+                    
+                    let result, resultClass;
+                    if (data.es_correcta) {
+                        puntajeCasosClinicos++;
+                        result = '¡Correcto! 🎉';
+                        resultClass = 'success';
+                    } else {
+                        result = `Incorrecto. La respuesta correcta es: ${data.opcion_correcta}`;
+                        resultClass = 'error';
+                    }
+                    
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = resultClass;
+                    resultDiv.innerHTML = `
+                        <div>${result}</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.9;">
+                            <strong>Explicación:</strong> ${data.explicacion}
+                        </div>
+                    `;
+                    document.getElementById('quizContent').appendChild(resultDiv);
+                    document.getElementById('checkBtn').disabled = true;
+                    
+                    // Esperar 3 segundos antes de mostrar el botón de siguiente
+                    setTimeout(() => {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.className = 'btn';
+                        nextBtn.style.marginLeft = '1rem';
+                        nextBtn.style.marginTop = '1rem';
+                        
+                        if (preguntaActual < caso.preguntas.length - 1) {
+                            // Siguiente pregunta del mismo caso
+                            nextBtn.textContent = 'Siguiente pregunta ➡️';
+                            nextBtn.onclick = () => {
+                                preguntaActual++;
+                                quizAnswered = false;
+                                showCasoClinico();
+                            };
+                        } else if (casoActual < casosClinicos.length - 1) {
+                            // Siguiente caso
+                            nextBtn.textContent = 'Siguiente caso ➡️';
+                            nextBtn.onclick = () => {
+                                casoActual++;
+                                preguntaActual = 0;
+                                quizAnswered = false;
+                                showCasoClinico();
+                            };
+                        } else {
+                            // Finalizar
+                            nextBtn.textContent = 'Finalizar evaluación 🏁';
+                            nextBtn.onclick = () => {
+                                casoActual++;
+                                showCasoClinico();
+                            };
+                        }
+                        document.getElementById('quizContent').appendChild(nextBtn);
+                    }, 3000);
+                    
+                } else {
+                    showError('Error al verificar la respuesta: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error al verificar respuesta:', error);
+                showError('Error de conexión al verificar la respuesta.');
+            }
+        }
+
+        function resetQuizSection() {
+            // Ocultar quiz y mostrar contenido inicial
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('casosClinicosContent').style.display = 'block';
+        }
+
+        // Inicialización de la aplicación
         window.onload = function() {
             loadSuggestedQuestions();
             loadConversationHistory(); // Cargar historial guardado
@@ -1165,24 +1492,9 @@
             if (cambiarBtn) {
                 cambiarBtn.onclick = loadSuggestedQuestions;
             }
-            // Cambiar el botón del quiz
-            const quizContent = document.getElementById('quizContent');
-            if (quizContent) {
-                quizContent.innerHTML = `
-                    <div style="text-align: center;">
-                        <p style="margin-bottom: 1.5rem;">¡Pon a prueba tus conocimientos con 7 preguntas del curso!</p>
-                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
-                            <p style="margin: 0; font-size: 0.9rem; color: var(--color-texto);">
-                                📝 <strong>Instrucciones:</strong><br>
-                                • Responde 7 preguntas de opción múltiple<br>
-                                • Ve tu progreso en tiempo real<br>
-                                • Obtén tu puntaje final al terminar
-                            </p>
-                        </div>
-                        <button class="btn" onclick="startQuiz()">🎯 Iniciar quiz</button>
-                    </div>
-                `;
-            }
+            
+            // Inicializar estudiante
+            initializeStudent();
         };
     </script>
 </body>

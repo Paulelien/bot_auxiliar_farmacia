@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatBot Auxiliar de Farmacia - Avanxa</title>
+    <title>Asistente Virtual de Farmacia - Avanxa</title>
     <style>
         :root {
             --color-primario: #4B2067;
@@ -11,6 +11,7 @@
             --color-acento: #FF6B35;
             --color-texto: #2C3E50;
             --color-fondo: #F8F9FA;
+            --color-rojo: #FF0000;
         }
 
         * {
@@ -21,356 +22,320 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: #F8F9FA;
             min-height: 100vh;
             color: var(--color-texto);
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        .header {
-            background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(76, 31, 103, 0.3);
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .logo {
-            max-width: 200px;
-            margin-bottom: 1rem;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .chat-section, .quiz-section {
+        /* Sección del Asistente Virtual */
+        .assistant-intro {
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border: 3px solid var(--color-primario);
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #E9ECEF;
         }
 
-        .section-title {
-            color: var(--color-primario);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+        .assistant-intro p {
+            font-size: 1.1rem;
+            color: var(--color-texto);
             text-align: center;
+            margin-bottom: 0;
         }
 
-        .chat-input {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+        /* Chat Interface */
+        .chat-interface {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #E9ECEF;
         }
 
-        .chat-input input {
-            flex: 1;
-            min-width: 200px;
-            padding: 1rem 1.5rem;
-            border: 2px solid #E9ECEF;
-            border-radius: 25px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .chat-input input:focus {
-            outline: none;
-            border-color: var(--color-secundario);
-            box-shadow: 0 0 0 3px rgba(124, 63, 175, 0.1);
-        }
-
-        .btn {
-            background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 0.75rem 2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(76, 31, 103, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(76, 31, 103, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .chat-history {
+        .chat-window {
             background: #F8F9FA;
             border-radius: 12px;
             padding: 1.5rem;
             border: 1px solid #E9ECEF;
-            max-height: 400px;
-            overflow-y: auto;
+            min-height: 200px;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
 
-        .message {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .message.user {
-            background: #E8F5E8;
-            border-left: 4px solid #2E7D32;
-        }
-
-        .message.bot {
-            background: #F3E5F5;
-            border-left: 4px solid var(--color-secundario);
-        }
-
-        .message-header {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--color-primario);
-        }
-
-        .suggested-questions {
-            margin-top: 1.5rem;
-        }
-
-        .suggested-questions h4 {
-            color: var(--color-primario);
+        .chat-message {
+            display: flex;
+            justify-content: flex-end;
             margin-bottom: 1rem;
         }
 
-        .question-btn {
-            background: #F8F9FA;
-            border: 2px solid var(--color-secundario);
-            color: var(--color-secundario);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            margin: 0.25rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .question-btn:hover {
+        .chat-bubble {
             background: var(--color-secundario);
             color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            max-width: 70%;
+            position: relative;
+            margin-left: auto;
         }
 
-        .quiz-container {
-            text-align: center;
+        .chat-bubble::before {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid var(--color-secundario);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
         }
 
-        .quiz-question {
+        .chat-bubble.user-bubble::before {
+            right: auto;
+            left: -10px;
+            border-left: none;
+            border-right: 10px solid #E8F5E8;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chat-input-field {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 1px solid #E9ECEF;
+            border-radius: 25px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .chat-input-field:focus {
+            outline: none;
+            border-color: var(--color-secundario);
+        }
+
+        .btn-send {
+            background: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-send:hover {
+            background: var(--color-secundario);
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-action {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background: #E9ECEF;
+        }
+
+        .btn-action i {
             font-size: 1.2rem;
-            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        /* Sección de Casos Clínicos */
+        .clinical-cases-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #E9ECEF;
+        }
+
+        .case-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-icon {
+            background: var(--color-rojo);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .case-title {
+            font-size: 1.5rem;
+            font-weight: 600;
             color: var(--color-texto);
         }
 
-        .quiz-options {
-            display: grid;
-            gap: 1rem;
+        .case-description {
+            color: var(--color-texto);
             margin-bottom: 2rem;
+            line-height: 1.7;
         }
 
-        .quiz-progress {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .progress-text {
+        .btn-start-practice {
+            background: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
             font-weight: 600;
-            color: var(--color-primario);
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #E9ECEF;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
-            transition: width 0.3s ease;
-        }
-
-        .score-display {
-            font-size: 0.9rem;
-            color: var(--color-secundario);
-            font-weight: 600;
-        }
-
-        .quiz-option {
-            background: white;
-            border: 2px solid #E9ECEF;
-            padding: 1rem;
-            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: left;
+            margin-right: 1rem;
         }
 
-        .quiz-option:hover {
-            border-color: var(--color-secundario);
-            background: #F8F9FA;
+        .btn-start-practice:hover {
+            background: var(--color-secundario);
         }
 
-        .quiz-option.selected {
-            border-color: var(--color-secundario);
-            background: #F3E5F5;
+        .case-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .quiz-option.correct {
-            border-color: #4CAF50;
-            background: #E8F5E8;
+        .case-controls {
+            display: flex;
+            gap: 0.5rem;
         }
 
-        .quiz-option.incorrect {
-            border-color: #F44336;
-            background: #FFEBEE;
+        .btn-control {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s ease;
         }
 
-        .caso-clinico {
-            background: #f8f9fa;
-            border: 2px solid var(--color-secundario);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+        .btn-control:hover {
+            background: #E9ECEF;
         }
 
-        .caso-titulo {
-            color: var(--color-primario);
+        .btn-control i {
             font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .caso-descripcion {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--color-acento);
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .success {
-            background: linear-gradient(90deg, var(--color-secundario) 0%, #A084CA 100%);
-            color: white;
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-        }
-
-        .error {
-            background: linear-gradient(90deg, #F44336 0%, #EF5350 100%);
-            color: white;
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
+            color: #666;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 10px;
             }
             
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .chat-input {
+            .chat-input-container {
                 flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .chat-actions {
+                justify-content: center;
+            }
+            
+            .case-actions {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <img src="logo_avanxa.png" alt="Logo Avanxa" class="logo">
-            <h1>Chatbot Auxiliar de Farmacia</h1>
-            <p>Asistente educativo inteligente para el curso de Auxiliar de Farmacia</p>
+        <!-- Sección del Asistente Virtual -->
+        <div class="assistant-intro">
+            <p>¡Hola! Soy XXXXXXXXX, tu Asistente Virtual de Farmacia. Estoy aquí para ayudarte con tus dudas sobre el curso de Auxiliar de Farmacia. Puedes escribirme cualquier pregunta o elegir una de las sugerencias que aparecen más abajo. ¡Comencemos!</p>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Chat Section -->
-            <div class="chat-section">
-                <h2 class="section-title">💬 Haz tus preguntas</h2>
-                
-                <div class="chat-input">
-                    <input type="text" id="questionInput" placeholder="Ej: ¿Qué es el principio FEFO?" onkeypress="handleKeyPress(event)">
-                    <button class="btn" onclick="sendQuestion()" id="sendBtn">Preguntar</button>
-                </div>
-
-                <div class="chat-history" id="chatHistory">
-                    <div class="message bot">
-                        <div class="message-header">🤖 Asistente</div>
-                        <div>¡Hola! Soy tu asistente educativo para el curso de Auxiliar de Farmacia. ¿En qué puedo ayudarte hoy?</div>
+        <!-- Interfaz de Chat -->
+        <div class="chat-interface">
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-message">
+                    <div class="chat-bubble">
+                        <strong>Asistente educativo:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
                     </div>
-                </div>
-
-                <div class="suggested-questions">
-                    <h4>💡 Preguntas sugeridas:</h4>
-                    <div id="suggestedQuestions"></div>
                 </div>
             </div>
-
-            <!-- Casos Clínicos Section -->
-            <div class="quiz-section">
-                <h2 class="section-title">🏥 Casos Clínicos</h2>
-                
-                <div class="quiz-container">
-                    <div id="casosClinicosContent">
-                        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">¡Practica con casos clínicos reales para mejorar tus habilidades!</p>
-                        <div style="text-align: center; margin-top: 1rem;">
-                            <button class="btn" onclick="startCasosClinicos()" style="background: linear-gradient(135deg, #6f42c1, #8e44ad); color: white; padding: 1rem 2rem; font-size: 1.2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3); transition: all 0.3s ease;">
-                                🏥 Iniciar Casos Clínicos
-                            </button>
-                        </div>
-                    </div>
-                    <div id="quizContent" style="display: none;"></div>
+            
+            <div class="chat-input-container">
+                <button class="btn-send" onclick="sendQuestion()" id="sendBtn">Enviar</button>
+                <input type="text" id="questionInput" class="chat-input-field" placeholder="Escribe tu pregunta aquí" onkeypress="handleKeyPress(event)">
+                <div class="chat-actions">
+                    <button class="btn-action" onclick="clearChat()" title="Limpiar chat">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="btn-action" onclick="exportChat()" title="Exportar chat">
+                        <i class="fas fa-file-export"></i>
+                    </button>
                 </div>
             </div>
         </div>
+
+        <!-- Sección de Casos Clínicos -->
+        <div class="clinical-cases-section">
+            <div class="case-header">
+                <div class="case-icon">+</div>
+                <div class="case-title">Practica con Casos Clínicos</div>
+            </div>
+            
+            <div class="case-description">
+                ¡Prepárate para tu examen con casos clínicos reales! Practica en un entorno seguro y sin repercusiones negativas, diseñado para ayudarte a ensayar y reforzar tus conocimientos. Esta herramienta te permitirá familiarizarte con el tipo de preguntas que podrías enfrentar en el examen de competencia ante la SEREMI de Salud. ¡Aumenta tu confianza y asegura tu éxito!
+            </div>
+            
+            <div class="case-actions">
+                <button class="btn-start-practice" onclick="startCasosClinicos()">Iniciar Practica</button>
+                <div class="case-controls">
+                    <button class="btn-control" onclick="refreshCases()" title="Recargar">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                    <button class="btn-control" onclick="shuffleCases()" title="Mezclar">
+                        <i class="fas fa-random"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido de Casos Clínicos (oculto inicialmente) -->
+        <div id="quizContent" style="display: none;"></div>
     </div>
 
     <script>
-        // CASOS CLÍNICOS INTEGRADOS DIRECTAMENTE
+        // CASOS CLÍNICOS INTEGRADOS DIRECTAMENTE - TODOS LOS CASOS
         const CASOS_CLINICOS = {
             "casos_clinicos": [
                 {
@@ -413,6 +378,30 @@
                             ],
                             "respuesta_correcta": 1,
                             "explicacion": "El valor normal de presión arterial es menor a 120/80 mmHg."
+                        },
+                        {
+                            "id": 4,
+                            "pregunta": "¿Qué efecto secundario es común en los inhibidores de la ECA?",
+                            "opciones": [
+                                "A) Tos seca",
+                                "B) Diarrea",
+                                "C) Insomnio",
+                                "D) Pérdida de apetito"
+                            ],
+                            "respuesta_correcta": 0,
+                            "explicacion": "La tos seca es un efecto secundario frecuente de los inhibidores de la ECA como el enalapril."
+                        },
+                        {
+                            "id": 5,
+                            "pregunta": "¿Qué recomendación dietética es importante para María?",
+                            "opciones": [
+                                "A) Aumentar el consumo de sal",
+                                "B) Reducir el consumo de sodio",
+                                "C) Consumir más grasas saturadas",
+                                "D) Evitar las verduras"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "La reducción del consumo de sodio es fundamental en el tratamiento de la hipertensión arterial."
                         }
                     ]
                 },
@@ -456,17 +445,153 @@
                             ],
                             "respuesta_correcta": 0,
                             "explicacion": "Los valores normales de glucosa en ayunas son entre 70-100 mg/dL."
+                        },
+                        {
+                            "id": 4,
+                            "pregunta": "¿Qué complicación es más frecuente en pacientes diabéticos?",
+                            "opciones": [
+                                "A) Problemas cardíacos",
+                                "B) Problemas renales",
+                                "C) Problemas oculares",
+                                "D) Todas las anteriores"
+                            ],
+                            "respuesta_correcta": 3,
+                            "explicacion": "La diabetes puede afectar múltiples órganos, siendo frecuentes las complicaciones cardíacas, renales y oculares."
+                        },
+                        {
+                            "id": 5,
+                            "pregunta": "¿Qué recomendación es importante para el autocontrol de la diabetes?",
+                            "opciones": [
+                                "A) Medir glucosa solo cuando se sienta mal",
+                                "B) Realizar controles regulares de glucosa",
+                                "C) No medir nunca la glucosa",
+                                "D) Medir solo una vez al mes"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "El autocontrol regular de la glucosa es fundamental para el manejo adecuado de la diabetes."
                         }
                     ]
                 },
                 {
                     "id": 3,
-                    "titulo": "Caso Clínico: Gestión de Almacenamiento",
-                    "descripcion": "Un auxiliar de farmacia recibe un nuevo lote de vacunas y jeringas precargadas de insulina. Estos productos requieren condiciones especiales de almacenamiento.",
+                    "titulo": "Caso Clínico: Paciente con Dolor Crónico",
+                    "descripcion": "Ana, 58 años, padece artritis reumatoide y acude a la farmacia con dolor crónico en las articulaciones. Toma medicamentos antiinflamatorios regularmente.",
                     "preguntas": [
                         {
                             "id": 1,
-                            "pregunta": "¿Cuál es el principio de gestión más adecuado para estos productos?",
+                            "pregunta": "¿Qué tipo de medicamento es más apropiado para el dolor crónico de Ana?",
+                            "opciones": [
+                                "A) Paracetamol",
+                                "B) Ibuprofeno",
+                                "C) Morfina",
+                                "D) Aspirina"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "Los antiinflamatorios no esteroideos como el ibuprofeno son apropiados para el dolor inflamatorio crónico."
+                        },
+                        {
+                            "id": 2,
+                            "pregunta": "¿Qué efecto secundario es común en los AINEs?",
+                            "opciones": [
+                                "A) Problemas gastrointestinales",
+                                "B) Somnolencia",
+                                "C) Pérdida de memoria",
+                                "D) Visión borrosa"
+                            ],
+                            "respuesta_correcta": 0,
+                            "explicacion": "Los AINEs pueden causar irritación gástrica y úlceras, por lo que deben tomarse con alimentos."
+                        },
+
+                        {
+                            "id": 3,
+                            "pregunta": "¿Qué recomendación es importante para Ana?",
+                            "opciones": [
+                                "A) Tomar medicamentos con el estómago vacío",
+                                "B) Tomar medicamentos con alimentos",
+                                "C) No hacer ejercicio",
+                                "D) Evitar el reposo"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "Los AINEs deben tomarse con alimentos para reducir la irritación gástrica."
+                        },
+                        {
+                            "id": 4,
+                            "pregunta": "¿Qué terapia complementaria puede ayudar a Ana?",
+                            "opciones": [
+                                "A) Fisioterapia",
+                                "B) Acupuntura",
+                                "C) Ejercicio moderado",
+                                "D) Todas las anteriores"
+                            ],
+                            "respuesta_correcta": 3,
+                            "explicacion": "Todas estas terapias complementarias pueden ayudar en el manejo del dolor crónico."
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "titulo": "Caso Clínico: Paciente Pediátrico",
+                    "descripcion": "Lucas, 8 años, presenta fiebre de 38.5°C y dolor de garganta. Su madre acude a la farmacia buscando orientación sobre el tratamiento adecuado.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "¿Qué medicamento es seguro para la fiebre en niños?",
+                            "opciones": [
+                                "A) Aspirina",
+                                "B) Paracetamol",
+                                "C) Ibuprofeno",
+                                "D) B y C son correctas"
+                            ],
+                            "respuesta_correcta": 3,
+                            "explicacion": "Tanto el paracetamol como el ibuprofeno son seguros para niños, pero nunca aspirina por riesgo de síndrome de Reye."
+                        },
+
+                        {
+                            "id": 2,
+                            "pregunta": "¿Cuándo se debe derivar al médico un niño con fiebre?",
+                            "opciones": [
+                                "A) Siempre que tenga fiebre",
+                                "B) Si la fiebre persiste más de 3 días",
+                                "C) Solo si la fiebre es muy alta",
+                                "D) Nunca es necesario"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "Se debe derivar al médico si la fiebre persiste más de 3 días o si hay otros síntomas preocupantes."
+                        },
+                        {
+                            "id": 3,
+                            "pregunta": "¿Qué medida no farmacológica es útil para la fiebre?",
+                            "opciones": [
+                                "A) Baños con agua fría",
+                                "B) Baños con agua tibia",
+                                "C) Abrigar mucho al niño",
+                                "D) No dar líquidos"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "Los baños con agua tibia ayudan a bajar la fiebre de forma segura."
+                        },
+                        {
+                            "id": 4,
+                            "pregunta": "¿Qué es importante verificar antes de administrar medicamentos a niños?",
+                            "opciones": [
+                                "A) Solo el peso",
+                                "B) Solo la edad",
+                                "C) Peso, edad y antecedentes alérgicos",
+                                "D) Solo si tiene hambre"
+                            ],
+                            "respuesta_correcta": 2,
+                            "explicacion": "Es fundamental verificar peso, edad y antecedentes alérgicos antes de administrar medicamentos a niños."
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "titulo": "Caso Clínico: Gestión de Almacenamiento de Vacunas e Insulina",
+                    "descripcion": "Un auxiliar de farmacia recibe un nuevo lote de vacunas y jeringas precargadas de insulina. Estos productos requieren condiciones especiales de almacenamiento para mantener su calidad y eficacia.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "Considerando el vencimiento y la necesidad de cadena de frío, ¿cuál de las siguientes combinaciones de principio de gestión de existencias y rango de temperatura es la más adecuada para estos productos?",
                             "opciones": [
                                 "A) FIFO (First In, First Out) a 15-25°C",
                                 "B) LIFO (Last In, First Out) a 8-15°C", 
@@ -474,7 +599,83 @@
                                 "D) FSN (Fast, Slow, Non-moving) a menos de 0°C"
                             ],
                             "respuesta_correcta": 2,
-                            "explicacion": "El principio FEFO es fundamental para el auxiliar de farmacia. Prioriza la salida de productos cuya fecha de caducidad está más próxima. Las vacunas e insulinas requieren cadena de frío estricta entre 2-8°C."
+                            "explicacion": "La alternativa correcta es c) FEFO (First Expired, First Out) a 2-8°C. El principio FEFO, acrónimo en inglés de \"First Expired, First Out\", es fundamental para el auxiliar de farmacia y rige la norma 147. Este principio prioriza la salida de los productos cuya fecha de caducidad está más próxima, independientemente del lote, lo cual ayuda a prevenir pérdidas por vencimiento. Tanto las vacunas como las insulinas son productos que requieren mantener una cadena de frío estricta, lo que significa que deben conservarse a una temperatura entre 2 y 8°C. Es importante recordar que la insulina NUNCA debe ser congelada."
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "titulo": "Caso Clínico: Cálculo Posológico - Ácido Valproico Gotas",
+                    "descripcion": "Un paciente acude a la farmacia con una receta para Ácido Valproico Gotas. La indicación médica es \"administrar 23 gotas cada 12 horas por 3 meses\". La farmacia solo dispone de Ácido Valproico en una presentación de frascos de 25 mL, y se sabe que 20 gotas equivalen a 1 mL.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "¿Cuántos frascos de 25 mL de Ácido Valproico Gotas debería dispensar el auxiliar de farmacia para cubrir el tratamiento completo de este paciente?",
+                            "opciones": [
+                                "A) 8 frascos",
+                                "B) 9 frascos",
+                                "C) 10 frascos", 
+                                "D) 4 frascos"
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "La alternativa correcta es b) 9 frascos. Para determinar la cantidad de frascos a dispensar, se realizan los siguientes cálculos posológicos: 1. Calcular la dosis diaria en gotas: La indicación \"cada 12 horas\" implica 2 administraciones al día (24 horas / 12 horas = 2). Por lo tanto, 23 gotas * 2 veces al día = 46 gotas diarias. 2. Calcular el total de gotas para el tratamiento: El tratamiento es por 3 meses, lo que se considera como 90 días. Entonces, 46 gotas/día * 90 días = 4.140 gotas necesarias para el tratamiento. 3. Determinar cuántas gotas contiene un frasco de 25 mL: Sabiendo que 20 gotas equivalen a 1 mL, un frasco de 25 mL contiene 25 mL * 20 gotas/mL = 500 gotas por frasco. 4. Calcular el número de frascos necesarios: Se divide el total de gotas requeridas por el número de gotas por frasco: 4.140 gotas / 500 gotas/frasco = 8,28 frascos. 5. Dado que no es posible dispensar frascos fraccionados y se debe asegurar la indemnidad del producto terminado y el cumplimiento completo del tratamiento, se debe redondear al entero superior. Por lo tanto, el auxiliar deberá dispensar 9 frascos al paciente."
+                        }
+                    ]
+                },
+                {
+                    "id": 7,
+                    "titulo": "Caso Clínico: Despacho de Medicamentos Estupefacientes",
+                    "descripcion": "Un paciente presenta una receta para un medicamento clasificado como estupefaciente. En ese momento, el Químico Farmacéutico (Director Técnico) no se encuentra en el establecimiento, y el Auxiliar de Farmacia es el único personal presente con autorización para despachar otros tipos de recetas y manejar el abastecimiento.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "Según el Reglamento 466, ¿cuál es la acción correcta que debe tomar el Auxiliar de Farmacia en esta situación?",
+                            "opciones": [
+                                "A) Despachar la receta, haciendo constar su nombre y firma, ya que tiene autorización sanitaria para el despacho de productos farmacéuticos en general.",
+                                "B) Negarse a despachar la receta y pedir al paciente que espere al Químico Farmacéutico, ya que el despacho de este tipo de medicamentos es una responsabilidad exclusiva de este último.",
+                                "C) Informar al paciente que la farmacia no comercializa este tipo de medicamentos controlados.",
+                                "D) Despachar la receta si cuenta con una autorización escrita del Químico Farmacéutico para acceder al área de control de stock."
+                            ],
+                            "respuesta_correcta": 1,
+                            "explicacion": "La alternativa correcta es b) Negarse a despachar la receta y pedir al paciente que espere al Químico Farmacéutico, ya que el despacho de este tipo de medicamentos es una responsabilidad exclusiva de este último. El Reglamento 466 establece claramente que es responsabilidad del Químico Farmacéutico (Director Técnico) despachar personalmente las recetas de productos farmacéuticos sometidos a controles legales especiales, como estupefacientes y psicotrópicos, dejando constancia de su nombre y firma. Aunque el auxiliar de farmacia tiene responsabilidades en el despacho y manejo de productos farmacéuticos bajo la supervisión del director técnico, la función específica de despacho personal de sustancias controladas es atribuida al Químico Farmacéutico. El acceso al área de control de stock de estos productos está restringido al director técnico o personal autorizado por escrito por él, pero esto no delega la obligación de \"despacho personal\" del Químico Farmacéutico."
+                        }
+                    ]
+                },
+                {
+                    "id": 8,
+                    "titulo": "Caso Clínico: Validez de Recetas Magistrales",
+                    "descripcion": "Un paciente acude a una farmacia que cuenta con recetario magistral, presentando una receta para una fórmula magistral (una crema tópica personalizada) que fue extendida por su médico hace 40 días. El auxiliar de farmacia debe verificar la validez de la receta antes de procesarla para su elaboración.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "¿Cuál es el estado de la receta magistral presentada por el paciente, según la normativa vigente?",
+                            "opciones": [
+                                "A) Es válida, ya que las recetas magistrales, al ser personalizadas, no tienen un plazo de caducidad estricto.",
+                                "B) Es válida, siempre y cuando el médico revalide la fecha en la farmacia mediante un nuevo documento o firma.",
+                                "C) No es válida, pues ha excedido el plazo legal de 30 días corridos desde su extensión.",
+                                "D) Es válida si el auxiliar de farmacia, tras evaluar al paciente, considera que el tratamiento sigue siendo pertinente."
+                            ],
+                            "respuesta_correcta": 2,
+                            "explicacion": "La alternativa correcta es c) No es válida, pues ha excedido el plazo legal de 30 días corridos desde su extensión. Los documentos indican que \"El plazo durante el cual una receta es válida para ser presentada a su elaboración en recetario es de 30 días corridos contados desde la fecha de su extensión\". Una vez superado este plazo, la receta pierde su validez para ser elaborada en el recetario, independientemente de la necesidad clínica o la valoración del auxiliar."
+                        }
+                    ]
+                },
+                {
+                    "id": 9,
+                    "titulo": "Caso Clínico: Almacenamiento de Medicamentos Fotosensibles",
+                    "descripcion": "El auxiliar de farmacia Pablo está realizando una revisión de las condiciones de almacenamiento en la sala de ventas. Observa que varios envases de medicamentos fotosensibles (que deben protegerse de la luz) están ubicados cerca de un ventanal donde reciben luz solar directa durante varias horas al día. Adicionalmente, Pablo nota que los termómetros de máxima y mínima no se han registrado por escrito en los últimos cinco días en las distintas áreas de almacenamiento.",
+                    "preguntas": [
+                        {
+                            "id": 1,
+                            "pregunta": "¿Cuál de los siguientes factores de almacenamiento representa un riesgo inmediato para la calidad de los medicamentos fotosensibles observados y qué acción se requiere con respecto a la temperatura?",
+                            "opciones": [
+                                "A) La humedad, ya que promueve el crecimiento de bacterias y hongos en el producto.",
+                                "B) La temperatura, aunque los medicamentos fotosensibles no se ven directamente afectados por ella.",
+                                "C) La luz, que puede degradar los medicamentos, y el registro constante (al menos dos veces al día) y por escrito de la temperatura es obligatorio en todas las áreas de almacenamiento.",
+                                "D) La falta de segregación física de los productos, que puede llevar a contaminación cruzada."
+                            ],
+                            "respuesta_correcta": 2,
+                            "explicacion": "La alternativa correcta es c) La luz, que puede degradar los medicamentos, y el registro constante (al menos dos veces al día) y por escrito de la temperatura es obligatorio en todas las áreas de almacenamiento."
                         }
                     ]
                 }
@@ -526,26 +727,96 @@
 
         // Función para agregar mensaje al chat
         function addMessage(type, content) {
-            const chatHistory = document.getElementById('chatHistory');
+            const chatWindow = document.getElementById('chatWindow');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
+            messageDiv.className = 'chat-message';
             
-            const header = type === 'user' ? '👤 Tú' : '🤖 Asistente';
-            messageDiv.innerHTML = `
-                <div class="message-header">${header}</div>
-                <div>${content}</div>
+            if (type === 'user') {
+                // Mensaje del usuario (alineado a la izquierda)
+                messageDiv.style.justifyContent = 'flex-start';
+                messageDiv.innerHTML = `
+                    <div class="chat-bubble user-bubble" style="background: #E8F5E8; color: #2C3E50; margin-left: 0; margin-right: auto;">
+                        <strong>Tú:</strong> ${content}
+                    </div>
+                `;
+            } else {
+                // Mensaje del bot (alineado a la derecha)
+                messageDiv.innerHTML = `
+                    <div class="chat-bubble">
+                        <strong>Asistente educativo:</strong> ${content}
+                    </div>
+                `;
+            }
+            
+            chatWindow.appendChild(messageDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // Función para limpiar el chat
+        function clearChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.innerHTML = `
+                <div class="chat-message">
+                    <div class="chat-bubble">
+                        <strong>Asistente educativo:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
+                    </div>
+                </div>
             `;
+        }
+
+        // Función para exportar el chat
+        function exportChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const messages = chatWindow.querySelectorAll('.chat-bubble');
+            let chatText = 'Conversación con Asistente Virtual de Farmacia\n';
+            chatText += 'Fecha: ' + new Date().toLocaleString() + '\n\n';
             
-            chatHistory.appendChild(messageDiv);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
+            messages.forEach(message => {
+                chatText += message.textContent + '\n\n';
+            });
+            
+            const blob = new Blob([chatText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'chat_farmacia_' + new Date().toISOString().slice(0,10) + '.txt';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Función para recargar casos clínicos
+        function refreshCases() {
+            if (confirm('¿Deseas recargar los casos clínicos?')) {
+                location.reload();
+            }
+        }
+
+        // Función para mezclar casos clínicos
+        function shuffleCases() {
+            if (confirm('¿Deseas mezclar el orden de los casos clínicos?')) {
+                // Mezclar el array de casos clínicos
+                for (let i = CASOS_CLINICOS.casos_clinicos.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [CASOS_CLINICOS.casos_clinicos[i], CASOS_CLINICOS.casos_clinicos[j]] = 
+                    [CASOS_CLINICOS.casos_clinicos[j], CASOS_CLINICOS.casos_clinicos[i]];
+                }
+                alert('Casos clínicos mezclados correctamente.');
+            }
         }
 
         // Función para mostrar errores
         function showError(message) {
             const errorDiv = document.createElement('div');
-            errorDiv.className = 'error';
+            errorDiv.style.cssText = `
+                background: #F44336;
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                margin: 1rem 0;
+                text-align: center;
+            `;
             errorDiv.textContent = message;
-            document.querySelector('.chat-section').insertBefore(errorDiv, document.querySelector('.chat-history'));
+            document.querySelector('.chat-interface').insertBefore(errorDiv, document.querySelector('.chat-input-container'));
             
             setTimeout(() => {
                 errorDiv.remove();
@@ -562,8 +833,10 @@
             
             console.log(`Casos clínicos iniciados con ${casosClinicos.length} casos y ${totalPreguntasCasosClinicos} preguntas`);
             
-            // Ocultar contenido inicial y mostrar quiz
-            document.getElementById('casosClinicosContent').style.display = 'none';
+            // Ocultar secciones principales y mostrar quiz
+            document.querySelector('.assistant-intro').style.display = 'none';
+            document.querySelector('.chat-interface').style.display = 'none';
+            document.querySelector('.clinical-cases-section').style.display = 'none';
             document.getElementById('quizContent').style.display = 'block';
             
             showCasoClinico();
@@ -614,7 +887,11 @@
             const pregunta = caso.preguntas[preguntaActual];
             
             // Calcular progreso general
-            const preguntasCompletadas = (casoActual * 3) + preguntaActual;
+            let preguntasCompletadas = 0;
+            for (let i = 0; i < casoActual; i++) {
+                preguntasCompletadas += casosClinicos[i].preguntas.length;
+            }
+            preguntasCompletadas += preguntaActual;
             const progreso = (preguntasCompletadas / totalPreguntasCasosClinicos) * 100;
             
             quizContent.innerHTML = `
@@ -739,31 +1016,15 @@
         function resetQuizSection() {
             // Ocultar quiz y mostrar contenido inicial
             document.getElementById('quizContent').style.display = 'none';
-            document.getElementById('casosClinicosContent').style.display = 'block';
+            document.querySelector('.assistant-intro').style.display = 'block';
+            document.querySelector('.chat-interface').style.display = 'block';
+            document.querySelector('.clinical-cases-section').style.display = 'block';
         }
 
-        // Cargar preguntas sugeridas al iniciar
-        window.onload = function() {
-            const preguntasSugeridas = [
-                "¿Qué es el principio FEFO?",
-                "¿Cómo se almacenan los medicamentos termolábiles?",
-                "¿Qué son los medicamentos de venta libre?",
-                "¿Cómo se debe atender al cliente en una farmacia?",
-                "¿Qué es el Decreto 405?"
-            ];
-            
-            const container = document.getElementById('suggestedQuestions');
-            preguntasSugeridas.forEach(pregunta => {
-                const btn = document.createElement('button');
-                btn.className = 'question-btn';
-                btn.textContent = pregunta;
-                btn.onclick = () => {
-                    document.getElementById('questionInput').value = pregunta;
-                    document.getElementById('questionInput').focus();
-                };
-                container.appendChild(btn);
-            });
-        };
+            // Inicialización al cargar la página
+    window.onload = function() {
+        // La página ya está lista para usar
+    };
     </script>
 </body>
 </html> 

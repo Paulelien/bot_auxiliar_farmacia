@@ -491,7 +491,36 @@ def extraer_preguntas_respuestas_modulo():
     preguntas = []
     ruta = os.path.join(CARPETA_MATERIAL, "preguntas_tipo.txt")
     modulo_actual = "General"
+    
     if os.path.exists(ruta):
+        with open(ruta, 'r', encoding='utf-8') as f:
+            contenido = f.read()
+        
+        # Dividir por preguntas numeradas
+        import re
+        # Buscar patrones como "1. ¿Pregunta?" seguido de opciones y "Respuesta: X"
+        patron = r'(\d+)\.\s*(¿[^?]+\?)\s*([A-D]\)[^A-D]*[A-D]\)[^A-D]*[A-D]\)[^A-D]*[A-D]\)[^A-D]*)\s*Respuesta:\s*([A-D])'
+        matches = re.findall(patron, contenido, re.DOTALL)
+        
+        for match in matches:
+            numero = match[0]
+            pregunta = match[1].strip()
+            opciones = match[2].strip()
+            respuesta = match[3].strip()
+            
+            # Extraer la respuesta completa basada en la letra
+            opciones_lista = re.findall(r'([A-D]\)[^A-D]*)', opciones)
+            if len(opciones_lista) >= 4:
+                respuesta_completa = opciones_lista[ord(respuesta) - ord('A')].strip()
+                preguntas.append({
+                    'pregunta': pregunta,
+                    'respuesta': respuesta_completa,
+                    'modulo': modulo_actual,
+                    'opciones': opciones_lista
+                })
+    
+    # Si no se encontraron preguntas con regex, usar el método anterior
+    if not preguntas:
         with open(ruta, 'r', encoding='utf-8') as f:
             lines = f.readlines()
         pregunta = None
@@ -507,31 +536,48 @@ def extraer_preguntas_respuestas_modulo():
                 preguntas.append({'pregunta': pregunta, 'respuesta': respuesta, 'modulo': modulo_actual})
                 pregunta = None
                 respuesta = None
+    
     return preguntas
 
 PREGUNTAS_QUIZ = extraer_preguntas_respuestas_modulo()
 
 # Función mejorada para generar distractores relacionados
 def generar_opciones(pregunta_idx, preguntas, n_opciones=4):
-    correcta = preguntas[pregunta_idx]['respuesta']
-    modulo = preguntas[pregunta_idx]['modulo']
+    pregunta_actual = preguntas[pregunta_idx]
+    
+    # Si la pregunta ya tiene opciones extraídas, usarlas
+    if 'opciones' in pregunta_actual and len(pregunta_actual['opciones']) >= 4:
+        opciones = pregunta_actual['opciones'].copy()
+        correcta = pregunta_actual['respuesta']
+        # Mezclar las opciones
+        random.shuffle(opciones)
+        return opciones, correcta
+    
+    # Método fallback: generar opciones como antes
+    correcta = pregunta_actual['respuesta']
+    modulo = pregunta_actual['modulo']
+    
     # Buscar distractores del mismo módulo
     distractores_modulo = [p['respuesta'] for i, p in enumerate(preguntas)
                            if i != pregunta_idx and p['modulo'] == modulo and p['respuesta']]
+    
     # Si hay menos de 3, buscar por similitud de palabras clave
     if len(distractores_modulo) < n_opciones-1:
         # Buscar distractores con palabras clave similares
-        pregunta_base = preguntas[pregunta_idx]['pregunta']
+        pregunta_base = pregunta_actual['pregunta']
         palabras_base = set(pregunta_base.lower().replace('¿','').replace('?','').split())
         distractores_similares = [p['respuesta'] for i, p in enumerate(preguntas)
                                  if i != pregunta_idx and p['respuesta'] and len(palabras_base.intersection(set(p['pregunta'].lower().split()))) > 0]
         distractores = list(set(distractores_modulo + distractores_similares))
     else:
         distractores = distractores_modulo
+    
     # Si aún faltan, completar con aleatorios
     if len(distractores) < n_opciones-1:
         otros = [p['respuesta'] for i, p in enumerate(preguntas) if i != pregunta_idx and p['respuesta'] and p['respuesta'] not in distractores]
-        distractores += random.sample(otros, k=min(n_opciones-1-len(distractores), len(otros)))
+        if otros:
+            distractores += random.sample(otros, k=min(n_opciones-1-len(distractores), len(otros)))
+    
     distractores = distractores[:n_opciones-1]
     opciones = distractores + [correcta]
     random.shuffle(opciones)
@@ -562,18 +608,30 @@ if 'quiz_total' not in st.session_state:
 # Botón para iniciar quiz y seleccionar cantidad de preguntas
 if not st.session_state.quiz_activo:
     st.markdown('<div style="display: flex; justify-content: center;">', unsafe_allow_html=True)
-    st.session_state.quiz_total = st.slider("¿Cuántas preguntas quieres responder?", min_value=3, max_value=min(15, len(PREGUNTAS_QUIZ)), value=5)
-    if st.button("Iniciar Quiz", key="iniciar_quiz_btn"):
-        st.session_state.quiz_activo = True
-        st.session_state.quiz_puntaje = 0
-        st.session_state.quiz_pregunta_actual = 0
-        st.session_state.quiz_feedback = ''
-        st.session_state.quiz_opcion_seleccionada = None
-        st.session_state.quiz_preguntas_orden = random.sample(range(len(PREGUNTAS_QUIZ)), k=st.session_state.quiz_total)
+    
+    # Verificar que hay preguntas disponibles
+    if len(PREGUNTAS_QUIZ) == 0:
+        st.error("No hay preguntas de quiz disponibles. Verifica que el archivo 'preguntas_tipo.txt' existe y tiene el formato correcto.")
+    else:
+        max_preguntas = min(15, len(PREGUNTAS_QUIZ))
+        st.session_state.quiz_total = st.slider("¿Cuántas preguntas quieres responder?", min_value=1, max_value=max_preguntas, value=min(5, max_preguntas))
+        
+        if st.button("Iniciar Quiz", key="iniciar_quiz_btn"):
+            st.session_state.quiz_activo = True
+            st.session_state.quiz_puntaje = 0
+            st.session_state.quiz_pregunta_actual = 0
+            st.session_state.quiz_feedback = ''
+            st.session_state.quiz_opcion_seleccionada = None
+            
+            # Asegurar que no se pida más preguntas de las disponibles
+            preguntas_disponibles = min(st.session_state.quiz_total, len(PREGUNTAS_QUIZ))
+            st.session_state.quiz_preguntas_orden = random.sample(range(len(PREGUNTAS_QUIZ)), k=preguntas_disponibles)
+            st.session_state.quiz_total = preguntas_disponibles
+    
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Mostrar preguntas del quiz
-if st.session_state.quiz_activo and st.session_state.quiz_pregunta_actual < st.session_state.quiz_total:
+if st.session_state.quiz_activo and st.session_state.quiz_pregunta_actual < st.session_state.quiz_total and st.session_state.quiz_pregunta_actual < len(st.session_state.quiz_preguntas_orden):
     idx = st.session_state.quiz_preguntas_orden[st.session_state.quiz_pregunta_actual]
     pregunta = PREGUNTAS_QUIZ[idx]['pregunta']
     opciones, correcta = generar_opciones(idx, PREGUNTAS_QUIZ)
@@ -599,7 +657,7 @@ if st.session_state.quiz_activo and st.session_state.quiz_pregunta_actual < st.s
             st.session_state.quiz_respondida = False
 
 # Mostrar resultado final
-if st.session_state.quiz_activo and st.session_state.quiz_pregunta_actual >= st.session_state.quiz_total:
+if st.session_state.quiz_activo and (st.session_state.quiz_pregunta_actual >= st.session_state.quiz_total or st.session_state.quiz_pregunta_actual >= len(st.session_state.quiz_preguntas_orden)):
     st.success(f'¡Quiz finalizado! Puntaje: {st.session_state.quiz_puntaje} de {st.session_state.quiz_total}')
     if st.button("Reiniciar Quiz", key="quiz_reiniciar"):
         st.session_state.quiz_activo = False

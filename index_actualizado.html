@@ -873,13 +873,24 @@
 
         // Función para iniciar casos clínicos
         function startCasosClinicos() {
+            console.log('🚀 Iniciando casos clínicos...');
+            
             casosClinicos = CASOS_CLINICOS.casos_clinicos;
             casoActual = 0;
             preguntaActual = 0;
             puntajeCasosClinicos = 0;
             totalPreguntasCasosClinicos = casosClinicos.reduce((total, caso) => total + caso.preguntas.length, 0);
+            quizAnswered = false; // Resetear estado de respuesta
             
-            console.log(`Casos clínicos iniciados con ${casosClinicos.length} casos y ${totalPreguntasCasosClinicos} preguntas`);
+            console.log(`✅ Casos clínicos iniciados con ${casosClinicos.length} casos y ${totalPreguntasCasosClinicos} preguntas`);
+            console.log('📊 Variables inicializadas:', {
+                casosClinicos: casosClinicos.length,
+                casoActual,
+                preguntaActual,
+                puntajeCasosClinicos,
+                totalPreguntasCasosClinicos,
+                quizAnswered
+            });
             
             // Ocultar secciones principales y mostrar quiz
             document.querySelector('.assistant-intro').style.display = 'none';
@@ -887,6 +898,7 @@
             document.querySelector('.clinical-cases-section').style.display = 'none';
             document.getElementById('quizContent').style.display = 'block';
             
+            console.log('🔄 Llamando a showCasoClinico...');
             showCasoClinico();
         }
 
@@ -973,12 +985,33 @@
 
         // Función para seleccionar opción
         function selectOptionCasoClinico(element, optionIndex) {
-            if (quizAnswered) return;
+            console.log('🔍 Función selectOptionCasoClinico ejecutada');
+            console.log('Elemento:', element);
+            console.log('Índice de opción:', optionIndex);
+            console.log('quizAnswered:', quizAnswered);
+            
+            if (quizAnswered) {
+                console.log('❌ Quiz ya respondido, no se puede seleccionar');
+                return;
+            }
+            
+            // Remover selección anterior
             document.querySelectorAll('.quiz-option').forEach(opt => {
                 opt.classList.remove('selected');
             });
+            
+            // Agregar selección nueva
             element.classList.add('selected');
-            document.getElementById('checkBtn').disabled = false;
+            console.log('✅ Opción seleccionada:', element.textContent);
+            
+            // Habilitar botón de responder
+            const checkBtn = document.getElementById('checkBtn');
+            if (checkBtn) {
+                checkBtn.disabled = false;
+                console.log('✅ Botón de responder habilitado');
+            } else {
+                console.log('❌ No se encontró el botón de responder');
+            }
         }
 
         // Función para verificar respuesta

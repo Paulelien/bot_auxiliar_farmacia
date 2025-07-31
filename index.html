@@ -715,7 +715,8 @@
             
             try {
                 // Conectar con tu API FastAPI
-                const response = await fetch('/preguntar', {
+                const API_URL = 'https://chatbot-auxiliar-farmacia.onrender.com';
+                const response = await fetch(`${API_URL}/preguntar`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

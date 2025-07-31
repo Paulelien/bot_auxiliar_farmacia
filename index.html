@@ -697,8 +697,8 @@
             }
         }
 
-        // Función para enviar pregunta (simulada para LMS)
-        function sendQuestion() {
+        // Función para enviar pregunta (conectada con backend)
+        async function sendQuestion() {
             const input = document.getElementById('questionInput');
             const question = input.value.trim();
             
@@ -710,17 +710,36 @@
             // Agregar pregunta del usuario al chat
             addMessage('user', question);
             
-            // Simular respuesta del bot
-            setTimeout(() => {
-                const respuestas = [
-                    "Excelente pregunta. Te recomiendo revisar el material del curso para obtener información más detallada.",
-                    "Esta es una consulta importante. Consulta con tu instructor para obtener la respuesta más precisa.",
-                    "Buena pregunta. Te sugiero revisar los módulos correspondientes del curso.",
-                    "Esta información se encuentra en el material de estudio. Revisa los documentos proporcionados."
-                ];
-                const respuesta = respuestas[Math.floor(Math.random() * respuestas.length)];
-                addMessage('bot', respuesta);
-            }, 1000);
+            // Mostrar indicador de carga
+            const loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo...');
+            
+            try {
+                // Conectar con tu API FastAPI
+                const response = await fetch('/preguntar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        pregunta: question
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                
+                const data = await response.json();
+                
+                // Remover mensaje de carga y agregar respuesta real
+                loadingMessage.remove();
+                addMessage('bot', data.respuesta);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loadingMessage.remove();
+                addMessage('bot', 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.');
+            }
 
             input.value = '';
         }
@@ -750,6 +769,8 @@
             
             chatWindow.appendChild(messageDiv);
             chatWindow.scrollTop = chatWindow.scrollHeight;
+            
+            return messageDiv; // Retornar el elemento para poder eliminarlo después
         }
 
         // Función para limpiar el chat

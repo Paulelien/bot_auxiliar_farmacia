@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Última actualización: 2024-12-19 17:00 - FORZAR ACTUALIZACIÓN LMS - DEBUG CASOS CLÍNICOS -->
+<!-- Última actualización: 2024-12-19 17:15 - ESTILOS QUIZ CORREGIDOS - VISUALIZACIÓN DE SELECCIÓN -->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Virtual de Farmacia - Avanxa - VERSION ACTUALIZADA 17:00 - DEBUG ACTIVO</title>
+    <title>Asistente Virtual de Farmacia - Avanxa - VERSION ACTUALIZADA 17:15 - ESTILOS QUIZ CORREGIDOS</title>
     <style>
         :root {
             --color-primario: #4B2067;
@@ -272,6 +272,105 @@
                 gap: 1rem;
                 align-items: stretch;
             }
+        }
+
+        /* Estilos para el Quiz de Casos Clínicos */
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-texto);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #E9ECEF;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: var(--color-texto);
+        }
+
+        .quiz-option:hover {
+            border-color: var(--color-secundario);
+            background: #F8F9FA;
+        }
+
+        .quiz-option.selected {
+            background: var(--color-secundario);
+            color: white;
+            border-color: var(--color-secundario);
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        .quiz-option.correct {
+            background: #28A745;
+            color: white;
+            border-color: #28A745;
+        }
+
+        .quiz-option.incorrect {
+            background: #DC3545;
+            color: white;
+            border-color: #DC3545;
+        }
+
+        .quiz-progress {
+            background: #F8F9FA;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-texto);
+        }
+
+        .btn {
+            background: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--color-secundario);
+        }
+
+        .btn:disabled {
+            background: #6C757D;
+            cursor: not-allowed;
+        }
+
+        .success {
+            background: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .error {
+            background: #F8D7DA;
+            color: #721C24;
+            border: 1px solid #F5C6CB;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1104,10 +1203,10 @@
 
                     // Inicialización al cargar la página
         window.onload = function() {
-            alert('🚀 VERSIÓN ACTUALIZADA 17:00 - DEBUG CASOS CLÍNICOS - Si ves este mensaje, el LMS está cargando el archivo correcto');
-            console.log('🚀 LMS - Página cargada correctamente - Versión actualizada 17:00');
+            alert('🚀 VERSIÓN ACTUALIZADA 17:15 - ESTILOS QUIZ CORREGIDOS - Si ves este mensaje, el LMS está cargando el archivo correcto');
+            console.log('🚀 LMS - Página cargada correctamente - Versión actualizada 17:15');
             console.log('🔗 API URL configurada:', 'https://asistente-auxiliar-farmacia.onrender.com');
-            console.log('🔍 Logs de debug para casos clínicos activados');
+            console.log('✅ Estilos de quiz corregidos - Visualización de selección activada');
             
             // Verificar que las secciones estén visibles
             const clinicalSection = document.querySelector('.clinical-cases-section');

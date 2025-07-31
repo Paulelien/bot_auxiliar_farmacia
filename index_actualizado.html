@@ -372,6 +372,34 @@
             padding: 1rem;
             margin-top: 1rem;
         }
+
+        /* Botón para volver al chat */
+        .btn-back-to-chat {
+            background: var(--color-secundario);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .btn-back-to-chat:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .case-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -411,6 +439,9 @@
             <div class="case-header">
                 <div class="case-icon">+</div>
                 <div class="case-title">Practica con Casos Clínicos</div>
+                <button class="btn-back-to-chat" onclick="resetQuizSection()" title="Volver al Chat">
+                    <i class="fas fa-comments"></i> Volver al Chat
+                </button>
             </div>
             
             <div class="case-description">
@@ -1078,7 +1109,12 @@
                         </div>
                     `).join('')}
                 </div>
-                <button class="btn" onclick="checkAnswerCasoClinico()" id="checkBtn" disabled>Responder</button>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <button class="btn" onclick="checkAnswerCasoClinico()" id="checkBtn" disabled>Responder</button>
+                    <button class="btn-back-to-chat" onclick="resetQuizSection()" style="margin: 0;">
+                        <i class="fas fa-comments"></i> Volver al Chat
+                    </button>
+                </div>
             `;
         }
 
@@ -1203,10 +1239,11 @@
 
                     // Inicialización al cargar la página
         window.onload = function() {
-            alert('🚀 VERSIÓN ACTUALIZADA 17:15 - ESTILOS QUIZ CORREGIDOS - Si ves este mensaje, el LMS está cargando el archivo correcto');
-            console.log('🚀 LMS - Página cargada correctamente - Versión actualizada 17:15');
+            alert('🚀 VERSIÓN ACTUALIZADA 17:30 - BOTÓN VOLVER AL CHAT AGREGADO - Si ves este mensaje, el LMS está cargando el archivo correcto');
+            console.log('🚀 LMS - Página cargada correctamente - Versión actualizada 17:30');
             console.log('🔗 API URL configurada:', 'https://asistente-auxiliar-farmacia.onrender.com');
             console.log('✅ Estilos de quiz corregidos - Visualización de selección activada');
+            console.log('✅ Botón "Volver al Chat" agregado en casos clínicos');
             
             // Verificar que las secciones estén visibles
             const clinicalSection = document.querySelector('.clinical-cases-section');

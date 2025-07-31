@@ -707,6 +707,9 @@
                 return;
             }
 
+            console.log('=== INICIO DE ENVÍO DE PREGUNTA ===');
+            console.log('Pregunta a enviar:', question);
+
             // Agregar pregunta del usuario al chat
             addMessage('user', question);
             
@@ -716,45 +719,56 @@
             try {
                 // Conectar con tu API FastAPI
                 const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
-                console.log('Intentando conectar a:', API_URL);
+                console.log('🔗 Intentando conectar a:', API_URL);
+                console.log('📝 Pregunta a enviar:', question);
                 
                 // Primero probar si la API está disponible
+                console.log('🧪 Probando conexión básica...');
                 const testResponse = await fetch(`${API_URL}/`, {
-                    method: 'GET'
+                    method: 'GET',
+                    mode: 'cors'
                 });
-                console.log('Test response status:', testResponse.status);
+                console.log('✅ Test response status:', testResponse.status);
                 
+                console.log('📤 Enviando pregunta al endpoint /preguntar...');
                 const response = await fetch(`${API_URL}/preguntar`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    mode: 'cors',
                     body: JSON.stringify({
                         pregunta: question
                     })
                 });
                 
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
+                console.log('📥 Response status:', response.status);
+                console.log('📥 Response headers:', response.headers);
                 
                 if (!response.ok) {
                     throw new Error(`Error en la respuesta del servidor: ${response.status}`);
                 }
                 
                 const data = await response.json();
-                console.log('Response data:', data);
+                console.log('✅ Response data recibida:', data);
+                console.log('✅ Respuesta del bot:', data.respuesta);
                 
                 // Remover mensaje de carga y mostrar respuesta real
                 loadingMessage.remove();
                 addMessage('bot', data.respuesta);
+                console.log('✅ Mensaje del bot agregado al chat');
                 
             } catch (error) {
-                console.error('Error:', error);
+                console.error('❌ Error detallado:', error);
+                console.error('❌ Error message:', error.message);
+                console.error('❌ Error stack:', error.stack);
                 loadingMessage.remove();
                 addMessage('bot', 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.');
+                console.log('❌ Mensaje de error mostrado al usuario');
             }
             
             input.value = '';
+            console.log('=== FIN DE ENVÍO DE PREGUNTA ===');
         }
 
         // Función para agregar mensaje al chat

@@ -710,13 +710,13 @@
             // Agregar pregunta del usuario al chat
             addMessage('user', question);
             
-            // Mostrar indicador de carga
+            // Mostrar mensaje de carga
             const loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo...');
             
             try {
-                        // Conectar con tu API FastAPI - VERSIÓN DE PRUEBA
-        const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
-        console.log('Intentando conectar a:', API_URL);
+                // Conectar con tu API FastAPI
+                const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
+                console.log('Intentando conectar a:', API_URL);
                 
                 // Primero probar si la API está disponible
                 const testResponse = await fetch(`${API_URL}/`, {
@@ -744,7 +744,7 @@
                 const data = await response.json();
                 console.log('Response data:', data);
                 
-                // Remover mensaje de carga y agregar respuesta real
+                // Remover mensaje de carga y mostrar respuesta real
                 loadingMessage.remove();
                 addMessage('bot', data.respuesta);
                 
@@ -753,7 +753,7 @@
                 loadingMessage.remove();
                 addMessage('bot', 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.');
             }
-
+            
             input.value = '';
         }
 
@@ -782,7 +782,6 @@
             
             chatWindow.appendChild(messageDiv);
             chatWindow.scrollTop = chatWindow.scrollHeight;
-            
             return messageDiv; // Retornar el elemento para poder eliminarlo después
         }
 

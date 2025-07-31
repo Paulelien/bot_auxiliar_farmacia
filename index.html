@@ -714,8 +714,16 @@
             const loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo...');
             
             try {
-                // Conectar con tu API FastAPI
+                // Conectar con tu API FastAPI - VERSIÓN DE PRUEBA
                 const API_URL = 'https://chatbot-auxiliar-farmacia.onrender.com';
+                console.log('Intentando conectar a:', API_URL);
+                
+                // Primero probar si la API está disponible
+                const testResponse = await fetch(`${API_URL}/`, {
+                    method: 'GET'
+                });
+                console.log('Test response status:', testResponse.status);
+                
                 const response = await fetch(`${API_URL}/preguntar`, {
                     method: 'POST',
                     headers: {
@@ -726,11 +734,15 @@
                     })
                 });
                 
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
                 if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
+                    throw new Error(`Error en la respuesta del servidor: ${response.status}`);
                 }
                 
                 const data = await response.json();
+                console.log('Response data:', data);
                 
                 // Remover mensaje de carga y agregar respuesta real
                 loadingMessage.remove();

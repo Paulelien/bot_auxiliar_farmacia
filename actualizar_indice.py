@@ -120,10 +120,9 @@ def main():
     # Verificar estado actual
     if verificar_indice():
         print("\n⚠️  Se encontró un índice existente.")
-        respuesta = input("¿Deseas actualizarlo con los nuevos PDFs? (s/n): ").lower()
-        if respuesta != 's':
-            print("❌ Actualización cancelada")
-            return
+        print("🔄 Actualizando automáticamente con los archivos disponibles...")
+    else:
+        print("\n🆕 Creando nuevo índice...")
     
     # Actualizar índice
     print("\n🚀 Iniciando actualización...")

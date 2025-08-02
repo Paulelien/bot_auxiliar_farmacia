@@ -41,6 +41,19 @@ estadisticas_uso = {
 # Cargar el índice y textos del material
 indice, textos = cargar_o_crear_indice([])
 
+# Inicialización para Render
+print("🚀 Inicializando sistema...")
+try:
+    from inicializar_render import inicializar_render
+    if inicializar_render():
+        print("✅ Sistema inicializado correctamente")
+        # Recargar el índice después de la inicialización
+        indice, textos = cargar_o_crear_indice([])
+    else:
+        print("⚠️ Problema en la inicialización, continuando con configuración actual")
+except Exception as e:
+    print(f"⚠️ Error en inicialización: {e}, continuando con configuración actual")
+
 app = FastAPI()
 
 app.add_middleware(

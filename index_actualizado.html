@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Virtual de Farmacia - Avanxa - VERSION ACTUALIZADA 17:45 - LOGO Y TEXTO AGREGADOS</title>
+    <title>Asistente Virtual de Farmacia</title>
     <style>
         :root {
             --color-primario: #4B2067;
@@ -31,9 +31,9 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 25px 15px;
         }
 
         /* Sección del Asistente Virtual */
@@ -53,63 +53,23 @@
             margin-bottom: 0;
         }
 
-        /* Estilos para el logo y texto */
-        .logo-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
-            border-radius: 12px;
-            color: white;
-        }
-
-        .logo-image {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
+        .warning-message {
+            background: #FFF3CD;
+            border: 1px solid #FFEAA7;
             border-radius: 8px;
-            background: white;
-            padding: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: #856404;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .logo-text {
-            text-align: left;
+        .warning-message strong {
+            color: #856404;
+            font-weight: 600;
         }
 
-        .logo-text h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 0 0.5rem 0;
-            color: white;
-        }
 
-        .logo-text p {
-            font-size: 1rem;
-            margin: 0;
-            opacity: 0.9;
-            color: white;
-        }
-
-        /* Responsive para el logo */
-        @media (max-width: 768px) {
-            .logo-section {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-            
-            .logo-text {
-                text-align: center;
-            }
-            
-            .logo-image {
-                width: 60px;
-                height: 60px;
-            }
-        }
 
         /* Chat Interface */
         .chat-interface {
@@ -228,16 +188,17 @@
         /* Sección de Casos Clínicos */
         .clinical-cases-section {
             background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             border: 1px solid #E9ECEF;
         }
 
         .case-header {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .case-icon {
@@ -262,8 +223,9 @@
 
         .case-description {
             color: var(--color-texto);
-            margin-bottom: 2rem;
-            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            font-size: 1.05rem;
         }
 
         .btn-start-practice {
@@ -311,6 +273,28 @@
             color: #666;
         }
 
+        /* Contenedor del Quiz */
+        #quizContent {
+            background: white;
+            border-radius: 8px;
+            padding: 3.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #E9ECEF;
+            position: relative;
+        }
+
+        #quizContent::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #E9ECEF;
+            border-radius: 8px 0 0 8px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -335,29 +319,89 @@
 
         /* Estilos para el Quiz de Casos Clínicos */
         .quiz-question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--color-texto);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .quiz-description {
+            font-size: 1.05rem;
+            color: #333;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        /* Estilos para la estructura del caso clínico */
+        .caso-clinico {
+            margin-bottom: 2.5rem;
+        }
+
+        .caso-titulo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #000;
             margin-bottom: 1.5rem;
-            line-height: 1.5;
+            line-height: 1.3;
+        }
+
+        .caso-descripcion {
+            font-size: 1.05rem;
+            color: #333;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .caso-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2.5rem;
+            padding: 1rem 0;
+        }
+
+        .caso-numeros {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .caso-numero {
+            font-weight: 600;
+            color: #000;
+            font-size: 1rem;
+        }
+
+        .pregunta-numero {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .puntaje-actual {
+            font-weight: 600;
+            color: #000;
+            font-size: 1rem;
         }
 
         .quiz-options {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
         }
 
         .quiz-option {
             background: white;
-            border: 2px solid #E9ECEF;
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
+            border: 1px solid #E9ECEF;
+            border-radius: 6px;
+            padding: 1.5rem 2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
             color: var(--color-texto);
+            margin: 0;
         }
 
         .quiz-option:hover {
@@ -366,22 +410,36 @@
         }
 
         .quiz-option.selected {
+            background: white;
+            color: #333;
+            border: 2px solid var(--color-secundario);
+            position: relative;
+        }
+
+        .quiz-option.selected::before {
+            content: '';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
             background: var(--color-secundario);
-            color: white;
-            border-color: var(--color-secundario);
-            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--color-secundario);
         }
 
         .quiz-option.correct {
-            background: #28A745;
-            color: white;
-            border-color: #28A745;
+            background: white;
+            color: #333;
+            border: 2px solid #028100;
         }
 
         .quiz-option.incorrect {
-            background: #DC3545;
-            color: white;
-            border-color: #DC3545;
+            background: white;
+            color: #333;
+            border: 2px solid #B20710;
         }
 
         .quiz-progress {
@@ -400,6 +458,7 @@
             border: none;
             border-radius: 8px;
             padding: 0.8rem 1.5rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -434,23 +493,23 @@
 
         /* Botón para volver al chat */
         .btn-back-to-chat {
-            background: var(--color-secundario);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
+            background: transparent;
+            color: #8B5A8B;
+            border: 1px solid #8B5A8B;
+            border-radius: 8px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            text-align: center;
+            margin-left: auto;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-left: auto;
         }
 
         .btn-back-to-chat:hover {
-            background: #0056b3;
+            background: #8B5A8B;
+            color: white;
             transform: translateY(-1px);
         }
 
@@ -466,14 +525,11 @@
     <div class="container">
         <!-- Sección del Asistente Virtual -->
         <div class="assistant-intro">
-            <div class="logo-section">
-                <img src="Tuerca Avanxa.png" alt="Logo Avanxa" class="logo-image">
-                <div class="logo-text">
-                    <h2>Avanxa</h2>
-                    <p>Asistente Virtual de Farmacia</p>
-                </div>
+            <div class="warning-message">
+                <strong>⚠️ Importante:</strong> Este chatbot está en periodo de prueba. Su contenido se basa en los manuales del curso y puede presentar inconsistencias. Si detectas errores o tienes dudas, contacta al tutor en la pestaña «Consultas académicas».
             </div>
-            <p>¡Hola! Soy tu Asistente Virtual de Farmacia. Estoy aquí para ayudarte con tus dudas sobre el curso de Auxiliar de Farmacia. Puedes escribirme cualquier pregunta o elegir una de las sugerencias que aparecen más abajo. ¡Comencemos!</p>
+            <p>¡Hola! Soy tu Asistente Virtual de Farmacia. Estoy aquí para ayudarte con tus dudas 
+                sobre el curso de Auxiliar de Farmacia. </p>
         </div>
 
         <!-- Interfaz de Chat -->
@@ -481,7 +537,7 @@
             <div class="chat-window" id="chatWindow">
                 <div class="chat-message">
                     <div class="chat-bubble">
-                        <strong>Asistente educativo:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
+                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
                     </div>
                 </div>
             </div>
@@ -505,9 +561,6 @@
             <div class="case-header">
                 <div class="case-icon">+</div>
                 <div class="case-title">Practica con Casos Clínicos</div>
-                <button class="btn-back-to-chat" onclick="resetQuizSection()" title="Volver al Chat">
-                    <i class="fas fa-comments"></i> Volver al Chat
-                </button>
             </div>
             
             <div class="case-description">
@@ -894,6 +947,24 @@
             }
         }
 
+        // Función para probar conectividad
+        async function testConnection() {
+            const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
+            try {
+                console.log('🧪 Probando conectividad con:', API_URL);
+                const response = await fetch(`${API_URL}/`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+                console.log('✅ Conectividad OK:', response.status);
+                return true;
+            } catch (error) {
+                console.error('❌ Error de conectividad:', error);
+                return false;
+            }
+        }
+
         // Función para enviar pregunta (conectada con backend)
         async function sendQuestion() {
             const input = document.getElementById('questionInput');
@@ -914,40 +985,57 @@
             const loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo...');
             
             try {
+                // Probar conectividad primero
+                const isConnected = await testConnection();
+                if (!isConnected) {
+                    throw new Error('No se pudo conectar con el servidor');
+                }
                 // Conectar con tu API FastAPI
                 const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
-                console.log('🔗 Intentando conectar a:', API_URL);
+                console.log('🔗 Conectando a:', API_URL);
                 console.log('📝 Pregunta a enviar:', question);
                 
-                // Primero probar si la API está disponible
-                console.log('🧪 Probando conexión básica...');
-                const testResponse = await fetch(`${API_URL}/`, {
-                    method: 'GET',
-                    mode: 'cors'
-                });
-                console.log('✅ Test response status:', testResponse.status);
-                
                 console.log('📤 Enviando pregunta al endpoint /preguntar...');
-                const response = await fetch(`${API_URL}/preguntar`, {
+                
+                // Timeout simple de 60 segundos
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Timeout')), 60000);
+                });
+                
+                const fetchPromise = fetch(`${API_URL}/preguntar`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Accept': 'application/json',
                     },
                     mode: 'cors',
+                    cache: 'no-cache',
                     body: JSON.stringify({
                         pregunta: question
                     })
                 });
                 
+                console.log('⏳ Esperando respuesta del servidor...');
+                const response = await Promise.race([fetchPromise, timeoutPromise]);
+                
                 console.log('📥 Response status:', response.status);
                 console.log('📥 Response headers:', response.headers);
+                console.log('📥 Response ok:', response.ok);
                 
                 if (!response.ok) {
-                    throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+                    console.error('❌ Response no ok:', response.status, response.statusText);
+                    throw new Error(`Error en la respuesta del servidor: ${response.status} - ${response.statusText}`);
                 }
                 
+                console.log('📥 Intentando parsear JSON...');
                 const data = await response.json();
                 console.log('✅ Response data recibida:', data);
+                
+                if (!data || !data.respuesta) {
+                    console.error('❌ Data inválida:', data);
+                    throw new Error('Respuesta del servidor inválida');
+                }
+                
                 console.log('✅ Respuesta del bot:', data.respuesta);
                 
                 // Remover mensaje de carga y mostrar respuesta real
@@ -960,7 +1048,16 @@
                 console.error('❌ Error message:', error.message);
                 console.error('❌ Error stack:', error.stack);
                 loadingMessage.remove();
-                addMessage('bot', 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.');
+                
+                let errorMessage = 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.';
+                
+                if (error.message === 'Timeout') {
+                    errorMessage = 'La respuesta está tardando demasiado. Por favor, intenta de nuevo en unos momentos.';
+                } else if (error.message.includes('Failed to fetch')) {
+                    errorMessage = 'No se pudo conectar con el servidor. Verifica tu conexión a internet e intenta de nuevo.';
+                }
+                
+                addMessage('bot', errorMessage);
                 console.log('❌ Mensaje de error mostrado al usuario');
             }
             
@@ -986,7 +1083,7 @@
                 // Mensaje del bot (alineado a la derecha)
                 messageDiv.innerHTML = `
                     <div class="chat-bubble">
-                        <strong>Asistente educativo:</strong> ${content}
+                        <strong>Asistente virtual:</strong> ${content}
                     </div>
                 `;
             }
@@ -1002,7 +1099,7 @@
             chatWindow.innerHTML = `
                 <div class="chat-message">
                     <div class="chat-bubble">
-                        <strong>Asistente educativo:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
+                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
                     </div>
                 </div>
             `;
@@ -1044,7 +1141,7 @@
                     [CASOS_CLINICOS.casos_clinicos[i], CASOS_CLINICOS.casos_clinicos[j]] = 
                     [CASOS_CLINICOS.casos_clinicos[j], CASOS_CLINICOS.casos_clinicos[i]];
                 }
-                alert('Casos clínicos mezclados correctamente.');
+                console.log('✅ Casos clínicos mezclados correctamente.');
             }
         }
 
@@ -1156,15 +1253,12 @@
                     <div class="caso-descripcion">${caso.descripcion}</div>
                 </div>
                 
-                <div class="quiz-progress">
-                    <div class="progress-text">
-                        Caso ${casoActual + 1} de ${casosClinicos.length} - 
-                        Pregunta ${preguntaActual + 1} de ${caso.preguntas.length}
+                <div class="caso-info">
+                    <div class="caso-numeros">
+                        <div class="caso-numero">Caso Clínico N° ${casoActual + 1}</div>
+                        <div class="pregunta-numero">Pregunta ${preguntaActual + 1}</div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progreso}%"></div>
-                    </div>
-                    <div class="score-display">Puntaje actual: ${puntajeCasosClinicos}</div>
+                    <div class="puntaje-actual">Puntaje actual: ${puntajeCasosClinicos} punto${puntajeCasosClinicos !== 1 ? 's' : ''}</div>
                 </div>
                 
                 <div class="quiz-question">${pregunta.pregunta}</div>
@@ -1178,7 +1272,7 @@
                 <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
                     <button class="btn" onclick="checkAnswerCasoClinico()" id="checkBtn" disabled>Responder</button>
                     <button class="btn-back-to-chat" onclick="resetQuizSection()" style="margin: 0;">
-                        <i class="fas fa-comments"></i> Volver al Chat
+                        Volver al Chat
                     </button>
                 </div>
             `;
@@ -1305,12 +1399,11 @@
 
                     // Inicialización al cargar la página
         window.onload = function() {
-            alert('🚀 VERSIÓN ACTUALIZADA 17:45 - LOGO Y TEXTO AGREGADOS - Si ves este mensaje, el LMS está cargando el archivo correcto');
-            console.log('🚀 LMS - Página cargada correctamente - Versión actualizada 17:45');
+            console.log('🚀 LMS - Página cargada correctamente');
             console.log('🔗 API URL configurada:', 'https://asistente-auxiliar-farmacia.onrender.com');
             console.log('✅ Estilos de quiz corregidos - Visualización de selección activada');
             console.log('✅ Botón "Volver al Chat" agregado en casos clínicos');
-            console.log('✅ Logo y texto agregados al frontend');
+            console.log('✅ Logo eliminado del frontend');
             
             // Verificar que las secciones estén visibles
             const clinicalSection = document.querySelector('.clinical-cases-section');

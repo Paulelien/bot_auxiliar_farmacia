@@ -1,0 +1,10 @@
+﻿id,estudiante_id,sesion_id,pregunta,respuesta,categoria,fecha,tiempo_respuesta_ms
+1,1,1,¿Qué es el Decreto 405?,Respuesta de ejemplo para: ¿Qué es el Decreto 405?,General,2025-07-11 00:41:44.165560,2000
+2,1,1,¿Cómo se almacenan los medicamentos termolábiles?,Respuesta de ejemplo para: ¿Cómo se almacenan los medicamentos termolábiles?,General,2025-07-11 00:41:44.165565,2300
+3,1,1,¿Cuáles son las funciones del auxiliar de farmacia?,Respuesta de ejemplo para: ¿Cuáles son las funciones del auxiliar de farmacia?,General,2025-07-11 00:41:44.165567,2600
+4,2,2,¿Qué es el Decreto 405?,Respuesta de ejemplo para: ¿Qué es el Decreto 405?,General,2025-07-11 00:41:44.175163,2500
+5,2,2,¿Cómo se almacenan los medicamentos termolábiles?,Respuesta de ejemplo para: ¿Cómo se almacenan los medicamentos termolábiles?,General,2025-07-11 00:41:44.175170,2800
+6,2,2,¿Cuáles son las funciones del auxiliar de farmacia?,Respuesta de ejemplo para: ¿Cuáles son las funciones del auxiliar de farmacia?,General,2025-07-11 00:41:44.175171,3100
+7,3,3,¿Qué es el Decreto 405?,Respuesta de ejemplo para: ¿Qué es el Decreto 405?,General,2025-07-11 00:41:44.178064,3000
+8,3,3,¿Cómo se almacenan los medicamentos termolábiles?,Respuesta de ejemplo para: ¿Cómo se almacenan los medicamentos termolábiles?,General,2025-07-11 00:41:44.178070,3300
+9,3,3,¿Cuáles son las funciones del auxiliar de farmacia?,Respuesta de ejemplo para: ¿Cuáles son las funciones del auxiliar de farmacia?,General,2025-07-11 00:41:44.178072,3600

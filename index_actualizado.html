@@ -89,6 +89,9 @@
             min-height: 200px;
             margin-bottom: 1.5rem;
             position: relative;
+            overflow-y: auto;
+            max-height: 400px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .chat-message {
@@ -97,6 +100,7 @@
             margin-bottom: 1rem;
         }
 
+        /* Estilos base para chat-bubble */
         .chat-bubble {
             background: var(--color-secundario);
             color: white;
@@ -105,6 +109,12 @@
             max-width: 70%;
             position: relative;
             margin-left: auto;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.5;
+            text-align: center;
+            white-space: normal;
+            overflow: visible;
         }
 
         .chat-bubble::before {
@@ -299,11 +309,63 @@
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
+                max-width: 100%;
+            }
+            
+            .chat-interface {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .chat-window {
+                padding: 1rem;
+                min-height: 150px;
+                max-height: 300px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .chat-bubble {
+                max-width: 100%;
+                padding: 1rem 1.2rem;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                text-align: center;
+                margin: 0 auto 0 auto;
+                white-space: normal;
+                overflow: visible;
+                width: auto;
+            }
+            
+            .chat-bubble:not(.user-bubble) {
+                max-width: 100%;
+                white-space: normal;
+                word-break: normal;
+                text-align: center;
+                overflow: visible;
+                width: auto;
             }
             
             .chat-input-container {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.8rem;
+                width: 100%;
+                padding: 0 0.5rem;
+            }
+            
+            .chat-input-field {
+                padding: 0.8rem 1rem;
+                font-size: 16px;
+                width: 100%;
+                min-width: 100%;
+            }
+            
+            .btn-send {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
             }
             
             .chat-actions {
@@ -314,6 +376,124 @@
                 flex-direction: column;
                 gap: 1rem;
                 align-items: stretch;
+            }
+            
+            .clinical-cases-section {
+                padding: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            #quizContent {
+                padding: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .assistant-intro {
+                padding: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .warning-message {
+                padding: 0.8rem;
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+            
+            /* Mejoras específicas para respuestas largas del bot */
+            .chat-message .chat-bubble {
+                max-height: none;
+                overflow-y: visible;
+                -webkit-overflow-scrolling: auto;
+                scrollbar-width: none;
+                scrollbar-color: transparent transparent;
+            }
+            
+            .chat-message .chat-bubble::-webkit-scrollbar {
+                width: 4px;
+            }
+            
+            .chat-message .chat-bubble::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            
+            .chat-message .chat-bubble::-webkit-scrollbar-thumb {
+                background: rgba(255,255,255,0.3);
+                border-radius: 2px;
+            }
+            
+            .chat-message .chat-bubble::-webkit-scrollbar-thumb:hover {
+                background: rgba(255,255,255,0.5);
+            }
+            
+            /* Ajustes para texto largo */
+            .chat-bubble p {
+                margin-bottom: 0.5rem;
+            }
+            
+            .chat-bubble p:last-child {
+                margin-bottom: 0;
+            }
+            
+            /* Mejor espaciado para listas */
+            .chat-bubble ul, .chat-bubble ol {
+                padding-left: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .chat-bubble li {
+                margin-bottom: 0.3rem;
+            }
+        }
+        
+        /* Estilos específicos para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .container {
+                padding: 5px;
+            }
+            
+            .chat-bubble {
+                max-width: 100%;
+                padding: 1rem 0.8rem;
+                font-size: 0.9rem;
+                text-align: center;
+                margin: 0 auto 0 auto;
+                white-space: normal;
+                overflow: visible;
+                line-height: 1.5;
+                width: auto;
+            }
+            
+            .chat-window {
+                max-height: 250px;
+            }
+            
+            .chat-message .chat-bubble {
+                max-height: none;
+            }
+            
+            .assistant-intro,
+            .chat-interface,
+            .clinical-cases-section {
+                padding: 1rem;
+            }
+            
+            #quizContent {
+                padding: 1rem;
+            }
+
+            .chat-input-field {
+                padding: 1rem 1.2rem;
+                font-size: 16px;
+                width: 100%;
+                min-width: 100%;
+                border-radius: 20px;
+            }
+            
+            .btn-send {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                width: 100%;
+                border-radius: 20px;
             }
         }
 
@@ -518,6 +698,102 @@
             align-items: center;
             gap: 1rem;
         }
+        .chat-bubble p {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .chat-bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .chat-bubble ul, .chat-bubble ol {
+            padding-left: 1.2rem;
+            margin: 0.8rem 0;
+            line-height: 1.6;
+        }
+
+        .chat-bubble li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .chat-bubble strong, .chat-bubble b {
+            font-weight: 600;
+        }
+
+        .chat-bubble em, .chat-bubble i {
+            font-style: italic;
+        }
+
+        /* Mejoras específicas para mensajes de carga */
+        .chat-bubble.loading-message {
+            text-align: center;
+            padding: 1.2rem 1.5rem;
+            white-space: normal;
+            overflow: visible;
+            word-wrap: normal;
+            word-break: normal;
+        }
+
+        .chat-bubble.loading-message p {
+            margin: 0;
+            text-align: center;
+            white-space: normal;
+            overflow: visible;
+        }
+
+        /* Estilos específicos para móviles - mensajes de carga */
+        @media (max-width: 768px) {
+            .chat-bubble.loading-message {
+                max-width: 100%;
+                padding: 1rem 1rem;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                white-space: normal;
+                overflow: visible;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-bubble.loading-message {
+                max-width: 100%;
+                padding: 1rem 0.8rem;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                white-space: normal;
+                overflow: visible;
+                width: auto;
+            }
+        }
+
+        /* Eliminar sangrías y problemas de texto cortado */
+        .chat-bubble {
+            text-indent: 0;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .chat-bubble {
+                text-indent: 0;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-bubble {
+                text-indent: 0;
+                padding-left: 0.8rem;
+                padding-right: 0.8rem;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -537,7 +813,7 @@
             <div class="chat-window" id="chatWindow">
                 <div class="chat-message">
                     <div class="chat-bubble">
-                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
+                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy con respecto al curso de Auxiliar de Farmacia y sus manuales?
                     </div>
                 </div>
             </div>
@@ -595,7 +871,7 @@
                     "preguntas": [
                         {
                             "id": 1,
-                            "pregunta": "¿Cuál de los siguientes medicamentos NO es un antihipertensivo de primera línea?",
+                            "pregunta": "¿Cuál de los siguientes medicamentos NO es un antihipertensivo?",
                             "opciones": [
                                 "A) Losartán",
                                 "B) Amlodipino", 
@@ -603,7 +879,7 @@
                                 "D) Enalapril"
                             ],
                             "respuesta_correcta": 2,
-                            "explicacion": "El paracetamol es un analgésico y antipirético, no un antihipertensivo. Los otros tres son medicamentos antihipertensivos comunes."
+                            "explicacion": "El paracetamol es un analgésico y antipirético, no un antihipertensivo. Losartán, Amlodipino y Enalapril son medicamentos antihipertensivos."
                         },
                         {
                             "id": 2,
@@ -932,6 +1208,10 @@
             ]
         };
 
+        // Variables globales para el chat
+        let chatHistory = [];
+        let isFirstQuestion = true; // Variable para controlar si es la primera pregunta
+
         // Variables globales para casos clínicos
         let casosClinicos = [];
         let casoActual = 0;
@@ -940,28 +1220,10 @@
         let totalPreguntasCasosClinicos = 0;
         let quizAnswered = false;
 
-        // Función para manejar Enter en el input
+        // Función para manejar tecla Enter
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 sendQuestion();
-            }
-        }
-
-        // Función para probar conectividad
-        async function testConnection() {
-            const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
-            try {
-                console.log('🧪 Probando conectividad con:', API_URL);
-                const response = await fetch(`${API_URL}/`, {
-                    method: 'GET',
-                    mode: 'cors',
-                    cache: 'no-cache'
-                });
-                console.log('✅ Conectividad OK:', response.status);
-                return true;
-            } catch (error) {
-                console.error('❌ Error de conectividad:', error);
-                return false;
             }
         }
 
@@ -981,25 +1243,26 @@
             // Agregar pregunta del usuario al chat
             addMessage('user', question);
             
-            // Mostrar mensaje de carga
-            const loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo...');
+            // Mostrar mensaje de carga solo si es la primera pregunta
+            let loadingMessage;
+            if (isFirstQuestion) {
+                loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo... (La primera pregunta puede demorar un poco)');
+                isFirstQuestion = false; // Marcar que ya no es la primera pregunta
+            } else {
+                loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo...');
+            }
             
             try {
-                // Probar conectividad primero
-                const isConnected = await testConnection();
-                if (!isConnected) {
-                    throw new Error('No se pudo conectar con el servidor');
-                }
-                // Conectar con tu API FastAPI
+                // Conectar directamente con tu API FastAPI
                 const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
                 console.log('🔗 Conectando a:', API_URL);
                 console.log('📝 Pregunta a enviar:', question);
                 
                 console.log('📤 Enviando pregunta al endpoint /preguntar...');
                 
-                // Timeout simple de 60 segundos
+                // Timeout de 45 segundos (reducido para mejor experiencia)
                 const timeoutPromise = new Promise((_, reject) => {
-                    setTimeout(() => reject(new Error('Timeout')), 60000);
+                    setTimeout(() => reject(new Error('Timeout')), 45000);
                 });
                 
                 const fetchPromise = fetch(`${API_URL}/preguntar`, {
@@ -1019,8 +1282,6 @@
                 const response = await Promise.race([fetchPromise, timeoutPromise]);
                 
                 console.log('📥 Response status:', response.status);
-                console.log('📥 Response headers:', response.headers);
-                console.log('📥 Response ok:', response.ok);
                 
                 if (!response.ok) {
                     console.error('❌ Response no ok:', response.status, response.statusText);
@@ -1046,7 +1307,6 @@
             } catch (error) {
                 console.error('❌ Error detallado:', error);
                 console.error('❌ Error message:', error.message);
-                console.error('❌ Error stack:', error.stack);
                 loadingMessage.remove();
                 
                 let errorMessage = 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.';
@@ -1081,8 +1341,10 @@
                 `;
             } else {
                 // Mensaje del bot (alineado a la derecha)
+                const isLoadingMessage = content.includes('está escribiendo');
+                const bubbleClass = isLoadingMessage ? 'chat-bubble loading-message' : 'chat-bubble';
                 messageDiv.innerHTML = `
-                    <div class="chat-bubble">
+                    <div class="${bubbleClass}">
                         <strong>Asistente virtual:</strong> ${content}
                     </div>
                 `;
@@ -1099,10 +1361,11 @@
             chatWindow.innerHTML = `
                 <div class="chat-message">
                     <div class="chat-bubble">
-                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy?
+                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy con respecto al curso de Auxiliar de Farmacia y sus manuales?
                     </div>
                 </div>
             `;
+            isFirstQuestion = true; // Resetear la variable para la siguiente pregunta
         }
 
         // Función para exportar el chat
@@ -1352,7 +1615,7 @@
             document.getElementById('quizContent').appendChild(resultDiv);
             document.getElementById('checkBtn').disabled = true;
             
-            // Esperar 3 segundos antes de mostrar el botón de siguiente
+            // Esperar 1 segundo antes de mostrar el botón de siguiente
             setTimeout(() => {
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'btn';
@@ -1385,25 +1648,33 @@
                     };
                 }
                 document.getElementById('quizContent').appendChild(nextBtn);
-            }, 3000);
+            }, 1000);
         }
 
         // Función para resetear la sección
         function resetQuizSection() {
+            // NO resetear el progreso de casos clínicos - mantener donde quedó el alumno
             // Ocultar quiz y mostrar contenido inicial
             document.getElementById('quizContent').style.display = 'none';
             document.querySelector('.assistant-intro').style.display = 'block';
             document.querySelector('.chat-interface').style.display = 'block';
             document.querySelector('.clinical-cases-section').style.display = 'block';
+            isFirstQuestion = true; // Resetear solo la variable del chat
         }
 
-                    // Inicialización al cargar la página
+        // Inicialización al cargar la página
         window.onload = function() {
             console.log('🚀 LMS - Página cargada correctamente');
             console.log('🔗 API URL configurada:', 'https://asistente-auxiliar-farmacia.onrender.com');
             console.log('✅ Estilos de quiz corregidos - Visualización de selección activada');
             console.log('✅ Botón "Volver al Chat" agregado en casos clínicos');
             console.log('✅ Logo eliminado del frontend');
+            
+            // Solo resetear la variable del chat, NO las de casos clínicos
+            isFirstQuestion = true;
+            
+            console.log('🔄 Variable del chat reseteada al cargar la página');
+            console.log('📊 Estado inicial del chat:', { isFirstQuestion });
             
             // Verificar que las secciones estén visibles
             const clinicalSection = document.querySelector('.clinical-cases-section');

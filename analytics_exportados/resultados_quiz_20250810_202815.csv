@@ -1,0 +1,4 @@
+﻿id,estudiante_id,puntaje,preguntas_correctas,total_preguntas,fecha,tiempo_completado_minutos
+1,1,80,6,7,2025-07-11 00:41:44.189723,17
+2,2,85,7,7,2025-07-11 00:41:44.194332,19
+3,3,90,5,7,2025-07-11 00:41:44.196225,21

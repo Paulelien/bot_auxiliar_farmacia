@@ -1211,7 +1211,7 @@
             document.getElementById('quizContent').appendChild(resultDiv);
             document.getElementById('checkBtn').disabled = true;
             
-            // Esperar 3 segundos antes de mostrar el botón de siguiente
+            // Esperar 1 segundo antes de mostrar el botón de siguiente
             setTimeout(() => {
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'btn';
@@ -1244,7 +1244,7 @@
                     };
                 }
                 document.getElementById('quizContent').appendChild(nextBtn);
-            }, 3000);
+            }, 1000);
         }
 
         // Función para resetear la sección

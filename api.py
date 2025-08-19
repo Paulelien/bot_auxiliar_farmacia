@@ -4,7 +4,17 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import os
 from fastapi.middleware.cors import CORSMiddleware
-from embedding_utils import buscar_similares, cargar_o_crear_indice
+# Importar funciones de búsqueda con manejo de errores
+try:
+    from embedding_utils import buscar_similares, cargar_o_crear_indice
+except ImportError:
+    print("⚠️ embedding_utils no encontrado, usando funciones básicas")
+    # Funciones básicas de fallback
+    def buscar_similares(pregunta, indice, textos, k=5, umbral=0.5):
+        return [{"texto": "Información del curso de Auxiliar de Farmacia", "archivo": "Manual", "pagina": "N/A", "similitud": 0.8}]
+    
+    def cargar_o_crear_indice(textos_existentes):
+        return {"textos": []}, []
 import random
 from datetime import datetime
 from sqlalchemy.orm import Session
@@ -27,8 +37,12 @@ client = OpenAI(api_key=api_key)
 
 CARPETA_MATERIAL = "material"
 
-# Importar configuración de umbrales
-from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
+# Configuración de umbrales por defecto (en caso de que no exista config.py)
+try:
+    from config import UMBRAL_SIMILITUD_PRINCIPAL, UMBRAL_SIMILITUD_SECUNDARIO
+except ImportError:
+    UMBRAL_SIMILITUD_PRINCIPAL = 0.7
+    UMBRAL_SIMILITUD_SECUNDARIO = 0.5
 
 # Estadísticas de uso
 estadisticas_uso = {

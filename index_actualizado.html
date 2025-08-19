@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Virtual de Farmacia</title>
+    <title>NEXO - Asistente Virtual de Farmacia</title>
     <style>
         :root {
             --color-primario: #4B2067;
@@ -98,6 +98,24 @@
             display: flex;
             justify-content: flex-end;
             margin-bottom: 1rem;
+        }
+
+        /* Nota informativa */
+        .info-note {
+            background: var(--color-secundario);
+            border: 1px solid var(--color-secundario);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .info-note i {
+            font-size: 1.1rem;
         }
 
         /* Estilos base para chat-bubble */
@@ -597,17 +615,7 @@
         }
 
         .quiz-option.selected::before {
-            content: '';
-            position: absolute;
-            right: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--color-secundario);
-            border: 2px solid white;
-            box-shadow: 0 0 0 2px var(--color-secundario);
+            display: none;
         }
 
         .quiz-option.correct {
@@ -643,6 +651,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
+
 
         .btn:hover {
             background: var(--color-secundario);
@@ -698,6 +708,26 @@
             align-items: center;
             gap: 1rem;
         }
+
+        /* Estilo específico para el botón siguiente pregunta */
+        .btn-siguiente-pregunta {
+            background: #7c3faf;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-siguiente-pregunta:hover {
+            background: #6a2f9f;
+            transform: translateY(-1px);
+        }
         .chat-bubble p {
             margin-bottom: 0.8rem;
             line-height: 1.6;
@@ -722,8 +752,17 @@
             font-weight: 600;
         }
 
-        .chat-bubble em, .chat-bubble i {
+        .chat-bubble em {
             font-style: italic;
+        }
+        
+        .chat-bubble i:not(.fas):not(.far):not(.fab):not(.fa) {
+            font-style: italic;
+        }
+        
+        /* Asegurar que todos los iconos de Font Awesome NO estén en itálica */
+        i.fas, i.far, i.fab, i.fa {
+            font-style: normal !important;
         }
 
         /* Mejoras específicas para mensajes de carga */
@@ -804,16 +843,30 @@
             <div class="warning-message">
                 <strong>⚠️ Importante:</strong> Este chatbot está en periodo de prueba. Su contenido se basa en los manuales del curso y puede presentar inconsistencias. Si detectas errores o tienes dudas, contacta al tutor en la pestaña «Consultas académicas».
             </div>
-            <p>¡Hola! Soy tu Asistente Virtual de Farmacia. Estoy aquí para ayudarte con tus dudas 
+
+            <p>¡Hola! Soy NEXO tu asistente virtual. Estoy aquí para ayudarte con tus dudas 
                 sobre el curso de Auxiliar de Farmacia. </p>
+
         </div>
 
         <!-- Interfaz de Chat -->
         <div class="chat-interface">
+            <!-- Nota informativa sobre tiempo de respuesta -->
+            <div class="info-note">
+                <i class="fas fa-info-circle" style="color: #007bff; margin-right: 0.5rem;"></i>
+                <strong>Nota:</strong> La primera pregunta puede demorar más tiempo en ser respondida mientras el sistema se inicializa.
+            </div>
+            
+            <!-- Indicador de sesión activa (oculto) -->
+            <div id="sessionIndicator" style="display: none;">
+                <i class="fas fa-circle" style="color: #28a745; margin-right: 0.5rem;"></i>
+                Sesión activa - Tiempo restante: <span id="sessionTimer">01:00</span>
+            </div>
+            
             <div class="chat-window" id="chatWindow">
                 <div class="chat-message">
                     <div class="chat-bubble">
-                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy con respecto al curso de Auxiliar de Farmacia y sus manuales?
+                        <strong>NEXO:</strong> ¡Hola! Soy NEXO tu asistente virtual. ¿En qué puedo ayudarte hoy con respecto al curso de Auxiliar de Farmacia y sus manuales?
                     </div>
                 </div>
             </div>
@@ -821,14 +874,15 @@
             <div class="chat-input-container">
                 <button class="btn-send" onclick="sendQuestion()" id="sendBtn">Enviar</button>
                 <input type="text" id="questionInput" class="chat-input-field" placeholder="Escribe tu pregunta aquí" onkeypress="handleKeyPress(event)">
-                <div class="chat-actions">
-                    <button class="btn-action" onclick="clearChat()" title="Limpiar chat">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                    <button class="btn-action" onclick="exportChat()" title="Exportar chat">
-                        <i class="fas fa-file-export"></i>
-                    </button>
-                </div>
+                            <div class="chat-actions">
+                <button class="btn-action" onclick="clearChat()" title="Limpiar chat">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <button class="btn-action" onclick="exportChat()" title="Exportar chat">
+                    <i class="fas fa-file-export"></i>
+                </button>
+
+            </div>
             </div>
         </div>
 
@@ -836,15 +890,15 @@
         <div class="clinical-cases-section">
             <div class="case-header">
                 <div class="case-icon">+</div>
-                <div class="case-title">Practica con Casos Clínicos</div>
+                <div class="case-title">Práctica con casos clínicos</div>
             </div>
             
             <div class="case-description">
-                ¡Prepárate para tu examen con casos clínicos reales! Practica en un entorno seguro y sin repercusiones negativas, diseñado para ayudarte a ensayar y reforzar tus conocimientos. Esta herramienta te permitirá familiarizarte con el tipo de preguntas que podrías enfrentar en el examen de competencia ante la SEREMI de Salud. ¡Aumenta tu confianza y asegura tu éxito!
+                ¡Prepárate para tu examen con casos clínicos reales! Practica en un entorno seguro y sin repercusiones negativas, diseñado para ayudarte a ensayar y reforzar tus conocimientos. Esta herramienta te permitirá familiarizarte con el tipo de preguntas que podrías enfrentar en el examen de competencia ante la SEREMI de Salud. La práctica tiene una duración aproximada de 15 minutos. ¡Aumenta tu confianza y asegura tu éxito!
             </div>
             
             <div class="case-actions">
-                <button class="btn-start-practice" onclick="startCasosClinicos()">Iniciar Practica</button>
+                <button class="btn-start-practice" onclick="startCasosClinicos()">Iniciar Práctica</button>
                 <div class="case-controls">
                     <button class="btn-control" onclick="refreshCases()" title="Recargar">
                         <i class="fas fa-redo"></i>
@@ -1211,6 +1265,13 @@
         // Variables globales para el chat
         let chatHistory = [];
         let isFirstQuestion = true; // Variable para controlar si es la primera pregunta
+        
+        // Variables para tracking de sesión
+        let sessionStartTime = Date.now();
+        let lastActivityTime = Date.now();
+        let sessionTimeout = 6 * 60 * 1000; // 6 minutos de inactividad
+        let sessionTimer = null;
+        let isSessionActive = true;
 
         // Variables globales para casos clínicos
         let casosClinicos = [];
@@ -1227,7 +1288,415 @@
             }
         }
 
-        // Función para enviar pregunta (conectada con backend)
+        // Función para actualizar actividad del usuario (solo al hacer preguntas)
+        function updateUserActivity() {
+            lastActivityTime = Date.now();
+            if (sessionTimer) {
+                clearTimeout(sessionTimer);
+            }
+            sessionTimer = setTimeout(checkSessionTimeout, sessionTimeout);
+            
+            console.log('💬 Pregunta enviada - Timer reseteado a 6 minutos');
+        }
+
+        // Función para actualizar timer visual de sesión
+        function updateSessionTimer() {
+            const timerElement = document.getElementById('sessionTimer');
+            if (!timerElement) return;
+            
+            const timeRemaining = Math.max(0, Math.ceil((sessionTimeout - (Date.now() - lastActivityTime)) / 1000 / 60));
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Cambiar color según tiempo restante
+            const indicator = document.getElementById('sessionIndicator');
+            if (timeRemaining <= 5) {
+                indicator.style.background = '#FFF3CD';
+                indicator.style.color = '#856404';
+                indicator.querySelector('i').style.color = '#FFC107';
+            } else if (timeRemaining <= 15) {
+                indicator.style.background = '#F8D7DA';
+                indicator.style.color = '#721C24';
+                indicator.querySelector('i').style.color = '#DC3545';
+            } else {
+                indicator.style.background = '#E8F5E8';
+                indicator.style.color = '#155724';
+                indicator.querySelector('i').style.color = '#28A745';
+            }
+        }
+
+        // Función para verificar timeout de sesión
+        function checkSessionTimeout() {
+            const currentTime = Date.now();
+            const timeSinceLastActivity = currentTime - lastActivityTime;
+            
+            console.log('⏰ Verificando timeout - Tiempo transcurrido:', Math.round(timeSinceLastActivity / 1000), 'segundos');
+            console.log('⏰ Timeout configurado:', Math.round(sessionTimeout / 1000), 'segundos');
+            console.log('⏰ Sesión activa:', isSessionActive);
+            
+            if (timeSinceLastActivity >= sessionTimeout && isSessionActive) {
+                console.log('🔚 TIMEOUT ACTIVADO - Cerrando sesión');
+                endSession();
+            }
+        }
+
+        // Función para finalizar sesión
+        function endSession() {
+            if (!isSessionActive) return;
+            
+            console.log('🚀 Iniciando endSession()...');
+            
+            isSessionActive = false;
+            const sessionDuration = Math.round((Date.now() - sessionStartTime) / 1000 / 60); // en minutos
+            
+            console.log('⏱️ Duración de sesión calculada:', sessionDuration, 'minutos');
+            
+            // Actualizar indicador visual
+            const indicator = document.getElementById('sessionIndicator');
+            if (indicator) {
+                indicator.innerHTML = `
+                    <i class="fas fa-circle" style="color: #6C757D; margin-right: 0.5rem;"></i>
+                    Sesión inactiva - Duración: ${sessionDuration} minutos
+                `;
+                indicator.style.background = '#F8F9FA';
+                indicator.style.color = '#6C757D';
+                console.log('✅ Indicador visual actualizado');
+            }
+            
+            // Agregar mensaje de fin de sesión
+            console.log('💬 Agregando mensaje de fin de sesión...');
+            addMessage('bot', `Sesión finalizada por inactividad. Duración total: ${sessionDuration} minutos. Para continuar, escribe una nueva pregunta.`);
+            console.log('✅ Mensaje agregado al chat');
+            
+            // Registrar fin de sesión
+            console.log(`🔚 Sesión finalizada - Duración: ${sessionDuration} minutos`);
+            
+            // Opcional: Enviar datos de sesión al backend
+            logSessionEnd(sessionDuration);
+        }
+
+        // Función para iniciar nueva sesión
+        function startNewSession() {
+            sessionStartTime = Date.now();
+            lastActivityTime = Date.now();
+            isSessionActive = true;
+            
+            if (sessionTimer) {
+                clearTimeout(sessionTimer);
+            }
+            sessionTimer = setTimeout(checkSessionTimeout, sessionTimeout);
+            
+            // Limpiar historial anterior si existe
+            if (chatHistory.length > 0) {
+                chatHistory = [];
+            }
+        }
+
+        // Función para registrar fin de sesión (opcional - para analytics)
+        function logSessionEnd(duration) {
+            // Obtener username del HTML
+            const spanElement = document.querySelector('.username');
+            const username = spanElement ? spanElement.textContent : 'Usuario Desconocido';
+            
+            // Obtener todo el chat generado
+            const chatWindow = document.getElementById('chatWindow');
+            const messages = chatWindow.querySelectorAll('.chat-bubble');
+            let chatContent = '';
+            
+            messages.forEach(message => {
+                chatContent += message.textContent + '\n';
+            });
+            
+            const sessionData = {
+                username: username,
+                startTime: new Date(sessionStartTime).toISOString(),
+                duration: duration,
+                totalMessages: chatHistory.length,
+                totalMessagesVisual: messages.length,
+                userAgent: navigator.userAgent,
+                chatContent: chatContent.trim()
+            };
+            
+            console.log('📊 Datos de sesión completos:', sessionData);
+            
+            // Simular envío a API (por ahora solo consola)
+            sendSessionDataToAPI(sessionData);
+        }
+
+        // Función para enviar datos de sesión a la API
+        function sendSessionDataToAPI(sessionData) {
+            console.log('🚀 Enviando datos de sesión a la API...');
+            
+            // Enviar datos a la API real
+            fetch('https://backencuestas.avanxadev.com/api/conversacion-bot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sessionData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+            })
+            .then(data => {
+                console.log('✅ Datos enviados exitosamente a la API:', data);
+            })
+            .catch(error => {
+                console.error('❌ Error enviando datos a la API:', error);
+                // Opcional: mostrar mensaje de error al usuario
+                console.log('⚠️ Los datos de la sesión no se pudieron enviar, pero se guardaron localmente');
+            });
+        }
+
+        // BASE DE CONOCIMIENTOS LOCAL PARA RESPUESTAS INSTANTÁNEAS
+        const BASE_CONOCIMIENTOS = {
+            // Medicamentos comunes
+            "paracetamol": {
+                respuesta: "El **paracetamol** (acetaminofén) es un medicamento analgésico y antipirético muy seguro. Se usa para tratar dolor leve a moderado y fiebre. Es especialmente útil en niños y personas que no pueden tomar AINEs. La dosis recomendada es 500-1000mg cada 4-6 horas, máximo 4g al día, según prescripción médica. Es importante no exceder la dosis máxima para evitar daño hepático.",
+                categoria: "Analgésicos"
+            },
+            "ibuprofeno": {
+                respuesta: "El **ibuprofeno** es un antiinflamatorio no esteroideo (AINE) que se usa para tratar dolor, inflamación y fiebre. Es efectivo para dolores musculares, artritis y dolores de cabeza. Se debe tomar con alimentos para evitar irritación gástrica. La dosis típica es 200-400mg cada 4-6 horas, según prescripción médica. No se recomienda en personas con problemas estomacales o renales.",
+                categoria: "AINEs"
+            },
+            "aspirina": {
+                respuesta: "La **aspirina** (ácido acetilsalicílico) es un AINE con propiedades analgésicas, antipiréticas y antiinflamatorias. También se usa en dosis bajas para prevenir problemas cardíacos. Es importante tomarla con alimentos y no administrarla a niños menores de 16 años por riesgo de síndrome de Reye. La dosis para dolor es 325-650mg cada 4-6 horas, según prescripción médica.",
+                categoria: "AINEs"
+            },
+            "metformina": {
+                respuesta: "La **metformina** es el medicamento de primera línea para la diabetes tipo 2. Actúa reduciendo la producción de glucosa en el hígado y mejorando la sensibilidad a la insulina. Se debe tomar con las comidas para minimizar efectos secundarios gastrointestinales. Los efectos secundarios más comunes son náuseas y diarrea, que suelen mejorar con el tiempo.",
+                categoria: "Antidiabéticos"
+            },
+            "losartan": {
+                respuesta: "El **losartán** es un bloqueador del receptor de angiotensina II (BRA) usado para tratar hipertensión arterial. Es bien tolerado y tiene menos efectos secundarios que otros antihipertensivos. Se puede tomar con o sin alimentos. Es importante mantener un control regular de la presión arterial y no suspender el tratamiento sin consultar al médico.",
+                categoria: "Antihipertensivos"
+            },
+            "enalapril": {
+                respuesta: "El **enalapril** es un inhibidor de la enzima convertidora de angiotensina (IECA) usado para hipertensión e insuficiencia cardíaca. Un efecto secundario común es la tos seca. Se debe tomar con el estómago vacío para mejor absorción. Es importante evitar el uso durante el embarazo por riesgo de malformaciones fetales.",
+                categoria: "Antihipertensivos"
+            },
+            "amlodipino": {
+                respuesta: "El **amlodipino** es un bloqueador de canales de calcio que relaja los vasos sanguíneos para tratar hipertensión y angina. Es de larga duración, por lo que se toma una vez al día. Los efectos secundarios pueden incluir edema en los tobillos y mareos. Es importante tomar la dosis a la misma hora cada día.",
+                categoria: "Antihipertensivos"
+            },
+            "omeprazol": {
+                respuesta: "El **omeprazol** es un inhibidor de la bomba de protones que reduce la producción de ácido gástrico. Se usa para tratar úlceras, reflujo gastroesofágico y gastritis. Se debe tomar 30 minutos antes de las comidas para máxima efectividad. El uso prolongado puede afectar la absorción de calcio y vitamina B12.",
+                categoria: "Protectores gástricos"
+            },
+            "insulina": {
+                respuesta: "La **insulina** es una hormona esencial para el control de la glucosa en diabetes tipo 1 y algunos casos de tipo 2. Debe almacenarse en refrigerador (2-8°C) y nunca congelarse. La administración debe ser subcutánea, rotando los sitios de inyección. Es crucial mantener un horario regular y monitorear los niveles de glucosa.",
+                categoria: "Hormonas"
+            },
+            "vacunas": {
+                respuesta: "Las **vacunas** son medicamentos biológicos que estimulan el sistema inmune para prevenir enfermedades. Requieren almacenamiento en cadena de frío (2-8°C) y nunca deben congelarse. Se aplican por vía intramuscular o subcutánea según la vacuna. Es importante verificar la fecha de vencimiento y mantener registros de vacunación.",
+                categoria: "Inmunológicos"
+            },
+            // Condiciones médicas
+            "hipertension": {
+                respuesta: "La **hipertensión arterial** es una condición crónica caracterizada por presión arterial elevada (>140/90 mmHg). El tratamiento incluye cambios en el estilo de vida (dieta baja en sodio, ejercicio regular) y medicamentos antihipertensivos. Es importante el control regular de la presión y no suspender la medicación sin indicación médica.",
+                categoria: "Enfermedades cardiovasculares"
+            },
+            "diabetes": {
+                respuesta: "La **diabetes** es una enfermedad crónica caracterizada por niveles elevados de glucosa en sangre. La diabetes tipo 2 se puede controlar con dieta, ejercicio y medicamentos orales como metformina. Es fundamental el autocontrol de glucosa, cuidado de los pies y revisiones oftalmológicas regulares para prevenir complicaciones.",
+                categoria: "Enfermedades metabólicas"
+            },
+            "fiebre": {
+                respuesta: "La **fiebre** es un aumento de la temperatura corporal (>38°C) que indica que el cuerpo está combatiendo una infección. Se puede tratar con antipiréticos como paracetamol o ibuprofeno. Es importante mantener hidratación adecuada y buscar atención médica si la fiebre persiste más de 3 días o es muy alta (>40°C).",
+                categoria: "Síntomas"
+            },
+            "dolor": {
+                respuesta: "El **dolor** es una sensación desagradable que indica daño o enfermedad. Para dolor leve se usan analgésicos como paracetamol. Para dolor inflamatorio se prefieren AINEs como ibuprofeno. Es importante identificar la causa del dolor y no automedicarse por períodos prolongados sin evaluación médica.",
+                categoria: "Síntomas"
+            },
+            // Conceptos farmacéuticos
+            "cadena de frio": {
+                respuesta: "La **cadena de frío** es el mantenimiento de productos farmacéuticos (vacunas, insulina) a temperaturas controladas (2-8°C) desde la fabricación hasta la administración. Es fundamental para mantener la eficacia y seguridad de estos medicamentos. Se debe monitorear la temperatura constantemente y registrar en bitácoras.",
+                categoria: "Almacenamiento"
+            },
+            "fefo": {
+                respuesta: "**FEFO** significa 'First Expired, First Out' (Primero en vencer, primero en salir). Es un principio fundamental en farmacia que prioriza la salida de productos cuya fecha de caducidad está más próxima. Esto ayuda a prevenir pérdidas por vencimiento y asegura que los pacientes reciban medicamentos con mayor vida útil.",
+                categoria: "Gestión de inventario"
+            },
+            "receta magistral": {
+                respuesta: "Una **receta magistral** es una prescripción médica para un medicamento personalizado que se elabora en la farmacia. Tiene validez de 30 días corridos desde su extensión. Solo se puede elaborar en farmacias con recetario magistral autorizado. Es importante verificar la fecha de validez antes de procesarla.",
+                categoria: "Legislación farmacéutica"
+            },
+            "estupefacientes": {
+                respuesta: "Los **estupefacientes** son medicamentos con alto potencial de abuso y dependencia, sometidos a controles legales especiales. Su despacho es responsabilidad exclusiva del Químico Farmacéutico (Director Técnico), quien debe estar presente personalmente. El auxiliar de farmacia no puede despachar estos medicamentos.",
+                categoria: "Legislación farmacéutica"
+            },
+            "fotosensible": {
+                respuesta: "Un medicamento **fotosensible** es aquel que se degrada o pierde eficacia cuando se expone a la luz. Debe almacenarse en envases opacos y protegerse de la luz solar directa. Es importante verificar las condiciones de almacenamiento y no exponer estos medicamentos a fuentes de luz intensa.",
+                categoria: "Almacenamiento"
+            },
+            "kitadol": {
+                respuesta: "El **kitadol** es un medicamento que contiene paracetamol (acetaminofén) como principio activo. Es un analgésico y antipirético que se usa para tratar dolor leve a moderado y fiebre. Es especialmente útil en niños y personas que no pueden tomar AINEs. La dosis recomendada es 500-1000mg cada 4-6 horas, máximo 4g al día, según prescripción médica. Es importante no exceder la dosis máxima para evitar daño hepático.",
+                categoria: "Analgésicos"
+            },
+            "clonazepam": {
+                respuesta: "El **clonazepam** es un medicamento que pertenece al grupo de las **Benzodiazepinas** (N05BA01 según clasificación ATC). Es un ansiolítico, anticonvulsivante y relajante muscular. Se usa principalmente para tratar trastornos de ansiedad, epilepsia, síndrome de piernas inquietas y trastornos del sueño. NO pertenece al grupo de Psicoanalépticos, sino que es un depresor del sistema nervioso central. Su uso debe ser supervisado por un médico debido al riesgo de dependencia y efectos secundarios como somnolencia y mareos.",
+                categoria: "Benzodiazepinas"
+            }
+        };
+
+
+
+        // Función para detectar comparaciones entre medicamentos
+        function detectarComparacion(pregunta) {
+            const preguntaLimpia = pregunta.toLowerCase();
+            
+            // Patrones de comparación
+            const patronesComparacion = [
+                /diferencia|diferencias/,
+                /comparar|comparación/,
+                /vs|versus/,
+                /entre\s+\w+\s+y\s+\w+/,
+                /cuál\s+es\s+la\s+diferencia/,
+                /qué\s+diferencia\s+hay/
+            ];
+            
+            for (const patron of patronesComparacion) {
+                if (patron.test(preguntaLimpia)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Función para generar comparación entre medicamentos
+        function generarComparacion(medicamento1, medicamento2) {
+            const info1 = BASE_CONOCIMIENTOS[medicamento1];
+            const info2 = BASE_CONOCIMIENTOS[medicamento2];
+            
+            if (!info1 || !info2) {
+                return null;
+            }
+            
+            return `**Comparación entre ${medicamento1} y ${medicamento2}:**\n\n` +
+                   `**${medicamento1}:**\n` +
+                   `- Categoría: ${info1.categoria}\n` +
+                   `- ${info1.respuesta.split('.')[0]}.\n\n` +
+                   `**${medicamento2}:**\n` +
+                   `- Categoría: ${info2.categoria}\n` +
+                   `- ${info2.respuesta.split('.')[0]}.\n\n` +
+                   `**Principales diferencias:**\n` +
+                   `• ${medicamento1} es de la categoría ${info1.categoria}\n` +
+                   `• ${medicamento2} es de la categoría ${info2.categoria}\n` +
+                   `• Ambos tienen usos y efectos secundarios diferentes`;
+        }
+
+        // Función para buscar respuesta local
+        function buscarRespuestaLocal(pregunta) {
+            // Limpiar la pregunta: quitar signos de interrogación, puntos, comas, etc.
+            let preguntaLimpia = pregunta.toLowerCase()
+                .replace(/[¿?.,;:!]/g, '')  // Quitar signos de puntuación
+                .replace(/\s+/g, ' ')        // Normalizar espacios
+                .trim();                     // Quitar espacios al inicio/final
+            
+            console.log('🔍 Pregunta original:', pregunta);
+            console.log('🧹 Pregunta limpia:', preguntaLimpia);
+            
+            // Verificar si es una comparación
+            if (detectarComparacion(pregunta)) {
+                console.log('🔍 Comparación detectada');
+                
+                // Buscar medicamentos en la pregunta
+                const medicamentosEncontrados = [];
+                for (const [medicamento, info] of Object.entries(BASE_CONOCIMIENTOS)) {
+                    if (preguntaLimpia.includes(medicamento)) {
+                        medicamentosEncontrados.push(medicamento);
+                    }
+                }
+                
+                // Si hay al menos 2 medicamentos, generar comparación
+                if (medicamentosEncontrados.length >= 2) {
+                    const comparacion = generarComparacion(medicamentosEncontrados[0], medicamentosEncontrados[1]);
+                    if (comparacion) {
+                        return {
+                            respuesta: comparacion,
+                            categoria: "Comparación de medicamentos",
+                            fuente: "Base de conocimientos local"
+                        };
+                    }
+                }
+            }
+            
+            // Buscar coincidencias exactas primero
+            for (const [palabra, info] of Object.entries(BASE_CONOCIMIENTOS)) {
+                if (preguntaLimpia.includes(palabra)) {
+                    console.log('✅ Coincidencia exacta encontrada:', palabra);
+                    return {
+                        respuesta: info.respuesta,
+                        categoria: info.categoria,
+                        fuente: "Base de conocimientos local"
+                    };
+                }
+            }
+            
+            // Buscar coincidencias parciales más inteligentes
+            for (const [palabra, info] of Object.entries(BASE_CONOCIMIENTOS)) {
+                // Si la palabra clave está en la pregunta
+                if (preguntaLimpia.includes(palabra)) {
+                    console.log('✅ Coincidencia parcial encontrada:', palabra);
+                    return {
+                        respuesta: info.respuesta,
+                        categoria: info.categoria,
+                        fuente: "Base de conocimientos local"
+                    };
+                }
+                
+                // Si la pregunta está en la palabra clave (para preguntas muy cortas)
+                if (palabra.includes(preguntaLimpia) && preguntaLimpia.length >= 3) {
+                    console.log('✅ Coincidencia inversa encontrada:', palabra);
+                    return {
+                        respuesta: info.respuesta,
+                        categoria: info.categoria,
+                        fuente: "Base de conocimientos local"
+                    };
+                }
+            }
+            
+            // Buscar palabras similares (para errores de escritura comunes)
+            const palabrasSimilares = {
+                'paracetamol': ['paracetamol', 'acetaminofen', 'acetaminofén', 'tylenol', 'kitadol'],
+                'ibuprofeno': ['ibuprofeno', 'ibuprofene', 'advil', 'motrin'],
+                'aspirina': ['aspirina', 'aspirin', 'acido acetilsalicilico', 'ácido acetilsalicílico'],
+                'hipertension': ['hipertension', 'hipertensión', 'presion alta', 'presión alta', 'tension alta', 'tensión alta'],
+                'diabetes': ['diabetes', 'diabetis', 'azucar alta', 'azúcar alta', 'glucosa alta'],
+                'fiebre': ['fiebre', 'fiebre', 'temperatura alta', 'calor'],
+                'dolor': ['dolor', 'dolores', 'molestia', 'molestias'],
+                'cadena de frio': ['cadena de frio', 'cadena de frío', 'cadena frio', 'cadena frío', 'refrigeracion', 'refrigeración'],
+                'fefo': ['fefo', 'fifo', 'primero vence', 'primero caduca'],
+                'receta magistral': ['receta magistral', 'receta magistral', 'formula magistral', 'fórmula magistral'],
+                'estupefacientes': ['estupefacientes', 'estupefacientes', 'narcoticos', 'narcóticos', 'controlados'],
+                'fotosensible': ['fotosensible', 'fotosensible', 'sensible luz', 'sensible a la luz']
+            };
+            
+            for (const [palabraClave, variantes] of Object.entries(palabrasSimilares)) {
+                for (const variante of variantes) {
+                    if (preguntaLimpia.includes(variante)) {
+                        console.log('✅ Coincidencia por variante encontrada:', palabraClave, 'via', variante);
+                        const info = BASE_CONOCIMIENTOS[palabraClave];
+                        return {
+                            respuesta: info.respuesta,
+                            categoria: info.categoria,
+                            fuente: "Base de conocimientos local"
+                        };
+                    }
+                }
+            }
+            
+            console.log('❌ No se encontraron coincidencias');
+            return null;
+        }
+
+        // Función para enviar pregunta (con respuestas locales + API de respaldo)
         async function sendQuestion() {
             const input = document.getElementById('questionInput');
             const question = input.value.trim();
@@ -1237,92 +1706,133 @@
                 return;
             }
 
+            // Actualizar actividad del usuario
+            updateUserActivity();
+            
+            // Si es la primera pregunta después de una sesión inactiva, iniciar nueva sesión
+            if (!isSessionActive) {
+                startNewSession();
+            }
+
             console.log('=== INICIO DE ENVÍO DE PREGUNTA ===');
             console.log('Pregunta a enviar:', question);
 
             // Agregar pregunta del usuario al chat
             addMessage('user', question);
             
-            // Mostrar mensaje de carga solo si es la primera pregunta
-            let loadingMessage;
-            if (isFirstQuestion) {
-                loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo... (La primera pregunta puede demorar un poco)');
-                isFirstQuestion = false; // Marcar que ya no es la primera pregunta
-            } else {
-                loadingMessage = addMessage('bot', '🤖 El asistente está escribiendo...');
+            // Buscar respuesta local primero
+            const respuestaLocal = buscarRespuestaLocal(question);
+            
+            if (respuestaLocal) {
+                // Respuesta local encontrada - instantánea
+                console.log('✅ Respuesta local encontrada');
+                addMessage('bot', respuestaLocal.respuesta);
+                input.value = '';
+                return;
             }
             
+            // Si no hay respuesta local, usar API externa
+            console.log('🔍 No se encontró respuesta local, usando API externa...');
+            const loadingMessage = addMessage('bot', 'El asistente está escribiendo...');
+            
             try {
-                // Conectar directamente con tu API FastAPI
                 const API_URL = 'https://asistente-auxiliar-farmacia.onrender.com';
-                console.log('🔗 Conectando a:', API_URL);
-                console.log('📝 Pregunta a enviar:', question);
+                console.log('🔗 Intentando conectar a:', API_URL);
                 
-                console.log('📤 Enviando pregunta al endpoint /preguntar...');
-                
-                // Timeout de 45 segundos (reducido para mejor experiencia)
-                const timeoutPromise = new Promise((_, reject) => {
-                    setTimeout(() => reject(new Error('Timeout')), 45000);
-                });
-                
-                const fetchPromise = fetch(`${API_URL}/preguntar`, {
+                const response = await fetch(`${API_URL}/preguntar`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json',
                     },
                     mode: 'cors',
-                    cache: 'no-cache',
                     body: JSON.stringify({
                         pregunta: question
                     })
                 });
                 
-                console.log('⏳ Esperando respuesta del servidor...');
-                const response = await Promise.race([fetchPromise, timeoutPromise]);
-                
-                console.log('📥 Response status:', response.status);
-                
                 if (!response.ok) {
-                    console.error('❌ Response no ok:', response.status, response.statusText);
-                    throw new Error(`Error en la respuesta del servidor: ${response.status} - ${response.statusText}`);
+                    throw new Error(`Error en la respuesta del servidor: ${response.status}`);
                 }
                 
-                console.log('📥 Intentando parsear JSON...');
                 const data = await response.json();
-                console.log('✅ Response data recibida:', data);
+                console.log('✅ Respuesta de API recibida');
                 
-                if (!data || !data.respuesta) {
-                    console.error('❌ Data inválida:', data);
-                    throw new Error('Respuesta del servidor inválida');
-                }
-                
-                console.log('✅ Respuesta del bot:', data.respuesta);
-                
-                // Remover mensaje de carga y mostrar respuesta real
                 loadingMessage.remove();
                 addMessage('bot', data.respuesta);
-                console.log('✅ Mensaje del bot agregado al chat');
                 
             } catch (error) {
-                console.error('❌ Error detallado:', error);
-                console.error('❌ Error message:', error.message);
+                console.error('❌ Error en API externa:', error);
                 loadingMessage.remove();
-                
-                let errorMessage = 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.';
-                
-                if (error.message === 'Timeout') {
-                    errorMessage = 'La respuesta está tardando demasiado. Por favor, intenta de nuevo en unos momentos.';
-                } else if (error.message.includes('Failed to fetch')) {
-                    errorMessage = 'No se pudo conectar con el servidor. Verifica tu conexión a internet e intenta de nuevo.';
-                }
-                
-                addMessage('bot', errorMessage);
-                console.log('❌ Mensaje de error mostrado al usuario');
+                addMessage('bot', 'No encontré una respuesta específica para tu pregunta en mi base de conocimientos local, y la API externa no está disponible. Te sugiero reformular tu pregunta o consultar directamente con tu tutor.');
             }
             
             input.value = '';
             console.log('=== FIN DE ENVÍO DE PREGUNTA ===');
+        }
+
+        // Función para verificar y agregar advertencia de dosis
+        function verificarDosis(content) {
+            // Patrones para detectar dosis (mg, ml, mcg, g, etc.)
+            const patronesDosis = [
+                /\d+\s*mg/gi,           // 500mg, 500 mg
+                /\d+\s*ml/gi,           // 10ml, 10 ml
+                /\d+\s*mcg/gi,          // 100mcg, 100 mcg
+                /\d+\s*g/gi,            // 4g, 4 g
+                /\d+\s*UI/gi,           // 1000UI, 1000 UI
+                /\d+\s*mEq/gi,          // 20mEq, 20 mEq
+                /\d+\s*mg\/kg/gi,       // 10mg/kg, 10 mg/kg
+                /\d+\s*mg\/ml/gi,       // 50mg/ml, 50 mg/ml
+                /\d+\s*mg\/día/gi,      // 4g/día, 4 g/día
+                /\d+\s*mg\/dosis/gi,    // 500mg/dosis, 500 mg/dosis
+                /\d+\s*mg\/hora/gi,     // 100mg/hora, 100 mg/hora
+                /\d+\s*mg\/semana/gi,   // 1000mg/semana, 1000 mg/semana
+                /\d+\s*mg\/mes/gi       // 500mg/mes, 500 mg/mes
+            ];
+            
+            // Verificar si el contenido contiene dosis
+            let contieneDosis = false;
+            for (const patron of patronesDosis) {
+                if (patron.test(content)) {
+                    contieneDosis = true;
+                    break;
+                }
+            }
+            
+            // Si contiene dosis y no tiene la advertencia, agregarla
+            if (contieneDosis && !content.includes('según prescripción médica') && !content.includes('prescripción médica')) {
+                // Buscar el final de la oración que contiene la dosis
+                const oraciones = content.split('.');
+                let contenidoModificado = '';
+                
+                for (let i = 0; i < oraciones.length; i++) {
+                    let oracion = oraciones[i];
+                    
+                    // Verificar si esta oración contiene dosis
+                    let oracionContieneDosis = false;
+                    for (const patron of patronesDosis) {
+                        if (patron.test(oracion)) {
+                            oracionContieneDosis = true;
+                            break;
+                        }
+                    }
+                    
+                    // Si la oración contiene dosis, agregar la advertencia
+                    if (oracionContieneDosis && !oracion.includes('según prescripción médica')) {
+                        // Agregar la advertencia al final de la oración
+                        if (oracion.trim().endsWith('')) {
+                            oracion = oracion.trim() + ' según prescripción médica.';
+                        } else {
+                            oracion = oracion.trim() + ' según prescripción médica.';
+                        }
+                    }
+                    
+                    contenidoModificado += oracion + (i < oraciones.length - 1 ? '. ' : '');
+                }
+                
+                return contenidoModificado;
+            }
+            
+            return content;
         }
 
         // Función para agregar mensaje al chat
@@ -1339,15 +1849,35 @@
                         <strong>Tú:</strong> ${content}
                     </div>
                 `;
+                
+                // Agregar al historial del chat
+                chatHistory.push({
+                    type: 'user',
+                    content: content,
+                    timestamp: new Date().toISOString()
+                });
             } else {
                 // Mensaje del bot (alineado a la derecha)
                 const isLoadingMessage = content.includes('está escribiendo');
                 const bubbleClass = isLoadingMessage ? 'chat-bubble loading-message' : 'chat-bubble';
+                
+                // Verificar y modificar contenido si contiene dosis
+                const contenidoVerificado = verificarDosis(content);
+                
                 messageDiv.innerHTML = `
                     <div class="${bubbleClass}">
-                        <strong>Asistente virtual:</strong> ${content}
+                        <strong>NEXO:</strong> ${contenidoVerificado}
                     </div>
                 `;
+                
+                // Agregar al historial del chat (solo si no es mensaje de carga)
+                if (!isLoadingMessage) {
+                    chatHistory.push({
+                        type: 'bot',
+                        content: contenidoVerificado,
+                        timestamp: new Date().toISOString()
+                    });
+                }
             }
             
             chatWindow.appendChild(messageDiv);
@@ -1361,18 +1891,22 @@
             chatWindow.innerHTML = `
                 <div class="chat-message">
                     <div class="chat-bubble">
-                        <strong>Asistente virtual:</strong> ¡Hola! ¿En qué puedo ayudarte hoy con respecto al curso de Auxiliar de Farmacia y sus manuales?
+                        <strong>NEXO:</strong> ¡Hola! Soy NEXO tu asistente virtual. ¿En qué puedo ayudarte hoy con respecto al curso de Auxiliar de Farmacia y sus manuales?
                     </div>
                 </div>
             `;
             isFirstQuestion = true; // Resetear la variable para la siguiente pregunta
+            
+            // Limpiar historial del chat
+            chatHistory = [];
+            console.log('🧹 Historial del chat limpiado');
         }
 
         // Función para exportar el chat
         function exportChat() {
             const chatWindow = document.getElementById('chatWindow');
             const messages = chatWindow.querySelectorAll('.chat-bubble');
-            let chatText = 'Conversación con Asistente Virtual de Farmacia\n';
+            let chatText = 'Conversación con NEXO - Asistente Virtual de Farmacia\n';
             chatText += 'Fecha: ' + new Date().toLocaleString() + '\n\n';
             
             messages.forEach(message => {
@@ -1387,6 +1921,10 @@
             a.click();
             window.URL.revokeObjectURL(url);
         }
+
+
+
+
 
         // Función para recargar casos clínicos
         function refreshCases() {
@@ -1510,19 +2048,30 @@
             preguntasCompletadas += preguntaActual;
             const progreso = (preguntasCompletadas / totalPreguntasCasosClinicos) * 100;
             
+            // Calcular número de pregunta correlativo en todo el test
+            let preguntaCorrelativa = 1;
+            for (let i = 0; i < casoActual; i++) {
+                preguntaCorrelativa += casosClinicos[i].preguntas.length;
+            }
+            preguntaCorrelativa += preguntaActual;
+            
             quizContent.innerHTML = `
                 <div class="caso-clinico">
                     <div class="caso-titulo">${caso.titulo}</div>
                     <div class="caso-descripcion">${caso.descripcion}</div>
                 </div>
                 
-                <div class="caso-info">
-                    <div class="caso-numeros">
-                        <div class="caso-numero">Caso Clínico N° ${casoActual + 1}</div>
-                        <div class="pregunta-numero">Pregunta ${preguntaActual + 1}</div>
+                                    <div class="caso-info">
+                        <div class="caso-numeros">
+                            <div class="caso-numero">
+                                <strong>Pregunta ${preguntaCorrelativa} de ${totalPreguntasCasosClinicos}</strong><br>
+                                <span style="font-size: 0.9rem; opacity: 0.8;">
+                                    Caso Clínico N° ${casoActual + 1} - Pregunta ${preguntaActual + 1} de ${caso.preguntas.length}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="puntaje-actual">Puntaje actual: ${puntajeCasosClinicos} punto${puntajeCasosClinicos !== 1 ? 's' : ''}</div>
                     </div>
-                    <div class="puntaje-actual">Puntaje actual: ${puntajeCasosClinicos} punto${puntajeCasosClinicos !== 1 ? 's' : ''}</div>
-                </div>
                 
                 <div class="quiz-question">${pregunta.pregunta}</div>
                 <div class="quiz-options">
@@ -1618,13 +2167,13 @@
             // Esperar 1 segundo antes de mostrar el botón de siguiente
             setTimeout(() => {
                 const nextBtn = document.createElement('button');
-                nextBtn.className = 'btn';
+                nextBtn.className = 'btn-siguiente-pregunta';
                 nextBtn.style.marginLeft = '1rem';
                 nextBtn.style.marginTop = '1rem';
                 
                 if (preguntaActual < caso.preguntas.length - 1) {
                     // Siguiente pregunta del mismo caso
-                    nextBtn.textContent = 'Siguiente pregunta ➡️';
+                    nextBtn.innerHTML = 'Siguiente pregunta <i class="fas fa-chevron-right"></i>';
                     nextBtn.onclick = () => {
                         preguntaActual++;
                         quizAnswered = false;
@@ -1632,7 +2181,7 @@
                     };
                 } else if (casoActual < casosClinicos.length - 1) {
                     // Siguiente caso
-                    nextBtn.textContent = 'Siguiente caso ➡️';
+                    nextBtn.innerHTML = 'Siguiente pregunta <i class="fas fa-chevron-right"></i>';
                     nextBtn.onclick = () => {
                         casoActual++;
                         preguntaActual = 0;
@@ -1641,7 +2190,7 @@
                     };
                 } else {
                     // Finalizar
-                    nextBtn.textContent = 'Finalizar evaluación 🏁';
+                    nextBtn.innerHTML = 'Finalizar evaluación <i class="fas fa-chevron-right"></i>';
                     nextBtn.onclick = () => {
                         casoActual++;
                         showCasoClinico();
@@ -1686,8 +2235,40 @@
             console.log('- Display de la sección:', clinicalSection ? clinicalSection.style.display : 'No encontrada');
             console.log('- Display del botón:', startButton ? startButton.style.display : 'No encontrado');
             
+            // Iniciar tracking de sesión
+            startNewSession();
+            
+            // Agregar event listeners para detectar actividad del usuario
+            setupActivityTracking();
+            
+            // Iniciar timer visual que se actualiza cada segundo
+            setInterval(updateSessionTimer, 1000);
+            
             // La página ya está lista para usar
         };
+
+        // Función para configurar tracking de actividad
+        function setupActivityTracking() {
+            // NO configurar eventos de mouse/teclado - solo preguntas resetean el timer
+            console.log('🔧 Tracking configurado: Solo preguntas resetean el timer');
+            
+            // Detectar cuando el usuario sale de la página
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    console.log('👁️ Usuario cambió de pestaña o minimizó ventana');
+                }
+                // NO resetear timer al volver a la pestaña
+            });
+            
+            // Detectar cuando el usuario sale de la página
+            window.addEventListener('beforeunload', function() {
+                if (isSessionActive) {
+                    endSession();
+                }
+            });
+            
+            console.log('✅ Tracking de actividad configurado (solo preguntas)');
+        }
     </script>
 </body>
 </html> 

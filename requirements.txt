@@ -6,4 +6,6 @@ PyMuPDF
 fastapi
 uvicorn
 sqlalchemy
-psycopg2-binary 
+psycopg2-binary
+requests
+cryptography 

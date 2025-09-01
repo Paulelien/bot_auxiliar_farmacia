@@ -1,0 +1,29 @@
+[Unit]
+Description=Keep-Alive API Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/ruta/a/tu/proyecto
+ExecStart=/usr/bin/python3 /ruta/a/tu/proyecto/keep_alive_avanzado.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Configuración de seguridad
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/ruta/a/tu/proyecto/logs
+
+# Variables de entorno
+Environment=PYTHONPATH=/ruta/a/tu/proyecto
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

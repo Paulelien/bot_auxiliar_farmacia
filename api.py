@@ -266,6 +266,17 @@ PREGUNTAS_QUIZ = [
 def read_root():
     return {"message": "API del Chatbot Auxiliar de Farmacia"}
 
+@app.get("/health")
+def health_check():
+    """Endpoint para verificar la salud de la API"""
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now().isoformat(),
+        "version": "1.0.0",
+        "service": "Chatbot Auxiliar de Farmacia",
+        "uptime": "running"
+    }
+
 @app.get("/preguntas_sugeridas")
 def obtener_preguntas_sugeridas():
     return {"preguntas": random.sample(PREGUNTAS_SUGERIDAS, k=4)}

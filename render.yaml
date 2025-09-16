@@ -9,3 +9,12 @@ services:
         sync: false
       - key: PYTHON_VERSION
         value: 3.11.0 
+  - type: cron
+    name: keep-alive-ping
+    env: python
+    schedule: "*/1 * * * *"   # cada 1 minuto
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -c "import os,requests; url=os.environ.get('PING_URL','https://asistente-auxiliar-farmacia.onrender.com/health'); requests.get(url, timeout=15)"
+    envVars:
+      - key: PING_URL
+        value: https://asistente-auxiliar-farmacia.onrender.com/health

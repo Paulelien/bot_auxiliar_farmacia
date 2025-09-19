@@ -4,17 +4,21 @@ services:
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    plan: starter  # Plan gratuito con menos restricciones
+    healthCheckPath: /health  # Endpoint de salud
     envVars:
       - key: OPENAI_API_KEY
         sync: false
       - key: PYTHON_VERSION
-        value: 3.11.0 
+        value: 3.11.0
+      - key: RENDER_KEEP_ALIVE
+        value: "true"  # Mantener activo 
   - type: cron
     name: keep-alive-ping
     env: python
     schedule: "*/1 * * * *"   # cada 1 minuto
     buildCommand: pip install -r requirements.txt
-    startCommand: python -c "import os,requests; url=os.environ.get('PING_URL','https://asistente-auxiliar-farmacia.onrender.com/health'); requests.get(url, timeout=15)"
+    startCommand: python keep_alive_render.py
     envVars:
       - key: PING_URL
-        value: https://asistente-auxiliar-farmacia.onrender.com/health
+        value: https://asistente-auxiliar-farmacia.onrender.com

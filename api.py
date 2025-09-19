@@ -277,6 +277,25 @@ def health_check():
         "uptime": "running"
     }
 
+@app.get("/ping")
+def ping():
+    """Endpoint de ping para mantener el servidor activo"""
+    return {
+        "pong": True,
+        "timestamp": datetime.now().isoformat(),
+        "message": "Servidor activo"
+    }
+
+@app.get("/keep-alive")
+def keep_alive():
+    """Endpoint de keep-alive para prevenir que Render detenga el servicio"""
+    return {
+        "status": "alive",
+        "timestamp": datetime.now().isoformat(),
+        "message": "Keep-alive activo",
+        "server": "running"
+    }
+
 @app.get("/preguntas_sugeridas")
 def obtener_preguntas_sugeridas():
     return {"preguntas": random.sample(PREGUNTAS_SUGERIDAS, k=4)}

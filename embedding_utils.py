@@ -60,6 +60,22 @@ def _read_pdf_text(pdf_path: str) -> List[Dict[str, Any]]:
     return out
 
 
+def _read_txt_text(txt_path: str) -> List[Dict[str, Any]]:
+    """Lee texto de un archivo .txt y devuelve un solo registro tipo página."""
+    try:
+        with open(txt_path, "r", encoding="utf-8", errors="ignore") as f:
+            text = f.read().strip()
+        if not text:
+            return []
+        return [{
+            "texto": text,
+            "archivo": os.path.basename(txt_path),
+            "pagina": 1
+        }]
+    except Exception:
+        return []
+
+
 def _chunk_text(text: str, max_chars: int = 1200, overlap: int = 200) -> List[str]:
     text = " ".join(text.split())
     if len(text) <= max_chars:
@@ -116,15 +132,26 @@ def cargar_o_crear_indice(textos_existentes: List[str]) -> Tuple[Any, List[Dict[
         except Exception:
             print("⚠️ No se pudo cargar índice previo. Se regenerará.")
 
-    # Recolectar PDFs
+    # Recolectar documentos (PDF y TXT) de forma recursiva
     documentos: List[Dict[str, Any]] = []
+    total_archivos = 0
     if os.path.isdir(MATERIAL_DIR):
-        for fname in os.listdir(MATERIAL_DIR):
-            if fname.lower().endswith(".pdf"):
-                documentos.extend(_read_pdf_text(os.path.join(MATERIAL_DIR, fname)))
+        for root, _dirs, files in os.walk(MATERIAL_DIR):
+            for fname in files:
+                path = os.path.join(root, fname)
+                lower = fname.lower()
+                if lower.endswith('.pdf'):
+                    total_archivos += 1
+                    documentos.extend(_read_pdf_text(path))
+                elif lower.endswith('.txt'):
+                    total_archivos += 1
+                    documentos.extend(_read_txt_text(path))
+
+    if total_archivos:
+        print(f"🔎 Detectados {total_archivos} archivos en '{MATERIAL_DIR}' (PDF/TXT)")
 
     if not documentos:
-        print("✅ Índice cargado con 0 documentos")
+        print("✅ Índice cargado con 0 documentos (no se encontraron PDFs/TXTs)")
         return None, []
 
     # Chunking y metadatos
